@@ -39,6 +39,18 @@
   <script src="./static/js/bulma-carousel.min.js"></script>
   <script src="./static/js/bulma-slider.min.js"></script>
   <script src="./static/js/index.js"></script>
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,700;1,400&display=swap');
+    
+    .small-caps {
+      font-family: 'EB Garamond', serif;
+      font-variant: small-caps;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      font-size: 1.1em;
+    }
+  </style>
 </head>
 <body>
 
@@ -57,9 +69,9 @@
           
           <div class="is-size-5 publication-authors">
             <span class="author-block">
-              <a href="https://openreview.net/profile?id=~Yingdong_Shi1">Yingdong Shi</a><sup>1</sup>,</span>
+              <a href="https://openreview.net/profile?id=~Yingdong_Shi1">Yingdong Shi</a><sup>1†</sup>,</span>
             <span class="author-block">
-              <a href="https://openreview.net/profile?id=~Changming_Li1">Changming Li</a><sup>1</sup>,</span>
+              <a href="https://openreview.net/profile?id=~Changming_Li1">Changming Li</a><sup>1†</sup>,</span>
             <span class="author-block">
               <a href="https://yfwang.me/">Yifan Wang</a><sup>1</sup>,
             </span>
@@ -76,12 +88,14 @@
               <a href="">Jingyi Yu</a><sup>1</sup>,
             </span>
             <span class="author-block">
-              <a href="https://www.saying.ren/">Kan Ren</a><sup>1</sup>
+              <a href="https://www.saying.ren/">Kan Ren</a><sup>1*</sup>
             </span>
           </div>
-
+          
           <div class="is-size-5 publication-authors">
-            <span class="author-block"><sup>1</sup>Shanghaitech University</span>
+            <span class="author-block"><sup>1</sup>Shanghaitech University</span><br>
+            <span class="author-block"><sup>†</sup>Equal contribution</span><br>
+            <span class="author-block"><sup>*</sup>Corresponding author</span>
           </div>
 
           <div class="column has-text-centered">
@@ -176,7 +190,7 @@
     <h3 class="title is-4">Attribute Debiasing</h3>
     <div class="content has-text-justified">
       <p>
-        We balance the generations of gender attribute.
+        <span class="small-caps">DiffLens</span> balances the generations of gender attribute.
       </p>
     </div>
     <div class="columns is-centered">
@@ -218,7 +232,7 @@
     <h3 class="title is-4">Accurate Identification of Bias Feature</h3>
     <div class="content has-text-justified">
       <p>
-        We preserve overall image semantics such as smile and eyeglasses 
+        <span class="small-caps">DiffLens</span> preserves overall image semantics such as smile and eyeglasses 
         while other methods frequently introduce distortions or lose important details.
       </p>
     </div>
@@ -244,7 +258,7 @@
     <h3 class="title is-4">Individual Image Transformations Along the Gender Axis</h3>
     <div class="content has-text-justified">
       <p>
-        We achieve smooth and consistent transitions that preserve semantic features like facial
+        <span class="small-caps">DiffLens</span> achieves smooth and consistent transitions that preserve semantic features like facial
         expressions, while other methods show distortions and loss of details at higher imbalance ratios.
       </p>
     </div>
@@ -268,6 +282,11 @@
     <p class="has-text-centered"></p>
 
 <h3 class="title is-4">Fine-grained Control and Editing</h3>
+<div class="content has-text-justified">
+  <p>
+    <span class="small-caps">DiffLens</span> can control bias level with finer granularity and across a broader range.
+  </p>
+</div>
 <div class="columns is-centered">
   <!-- Gender Group -->
   <div class="column">
