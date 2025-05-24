@@ -43,6 +43,18 @@
   <script src="./static/js/bulma-slider.min.js"></script>
   <script src="./static/js/index.js"></script>
 
+  <!-- MathJax for mathematical formulas -->
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$', '$$'], ['\\[', '\\]']]
+      }
+    };
+  </script>
+
   <style>
     @import url('https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,700;1,400&display=swap');
     
@@ -172,6 +184,77 @@
       </div>
     </div>
     <!--/ Abstract. -->
+
+    <!-- Motivation. -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Motivation</h2>
+        <div class="content has-text-justified">
+          <p>
+            Existing retrieval-based methods for demonstration selection face critical challenges. 
+            The most significant issue is the misalignment between the surrogate learning objective of the retriever and the intrinsic optimization goal of ICL. 
+            A discriminative model trained with metric learning objectives to approximate relevance scores does not necessarily indicate a candidate's effectiveness as an in-context demonstration for LLMs.
+          </p>
+          <p>
+            Furthermore, the scarcity of effective demonstration candidates poses another challenge. 
+            As illustrated in the figure below, most demonstration examples are ineffective for most queries, making retriever optimization particularly challenging.
+          </p>
+        </div>
+        <div class="content has-text-centered">
+          <img src="./static/images/combined_accuracy_distribution1.png"
+               class="interpolation-image"
+               alt="Distribution of useful example ratio"
+               style="width: auto; max-width: 80%;">
+          <p style="margin-top: 10px; font-style: italic; color: #666;">
+            The distribution of the useful example ratio across test sets from different datasets. 
+            The x-axis represents the ratio of useful examples to total examples, where a 'useful example' helps the LLM generate accurate output with in-context learning. 
+            The ratio remains low for most test queries, indicating that the majority of demonstration examples are ineffective for the LLM.
+          </p>
+        </div>
+      </div>
+    </div>
+    <!--/ Motivation. -->
+
+    <!-- Method. -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Method</h2>
+        <div class="content has-text-justified">
+          <p>
+            To address these challenges, we propose <span class="small-caps">GenICL</span>, a novel generative preference learning framework that directly optimizes demonstration selection for ICL using LLM feedback. 
+            We reformulate ICL as a generative Bayesian optimization problem, introducing a latent variable to bridge demonstration selection and LLM inference.
+          </p>
+          <p>
+            Our optimization objective can be formulated as:
+          </p>
+        </div>
+        <div class="content has-text-centered" style="margin: 20px 0;">
+          <div style="background-color: #f8f9fa; padding: 20px; border-radius: 8px; display: inline-block;">
+            $$P_{\mathcal{M}}(Y \mid \{(X_k, Y_k)\}_{k=1}^K, X) = \int_{z} P_{\mathcal{M}}(Y \mid z, X)\, P_{\mathcal{M}}(z \mid \{(X_k, Y_k)\}_{k=1}^K, X)\, dz$$
+          </div>
+        </div>
+        <div class="content has-text-justified">
+          <p>
+            <strong>Variable Definitions:</strong>
+          </p>
+          <ul>
+            <li><strong>$(X, Y)$</strong>: A task sample with input $X$ and ground-truth output $Y$</li>
+            <li><strong>$\{(X_k, Y_k)\}_{k=1}^K$</strong>: A set of $K$ demonstrations selected from the demonstration pool $\mathcal{P}$</li>
+            <li><strong>$\mathcal{P}$</strong>: The demonstration pool containing all training samples from all tasks</li>
+            <li><strong>$z$</strong>: A latent variable that bridges demonstration selection and LLM inference</li>
+            <li><strong>$P_{\mathcal{M}}$</strong>: The probability distribution of the LLM $\mathcal{M}$</li>
+          </ul>
+        </div>
+        <div class="content has-text-justified">
+          <p>
+            <span class="small-caps">GenICL</span> optimizes this objective through preference learning, which focuses on the relative effectiveness between demonstration samples. 
+            This approach allows our method to capture finer-grained information in scenarios where effective demonstrations are scarce, 
+            and aligns more closely with the intrinsic objective of ICL.
+          </p>
+        </div>
+      </div>
+    </div>
+    <!--/ Method. -->
 
   </div>
 </section>
