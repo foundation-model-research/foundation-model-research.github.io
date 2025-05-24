@@ -1,0 +1,399 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="icon" href="/static/images/favicon.ico" type="image/x-icon">
+  <meta charset="utf-8">
+  <meta name="description"
+        content="Dissecting and Mitigating Diffusion Bias via Mechanistic Interpretability">
+  <meta name="keywords" content="Fairness, Diffusion Models, Social Bias, Mechanistic Interpretability, Sparse Autoencoder">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Dissecting and Mitigating Diffusion Bias via Mechanistic Interpretability</title>
+
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-PYVRSFMDRL"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+
+    gtag('js', new Date());
+
+    gtag('config', 'G-PYVRSFMDRL');
+  </script>
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
+        rel="stylesheet">
+
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+  <!-- <link rel="icon" href="./static/images/favicon.svg"> -->
+  <link rel="icon" href="./static/images/favicon.ico" type="image/x-icon">
+  <!-- <link rel="icon" href="./static/images/favicon-16x16.png"> -->
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script src="./static/js/bulma-carousel.min.js"></script>
+  <script src="./static/js/bulma-slider.min.js"></script>
+  <script src="./static/js/index.js"></script>
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,700;1,400&display=swap');
+    
+    .small-caps {
+      font-family: 'EB Garamond', serif;
+      font-variant: small-caps;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      font-size: 1.1em;
+    }
+  </style>
+</head>
+<body>
+
+<section class="hero">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column has-text-centered">
+          <h1 class="title is-1 publication-title">Dissecting and Mitigating Diffusion Bias via Mechanistic Interpretability</h1>
+          
+          <div class="has-text-centered" style="color: #FF6F00; margin: 0.5rem 0;">
+            <h2 class="title is-4" style="color: inherit;">
+              The IEEE/CVF Conference on Computer Vision and Pattern Recognition (CVPR) 2025
+            </h2>
+          </div>
+          
+          <div class="is-size-5 publication-authors">
+            <span class="author-block">
+              <a href="https://openreview.net/profile?id=~Zheng_Zhang52">Zheng Zhang</a><sup>1,3</sup>,</span>
+            <span class="author-block">
+              <a href="https://openreview.net/profile?id=~Shaocheng_Lan1">Shaocheng Lan</a><sup>1</sup>,</span>
+            <span class="author-block">
+              <a href="https://openreview.net/profile?id=~Lei_Song3">Lei Song</a><sup>2*</sup>,
+            </span>
+            <span class="author-block">
+              <a href="https://openreview.net/profile?id=~Jiang_Bian1">Jiang Bian</a><sup>1</sup>,
+            </span>
+            <span class="author-block">
+              <a href="https://openreview.net/profile?id=~Yexin_Li1">Yexin Li</a><sup>3</sup>,
+            <span class="author-block">
+              <a href="https://www.saying.ren/">Kan Ren</a><sup>1*</sup>
+            </span>
+          </div>
+          
+          <div class="is-size-5 publication-authors">
+            <div class="author-affiliation">
+              <span class="author-block"><sup>1</sup>ShanghaiTech University</span>
+              <span class="separator" style="margin: 0 20px;"></span>
+              <span class="author-block"><sup>2</sup>Microsoft Research Asia</span>
+              <span class="separator" style="margin: 0 20px;"></span>
+              <span class="author-block"><sup>3</sup>State Key Laboratory of General Artificial Intelligence, BIGAI,
+                Beijing, China</span>
+            </div>
+            <span class="author-block"><sup>*</sup>Corresponding author</span>
+          </div>
+
+          <div class="column has-text-centered">
+            <div class="publication-links">
+              <!-- PDF Link. -->
+              <span class="link-block">
+                <a href=""
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fas fa-file-pdf"></i>
+                  </span>
+                  <span>Paper</span>
+                </a>
+              </span>
+              <span class="link-block">
+                <a href=""
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="ai ai-arxiv"></i>
+                  </span>
+                  <span>arXiv</span>
+                </a>
+              </span>
+              <!-- Code Link. -->
+              <span class="link-block">
+                <a href=""
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fab fa-github"></i>
+                  </span>
+                  <span>Code</span>
+                  </a>
+              </span>              
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="hero teaser">
+  <div class="container is-max-desktop">
+    <div class="content has-text-centered">
+      <img src="./static/images/flow.png"
+                 class="interpolation-image"
+                 alt="Interpolation end reference image."
+                 >
+    </div>
+  </div>
+</section>
+
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <!-- Abstract. -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Abstract</h2>
+        <div class="content has-text-justified">
+          <p>
+            In-context learning (ICL) enables large language models (LLMs) to adapt to new tasks during inference using only a few demonstrations. 
+            However, ICL performance is highly dependent on the selection of these demonstrations. 
+            Recent work explores retrieval-based methods for selecting query-specific demonstrations, but these approaches often rely on surrogate objectives such as metric learning, failing to directly optimize ICL performance.
+            Consequently, they struggle to identify truly beneficial demonstrations. 
+            Moreover, their discriminative retrieval paradigm is ineffective when the candidate pool lacks sufficient high-quality demonstrations.
+            To address these challenges, we propose GenICL, a novel generative preference learning framework that leverages LLM feedback to directly optimize demonstration selection for ICL.
+            Experiments on 19 datasets across 11 task categories demonstrate that GenICL achieves superior performance than existing methods in selecting the most effective demonstrations, leading to better ICL performance.
+          </p>
+        </div>
+      </div>
+    </div>
+    <!--/ Abstract. -->
+
+  </div>
+</section>
+
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <p class="has-text-centered"></p>
+    <h2 class="title is-3">Results</h2> 
+
+    <!-- Interpolating. -->
+    <h3 class="title is-4">Attribute Debiasing</h3>
+    <div class="content has-text-justified">
+      <p>
+        <span class="small-caps">DiffLens</span> balances the generations of gender attribute.
+      </p>
+    </div>
+    <div class="columns is-centered">
+      <div class="column is-13">
+        <div class="content has-text-centered">
+          <img src="./static/images/gender-results.png"
+               class="interpolation-image"
+               alt="Gender debiasing results"
+               style="width: auto; max-width: 100%;">
+        </div>
+      </div>
+    </div>
+
+      <div class="content has-text-justified">
+      </div>
+      <!-- <div class="columns is-vcentered interpolation-panel"> -->
+        <!-- <div class="column is-3 has-text-centered"> -->
+      <div class="columns is-centered">
+        <div class="column is-13">
+        <div class="content has-text-centered">
+          <img src="./static/images/gender-results-sd.png"
+               class="interpolation-image"
+               alt="Interpolate start reference image."
+               width = 945/>
+          <!-- <p>Start Frame</p> -->
+        </div>
+      </div>
+    </div>
+    
+  </div>
+    
+</section>
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <p class="has-text-centered"></p>
+
+    <!-- Interpolating. -->
+    <h3 class="title is-4">Accurate Identification of Bias Feature</h3>
+    <div class="content has-text-justified">
+      <p>
+        <span class="small-caps">DiffLens</span> preserves overall image semantics such as smile and eyeglasses 
+        while other methods frequently introduce distortions or lose important details.
+      </p>
+    </div>
+    <div class="columns is-centered">
+      <div class="column is-13">
+        <div class="content has-text-centered">
+          <img src="./static/images/viscomp.png"
+               class="interpolation-image"
+               alt="Gender debiasing results"
+               style="width: auto; max-width: 100%;">
+        </div>
+      </div>
+    </div>
+    
+</section>
+
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <p class="has-text-centered"></p>
+
+    <!-- Interpolating. -->
+    <h3 class="title is-4">Individual Image Transformations Along the Gender Axis</h3>
+    <div class="content has-text-justified">
+      <p>
+        <span class="small-caps">DiffLens</span> achieves smooth and consistent transitions that preserve semantic features like facial
+        expressions, while other methods show distortions and loss of details at higher imbalance ratios.
+      </p>
+    </div>
+    <div class="columns is-centered">
+      <div class="column is-13">
+        <div class="content has-text-centered">
+          <img src="./static/images/Figcont.png"
+               class="interpolation-image"
+               alt="Gender debiasing results"
+               style="width: auto; max-width: 100%;">
+        </div>
+      </div>
+    </div>
+    
+</section>
+
+
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <p class="has-text-centered"></p>
+
+<h3 class="title is-4">Fine-grained Control and Editing</h3>
+<div class="content has-text-justified">
+  <p>
+    <span class="small-caps">DiffLens</span> can control bias level with finer granularity and across a broader range.
+  </p>
+</div>
+<div class="columns is-centered">
+  <!-- Gender Group -->
+  <div class="column">
+    <div class="box has-text-centered">
+      <p class="subtitle is-6">Gender</p>
+      <div class="columns">
+        <div class="column">
+          <img src="./static/images/gender1.gif" class="gif-image" alt="Gender 1">
+        </div>
+        <div class="column">
+          <img src="./static/images/gender2.gif" class="gif-image" alt="Gender 2">
+        </div>
+        <div class="column">
+          <img src="./static/images/gender3.gif" class="gif-image" alt="Gender 3">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Age Group -->
+  <div class="column">
+    <div class="box has-text-centered">
+      <p class="subtitle is-6">Age</p>
+      <div class="columns">
+        <div class="column">
+          <img src="./static/images/age1.gif" class="gif-image" alt="Age 1">
+        </div>
+        <div class="column">
+          <img src="./static/images/age2.gif" class="gif-image" alt="Age 2">
+        </div>
+        <div class="column">
+          <img src="./static/images/age3.gif" class="gif-image" alt="Age 3">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Race Group -->
+  <div class="column">
+    <div class="box has-text-centered">
+      <p class="subtitle is-6">Race</p>
+      <div class="columns">
+        <div class="column">
+          <img src="./static/images/race1.gif" class="gif-image" alt="Race 1">
+        </div>
+        <div class="column">
+          <img src="./static/images/race2.gif" class="gif-image" alt="Race 2">
+        </div>
+        <div class="column">
+          <img src="./static/images/race3.gif" class="gif-image" alt="Race 3">
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<style>
+.gif-image {
+  width: 100%;
+  height: auto;
+  max-width: 200px;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+</style>
+
+
+<section class="section" id="BibTeX">
+  <div class="container is-max-desktop content">
+    <h2 class="title">BibTeX</h2>
+    <pre><code>@article{shi2025dissecting,
+  author    = {Shi, Yingdong and Li, Changming and Wang, Yifan and Zhao, Yongxiang and Pang, Anqi and Yang, Sibei and Yu, Jingyi and Ren, Kan},
+  title     = {Dissecting and Mitigating Diffusion Bias via Mechanistic Interpretability},
+  journal   = {CVPR},
+  year      = {2025},
+}</code></pre>
+  </div>
+</section>
+
+
+<footer class="footer">
+  <div class="container">
+    <div class="content has-text-centered">
+      <a class="icon-link"
+         href="./static/videos/nerfies_paper.pdf">
+        <i class="fas fa-file-pdf"></i>
+      </a>
+      <a class="icon-link" href="https://github.com/keunhong" class="external-link" disabled>
+        <i class="fab fa-github"></i>
+      </a>
+    </div>
+    <div class="columns is-centered">
+      <div class="column is-8">
+        <div class="content">
+          <p>
+            This website is licensed under a <a rel="license"
+                                                href="http://creativecommons.org/licenses/by-sa/4.0/">Creative
+            Commons Attribution-ShareAlike 4.0 International License</a>.
+          </p>
+          <p>
+            This means you are free to borrow the <a
+              href="https://github.com/nerfies/nerfies.github.io">source code</a> of this website,
+            we just ask that you link back to this page in the footer.
+            Please remember to remove the analytics code included in the header of the website which
+            you do not want on your website.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
