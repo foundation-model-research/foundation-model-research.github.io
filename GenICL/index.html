@@ -1,0 +1,787 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="icon" href="/static/images/favicon.ico" type="image/x-icon">
+  <meta charset="utf-8">
+  <meta name="description"
+        content="GenICL: Generative In-Context Learning for Demonstration Selection">
+  <meta name="keywords" content="In-Context Learning, Large Language Models, Demonstration Selection, Generative Learning, LLM">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Learning to Select In-Context Demonstration Preferred by Large Language Model</title>
+
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-PYVRSFMDRL"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+
+    gtag('js', new Date());
+
+    gtag('config', 'G-PYVRSFMDRL');
+  </script>
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
+        rel="stylesheet">
+
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+  <!-- <link rel="icon" href="./static/images/favicon.svg"> -->
+  <link rel="icon" href="./static/images/favicon.ico" type="image/x-icon">
+  <!-- <link rel="icon" href="./static/images/favicon-16x16.png"> -->
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script src="./static/js/bulma-carousel.min.js"></script>
+  <script src="./static/js/bulma-slider.min.js"></script>
+  <script src="./static/js/index.js"></script>
+
+  <!-- MathJax for mathematical formulas -->
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$', '$$'], ['\\[', '\\]']]
+      }
+    };
+  </script>
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,700;1,400&display=swap');
+    
+    .small-caps {
+      font-family: 'EB Garamond', serif;
+      font-variant: small-caps;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      font-size: 1.1em;
+    }
+  </style>
+</head>
+<body>
+
+<section class="hero">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column has-text-centered">
+          <h1 class="title is-1 publication-title">Learning to Select In-Context Demonstration Preferred by Large Language Model</h1>
+          
+          <div class="has-text-centered" style="color: #FF6F00; margin: 0.5rem 0;">
+            <h2 class="title is-4" style="color: inherit;">
+              Findings of the Association for Computational Linguistics (2025)
+            </h2>
+          </div>
+          
+          <div class="is-size-5 publication-authors">
+            <span class="author-block">
+              <a href="https://openreview.net/profile?id=~Zheng_Zhang52">Zheng Zhang</a><sup>1,3</sup>,</span>
+            <span class="author-block">
+              <a href="https://openreview.net/profile?id=~Shaocheng_Lan1">Shaocheng Lan</a><sup>1</sup>,</span>
+            <span class="author-block">
+              <a href="https://openreview.net/profile?id=~Lei_Song3">Lei Song</a><sup>2*</sup>,
+            </span>
+            <span class="author-block">
+              <a href="https://openreview.net/profile?id=~Jiang_Bian1">Jiang Bian</a><sup>1</sup>,
+            </span>
+            <span class="author-block">
+              <a href="https://openreview.net/profile?id=~Yexin_Li1">Yexin Li</a><sup>3</sup>,
+            <span class="author-block">
+              <a href="https://www.saying.ren/">Kan Ren</a><sup>1*</sup>
+            </span>
+          </div>
+          
+          <div class="is-size-5 publication-authors">
+            <div class="author-affiliation">
+              <span class="author-block"><sup>1</sup>ShanghaiTech University</span>
+              <span class="separator" style="margin: 0 20px;"></span>
+              <span class="author-block"><sup>2</sup>Microsoft Research Asia</span>
+              <span class="separator" style="margin: 0 20px;"></span>
+              <span class="author-block"><sup>3</sup>State Key Laboratory of General Artificial Intelligence, BIGAI,
+                Beijing, China</span>
+            </div>
+            <span class="author-block"><sup>*</sup>Corresponding author</span>
+          </div>
+
+          <div class="column has-text-centered">
+            <div class="publication-links">
+              <!-- PDF Link. -->
+              <span class="link-block">
+                <a href=""
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fas fa-file-pdf"></i>
+                  </span>
+                  <span>Paper</span>
+                </a>
+              </span>
+              <span class="link-block">
+                <a href=""
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="ai ai-arxiv"></i>
+                  </span>
+                  <span>arXiv</span>
+                </a>
+              </span>
+              <!-- Code Link. -->
+              <span class="link-block">
+                <a href=""
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fab fa-github"></i>
+                  </span>
+                  <span>Code</span>
+                  </a>
+              </span>              
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="hero teaser">
+  <div class="container is-max-desktop">
+    <div class="content has-text-centered">
+      <img src="./static/images/pipeline.png"
+                 class="interpolation-image"
+                 alt="GenICL Pipeline Overview"
+                 >
+    </div>
+  </div>
+</section>
+
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <!-- Abstract. -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Abstract</h2>
+        <div class="content has-text-justified">
+          <p>
+            In-context learning (ICL) enables large language models (LLMs) to adapt to new tasks during inference using only a few demonstrations. 
+            However, ICL performance is highly dependent on the selection of these demonstrations. 
+            Recent work explores retrieval-based methods for selecting query-specific demonstrations, but these approaches often rely on surrogate objectives such as metric learning, failing to directly optimize ICL performance.
+            Consequently, they struggle to identify truly beneficial demonstrations. 
+            Moreover, their discriminative retrieval paradigm is ineffective when the candidate pool lacks sufficient high-quality demonstrations.
+            To address these challenges, we propose <span class="small-caps">GenICL</span>, a novel generative preference learning framework that leverages LLM feedback to directly optimize demonstration selection for ICL.
+            Experiments on 19 datasets across 11 task categories demonstrate that <span class="small-caps">GenICL</span> achieves superior performance than existing methods in selecting the most effective demonstrations, leading to better ICL performance.
+          </p>
+        </div>
+      </div>
+    </div>
+    <!--/ Abstract. -->
+
+    <!-- Motivation. -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Motivation</h2>
+        <div class="content has-text-justified">
+          <p>
+            Existing retrieval-based methods for demonstration selection face critical challenges. 
+            The most significant issue is the misalignment between the surrogate learning objective of the retriever and the intrinsic optimization goal of ICL. 
+            A discriminative model trained with metric learning objectives to approximate relevance scores does not necessarily indicate a candidate's effectiveness as an in-context demonstration for LLMs.
+          </p>
+          <p>
+            Furthermore, the scarcity of effective demonstration candidates poses another challenge. 
+            As illustrated in the figure below, most demonstration examples are ineffective for most queries, making retriever optimization particularly challenging.
+          </p>
+        </div>
+        <div class="content has-text-centered">
+          <img src="./static/images/combined_accuracy_distribution1.png"
+               class="interpolation-image"
+               alt="Distribution of useful example ratio"
+               style="width: auto; max-width: 80%;">
+          <p style="margin-top: 10px; font-style: italic; color: #666;">
+            The distribution of the useful example ratio across test sets from different datasets. 
+            The x-axis represents the ratio of useful examples to total examples, where a 'useful example' helps the LLM generate accurate output with in-context learning. 
+            The ratio remains low for most test queries, indicating that the majority of demonstration examples are ineffective for the LLM.
+          </p>
+        </div>
+      </div>
+    </div>
+    <!--/ Motivation. -->
+
+    <!-- Method. -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Method</h2>
+        <div class="content has-text-justified">
+          <p>
+            To address these challenges, we propose <span class="small-caps">GenICL</span>, a novel generative preference learning framework that directly optimizes demonstration selection for ICL using LLM feedback. 
+            We reformulate ICL as a generative Bayesian optimization problem, introducing a latent variable to bridge demonstration selection and LLM inference.
+          </p>
+          <p>
+            Our optimization objective can be formulated as:
+          </p>
+        </div>
+        <div class="content has-text-centered" style="margin: 20px 0;">
+          <div style="background-color: #f8f9fa; padding: 20px; border-radius: 8px; display: inline-block;">
+            $$P_{\mathcal{M}}(Y \mid \{(X_k, Y_k)\}_{k=1}^K, X) = \int_{z} P_{\mathcal{M}}(Y \mid z, X)\, P_{\mathcal{M}}(z \mid \{(X_k, Y_k)\}_{k=1}^K, X)\, dz$$
+          </div>
+        </div>
+        <div class="content has-text-justified">
+          <p>
+            <strong>Variable Definitions:</strong>
+          </p>
+          <ul>
+            <li><strong>$(X, Y)$</strong>: A task sample with input $X$ and ground-truth output $Y$</li>
+            <li><strong>$\{(X_k, Y_k)\}_{k=1}^K$</strong>: A set of $K$ demonstrations selected from the demonstration pool $\mathcal{P}$</li>
+            <li><strong>$\mathcal{P}$</strong>: The demonstration pool containing all training samples from all tasks</li>
+            <li><strong>$z$</strong>: A latent variable that bridges demonstration selection and LLM inference</li>
+            <li><strong>$P_{\mathcal{M}}$</strong>: The probability distribution of the LLM $\mathcal{M}$</li>
+          </ul>
+        </div>
+        <div class="content has-text-justified">
+          <p>
+            <span class="small-caps">GenICL</span> optimizes this objective through preference learning, which focuses on the relative effectiveness between demonstration samples. 
+            This approach allows our method to capture finer-grained information in scenarios where effective demonstrations are scarce, 
+            and aligns more closely with the intrinsic objective of ICL.
+          </p>
+        </div>
+      </div>
+    </div>
+    <!--/ Method. -->
+
+  </div>
+</section>
+
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <h2 class="title is-3">Experimental Results</h2> 
+
+    <!-- Main Results Table -->
+    <h3 class="title is-4">Main Results on Classification, Multi-Choice, and Text Generation Tasks</h3>
+    <div class="content has-text-justified">
+      <p>
+        <span class="small-caps">GenICL</span> achieves superior performance compared to existing demonstration selection methods across multiple datasets and task categories. The results demonstrate consistent improvements across classification tasks, multi-choice reasoning, and text generation tasks.
+      </p>
+    </div>
+
+    <!-- Classification Tasks Table -->
+    <div class="table-container" style="margin-bottom: 2rem;">
+      <h4 class="title is-5">Classification Tasks</h4>
+      <table class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth">
+        <thead>
+          <tr>
+            <th rowspan="3">Method</th>
+            <th>Topic</th>
+            <th colspan="2">Reading Comprehension</th>
+            <th colspan="2">Paraphrase</th>
+            <th colspan="2">NLI</th>
+            <th colspan="2">Sentiment</th>
+          </tr>
+          <tr>
+            <th>AGNews</th>
+            <th>BoolQ</th>
+            <th>MultiRC</th>
+            <th>PAWS</th>
+            <th>QQP</th>
+            <th>RTE</th>
+            <th>SNLI</th>
+            <th>Sentiment140</th>
+            <th>SST2</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Zero-shot</strong></td>
+            <td>31.4</td>
+            <td>64.7</td>
+            <td>57.0</td>
+            <td>53.0</td>
+            <td>57.9</td>
+            <td>59.9</td>
+            <td>39.6</td>
+            <td>49.3</td>
+            <td>54.2</td>
+          </tr>
+          <tr>
+            <td><strong>Random</strong></td>
+            <td>65.0</td>
+            <td>69.6</td>
+            <td><strong>60.4</strong></td>
+            <td>49.6</td>
+            <td>54.0</td>
+            <td>65.7</td>
+            <td>40.4</td>
+            <td>78.8</td>
+            <td>64.1</td>
+          </tr>
+          <tr>
+            <td><strong>BM25</strong></td>
+            <td>90.0</td>
+            <td>74.0</td>
+            <td>58.7</td>
+            <td>56.5</td>
+            <td>80.3</td>
+            <td>59.9</td>
+            <td>47.7</td>
+            <td>88.3</td>
+            <td>84.7</td>
+          </tr>
+          <tr>
+            <td><strong>SBERT</strong></td>
+            <td>89.8</td>
+            <td>73.6</td>
+            <td>53.3</td>
+            <td><u>58.3</u></td>
+            <td><u>81.7</u></td>
+            <td>60.2</td>
+            <td>56.2</td>
+            <td><u>94.1</u></td>
+            <td>87.8</td>
+          </tr>
+          <tr>
+            <td><strong>E5<sub>base</sub></strong></td>
+            <td>90.6</td>
+            <td>71.0</td>
+            <td>54.0</td>
+            <td>55.6</td>
+            <td>77.3</td>
+            <td><u>68.5</u></td>
+            <td>53.7</td>
+            <td>93.0</td>
+            <td>92.4</td>
+          </tr>
+          <tr>
+            <td><strong>CBDS</strong></td>
+            <td>67.3</td>
+            <td><u>77.6</u></td>
+            <td>49.3</td>
+            <td>57.6</td>
+            <td>64.2</td>
+            <td>56.3</td>
+            <td>43.5</td>
+            <td>92.5</td>
+            <td>69.2</td>
+          </tr>
+          <tr>
+            <td><strong>EPR</strong></td>
+            <td>91.8</td>
+            <td>74.8</td>
+            <td>50.4</td>
+            <td>57.7</td>
+            <td><u>81.7</u></td>
+            <td>66.8</td>
+            <td>68.4</td>
+            <td>91.4</td>
+            <td>88.7</td>
+          </tr>
+          <tr>
+            <td><strong>LLM-R</strong></td>
+            <td><u>92.4</u></td>
+            <td>74.9</td>
+            <td>50.2</td>
+            <td>57.5</td>
+            <td>80.9</td>
+            <td>61.7</td>
+            <td><u>80.0</u></td>
+            <td>91.6</td>
+            <td><u>93.4</u></td>
+          </tr>
+          <tr style="background-color: #f0f8ff;">
+            <td><strong>GenICL (ours)</strong></td>
+            <td><strong>92.6</strong></td>
+            <td><strong>78.1</strong></td>
+            <td><u>56.9</u></td>
+            <td><strong>63.9</strong></td>
+            <td><strong>82.0</strong></td>
+            <td><strong>72.9</strong></td>
+            <td><strong>84.6</strong></td>
+            <td><strong>94.7</strong></td>
+            <td><strong>95.0</strong></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <!-- Multi-Choice and Text Generation Tasks Table -->
+    <div class="table-container">
+      <h4 class="title is-5">Multi-Choice and Text Generation Tasks</h4>
+      <table class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth">
+        <thead>
+          <tr>
+            <th rowspan="3">Method</th>
+            <th colspan="4">Multi-Choice Tasks</th>
+            <th colspan="6">Text Generation Tasks</th>
+          </tr>
+          <tr>
+            <th>Coreference</th>
+            <th colspan="3">Commonsense Reasoning</th>
+            <th colspan="2">Summarize</th>
+            <th>CommonGen</th>
+            <th colspan="2">Data-to-text</th>
+            <th>CloseQA</th>
+          </tr>
+          <tr>
+            <th>Winogrande</th>
+            <th>COPA</th>
+            <th>HellaSwag</th>
+            <th>OpenBookQA</th>
+            <th>AESLC</th>
+            <th>Gigaword</th>
+            <th>CommonGen</th>
+            <th>DART</th>
+            <th>E2ENLG</th>
+            <th>SQuADv1</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td><strong>Zero-shot</strong></td>
+            <td>61.8</td>
+            <td>66.0</td>
+            <td>71.5</td>
+            <td>41.6</td>
+            <td>5.7</td>
+            <td>15.4</td>
+            <td>19.2</td>
+            <td>22.8</td>
+            <td>34.6</td>
+            <td>2.2</td>
+          </tr>
+          <tr>
+            <td><strong>Random</strong></td>
+            <td>62.1</td>
+            <td>74.0</td>
+            <td>72.1</td>
+            <td>43.0</td>
+            <td>6.5</td>
+            <td>27.2</td>
+            <td>36.3</td>
+            <td>34.5</td>
+            <td>51.1</td>
+            <td>47.3</td>
+          </tr>
+          <tr>
+            <td><strong>BM25</strong></td>
+            <td>66.4</td>
+            <td>77.0</td>
+            <td>74.6</td>
+            <td>47.8</td>
+            <td>23.9</td>
+            <td><u>32.5</u></td>
+            <td>38.3</td>
+            <td>55.4</td>
+            <td>53.8</td>
+            <td>53.7</td>
+          </tr>
+          <tr>
+            <td><strong>SBERT</strong></td>
+            <td><u>66.9</u></td>
+            <td>81.0</td>
+            <td><strong>75.2</strong></td>
+            <td>49.2</td>
+            <td>22.3</td>
+            <td>31.7</td>
+            <td>37.8</td>
+            <td>54.6</td>
+            <td>50.6</td>
+            <td>62.5</td>
+          </tr>
+          <tr>
+            <td><strong>E5<sub>base</sub></strong></td>
+            <td>66.7</td>
+            <td>84.0</td>
+            <td>75.0</td>
+            <td><u>51.0</u></td>
+            <td>23.4</td>
+            <td>31.9</td>
+            <td>37.6</td>
+            <td>54.9</td>
+            <td>52.3</td>
+            <td>61.9</td>
+          </tr>
+          <tr>
+            <td><strong>CBDS</strong></td>
+            <td>66.3</td>
+            <td>83.0</td>
+            <td>73.6</td>
+            <td>47.6</td>
+            <td>20.5</td>
+            <td>29.2</td>
+            <td>34.5</td>
+            <td>52.2</td>
+            <td>50.8</td>
+            <td>59.8</td>
+          </tr>
+          <tr>
+            <td><strong>EPR</strong></td>
+            <td>66.5</td>
+            <td>82.0</td>
+            <td><strong>75.2</strong></td>
+            <td>49.6</td>
+            <td><strong>26.0</strong></td>
+            <td>32.4</td>
+            <td><u>39.2</u></td>
+            <td><u>56.2</u></td>
+            <td>53.6</td>
+            <td><u>64.3</u></td>
+          </tr>
+          <tr>
+            <td><strong>LLM-R</strong></td>
+            <td><u>66.9</u></td>
+            <td><u>85.0</u></td>
+            <td>74.6</td>
+            <td>50.8</td>
+            <td><strong>26.0</strong></td>
+            <td><u>32.5</u></td>
+            <td>37.2</td>
+            <td>56.0</td>
+            <td><u>54.4</u></td>
+            <td>61.8</td>
+          </tr>
+          <tr style="background-color: #f0f8ff;">
+            <td><strong>GenICL (ours)</strong></td>
+            <td><strong>68.0</strong></td>
+            <td><strong>86.0</strong></td>
+            <td>74.6</td>
+            <td><strong>51.8</strong></td>
+            <td>24.4</td>
+            <td><strong>33.0</strong></td>
+            <td><strong>41.0</strong></td>
+            <td><strong>56.4</strong></td>
+            <td><strong>55.1</strong></td>
+            <td><strong>65.7</strong></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    
+    <div class="content has-text-justified" style="margin-top: 1rem;">
+      <p>
+        <strong>Note:</strong> Bold numbers indicate the best performance, and underlined numbers indicate the second-best performance. 
+        GenICL consistently outperforms existing methods across most tasks, demonstrating the effectiveness of our generative preference learning approach.
+      </p>
+    </div>
+    
+  </div>
+</section>
+
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <h2 class="title is-3">Case Study</h2>
+    <div class="content has-text-justified">
+      <p>
+        We present several case studies to illustrate how <span class="small-caps">GenICL</span> selects effective demonstrations across different task types. 
+        These examples showcase the quality and relevance of demonstrations chosen by our method.
+      </p>
+    </div>
+
+    <div class="table-container">
+      <table class="table is-bordered is-narrow is-fullwidth">
+        <tbody>
+          <!-- AGNews Case -->
+          <tr>
+            <td style="width: 15%; background-color: #f8f9fa; font-weight: bold; vertical-align: top;">Task Name</td>
+            <td style="width: 85%;">AGNews</td>
+          </tr>
+          <tr>
+            <td style="background-color: #f8f9fa; font-weight: bold; vertical-align: top;">Test Input</td>
+            <td style="font-family: 'Courier New', monospace; background-color: #f5f5f5; padding: 10px;">
+              "Dominant US captures gold with 79th straight win The US softball team completed its scorched-earth run through the Olympics on Monday with a 5-1 win over Australia, America's third straight gold medal." What is this text about? World, Sports, Business, or Technology?
+            </td>
+          </tr>
+          <tr>
+            <td style="background-color: #f8f9fa; font-weight: bold; vertical-align: top;">Demonstration</td>
+            <td style="font-family: 'Courier New', monospace; background-color: #e8f5e8; padding: 10px;">
+              "US Women Shatter Olympic 800-Meter Freestyle Relay Record The United States has shattered a 17-year-old world record in the women's Olympic 800-meter freestyle relay." What is this text about? World, Sports, Business, or Technology? <strong>Sports</strong>
+            </td>
+          </tr>
+          <tr>
+            <td style="background-color: #f8f9fa; font-weight: bold; vertical-align: top;">Test Answer</td>
+            <td style="font-family: 'Courier New', monospace; background-color: #fff3cd; padding: 10px;">
+              <strong>"Sports"</strong>
+            </td>
+          </tr>
+          
+          <!-- Separator -->
+          <tr><td colspan="2" style="height: 20px; border: none;"></td></tr>
+          
+          <!-- Sentiment140 Case -->
+          <tr>
+            <td style="background-color: #f8f9fa; font-weight: bold; vertical-align: top;">Task Name</td>
+            <td>Sentiment140</td>
+          </tr>
+          <tr>
+            <td style="background-color: #f8f9fa; font-weight: bold; vertical-align: top;">Test Input</td>
+            <td style="font-family: 'Courier New', monospace; background-color: #f5f5f5; padding: 10px;">
+              zomg!!! I have a G2!!!!!!! What is the sentiment of this tweet?
+            </td>
+          </tr>
+          <tr>
+            <td style="background-color: #f8f9fa; font-weight: bold; vertical-align: top;">Demonstration</td>
+            <td style="font-family: 'Courier New', monospace; background-color: #e8f5e8; padding: 10px;">
+              My brother got his update for his G1 and I ain't got shit What is the sentiment of this tweet? <strong>Negative</strong>
+            </td>
+          </tr>
+          <tr>
+            <td style="background-color: #f8f9fa; font-weight: bold; vertical-align: top;">Test Answer</td>
+            <td style="font-family: 'Courier New', monospace; background-color: #fff3cd; padding: 10px;">
+              <strong>"Positive"</strong>
+            </td>
+          </tr>
+          
+          <!-- Separator -->
+          <tr><td colspan="2" style="height: 20px; border: none;"></td></tr>
+          
+          <!-- RTE Case -->
+          <tr>
+            <td style="background-color: #f8f9fa; font-weight: bold; vertical-align: top;">Task Name</td>
+            <td>RTE</td>
+          </tr>
+          <tr>
+            <td style="background-color: #f8f9fa; font-weight: bold; vertical-align: top;">Test Input</td>
+            <td style="font-family: 'Courier New', monospace; background-color: #f5f5f5; padding: 10px;">
+              The west has preferred to focus on endangered animals, rather than endangered humans. African elephants are hunted down and stripped of tusks and hidden by poachers. Their numbers in Africa slumped from 1.2m to 600,000 in a decade until CITES - the Convention on International Trade in Endangered Species - banned the trade in ivory. Based on the paragraph above can we conclude that "African elephants are endangered by ivory poachers."? Yes or No?
+            </td>
+          </tr>
+          <tr>
+            <td style="background-color: #f8f9fa; font-weight: bold; vertical-align: top;">Demonstration</td>
+            <td style="font-family: 'Courier New', monospace; background-color: #e8f5e8; padding: 10px;">
+              Three leading Japanese banks have announced an alliance forming the world's largest financial group. Fuji Bank, Dai-Ichi Kangyo and the Industrial Bank of Japan say their operations will be integrated by the spring of 2002. Based on the paragraph above can we conclude that "Merger of Japanese Banks creates the world's biggest bank."? Yes or No? <strong>Yes</strong>
+            </td>
+          </tr>
+          <tr>
+            <td style="background-color: #f8f9fa; font-weight: bold; vertical-align: top;">Test Answer</td>
+            <td style="font-family: 'Courier New', monospace; background-color: #fff3cd; padding: 10px;">
+              <strong>"Yes"</strong>
+            </td>
+          </tr>
+          
+          <!-- Separator -->
+          <tr><td colspan="2" style="height: 20px; border: none;"></td></tr>
+          
+          <!-- SST2 Case -->
+          <tr>
+            <td style="background-color: #f8f9fa; font-weight: bold; vertical-align: top;">Task Name</td>
+            <td>SST2</td>
+          </tr>
+          <tr>
+            <td style="background-color: #f8f9fa; font-weight: bold; vertical-align: top;">Test Input</td>
+            <td style="font-family: 'Courier New', monospace; background-color: #f5f5f5; padding: 10px;">
+              Review: "instead of a hyperbolic beat-charged urban western , it 's an unpretentious , sociologically pointed slice of life ." Is this movie review sentence negative or positive?
+            </td>
+          </tr>
+          <tr>
+            <td style="background-color: #f8f9fa; font-weight: bold; vertical-align: top;">Demonstration</td>
+            <td style="font-family: 'Courier New', monospace; background-color: #e8f5e8; padding: 10px;">
+              Review: "offers an unexpected window into the complexities of the middle east struggle and into the humanity of its people ." Is this movie review sentence negative or positive? <strong>Positive</strong>
+            </td>
+          </tr>
+          <tr>
+            <td style="background-color: #f8f9fa; font-weight: bold; vertical-align: top;">Test Answer</td>
+            <td style="font-family: 'Courier New', monospace; background-color: #fff3cd; padding: 10px;">
+              <strong>"Positive"</strong>
+            </td>
+          </tr>
+          
+          <!-- Separator -->
+          <tr><td colspan="2" style="height: 20px; border: none;"></td></tr>
+          
+          <!-- CommonGen Case -->
+          <tr>
+            <td style="background-color: #f8f9fa; font-weight: bold; vertical-align: top;">Task Name</td>
+            <td>CommonGen</td>
+          </tr>
+          <tr>
+            <td style="background-color: #f8f9fa; font-weight: bold; vertical-align: top;">Test Input</td>
+            <td style="font-family: 'Courier New', monospace; background-color: #f5f5f5; padding: 10px;">
+              Concepts: kid, yard, ball. Write a sentence that includes all these words.
+            </td>
+          </tr>
+          <tr>
+            <td style="background-color: #f8f9fa; font-weight: bold; vertical-align: top;">Demonstration</td>
+            <td style="font-family: 'Courier New', monospace; background-color: #e8f5e8; padding: 10px;">
+              Concepts: kid, grass, crawl. Write a sentence that includes all these words. <strong>A kid is about to crawl through some grass.</strong>
+            </td>
+          </tr>
+          <tr>
+            <td style="background-color: #f8f9fa; font-weight: bold; vertical-align: top;">Test Answer</td>
+            <td style="font-family: 'Courier New', monospace; background-color: #fff3cd; padding: 10px;">
+              <strong>"A kid is playing with a ball in his yard."</strong>
+            </td>
+          </tr>
+        </tbody>
+      </table>
+  </div>
+
+    <div class="content has-text-justified" style="margin-top: 1rem;">
+      <p>
+        These examples demonstrate how <span class="small-caps">GenICL</span> leverages LLM feedback to directly optimize demonstration selection for in-context learning. 
+        Unlike traditional retrieval-based methods that rely on surrogate objectives, our generative preference learning framework identifies truly beneficial demonstrations 
+        that lead to better ICL performance across diverse task types including classification, natural language inference, sentiment analysis, and text generation.
+      </p>
+    </div>
+  </div>
+</section>
+
+
+<section class="section" id="BibTeX">
+  <div class="container is-max-desktop content">
+    <h2 class="title">BibTeX</h2>
+    <pre><code>@inproceedings{zhang2025learning,
+  author    = {Zhang, Zheng and
+               Lan, Shaocheng and
+               Song, Lei and
+               Bian, Jiang and
+               Li, Yexin and
+               Ren, Kan},
+  title     = {Learning to Select In-Context Demonstration Preferred by Large Language Model},
+  booktitle = {Findings of the Association for Computational Linguistics: ACL 2025},
+  year      = {2025},
+}</code></pre>
+  </div>
+</section>
+
+
+<footer class="footer">
+  <div class="container">
+    <div class="content has-text-centered">
+      <a class="icon-link"
+         href="./static/videos/nerfies_paper.pdf">
+        <i class="fas fa-file-pdf"></i>
+      </a>
+      <a class="icon-link" href="https://github.com/keunhong" class="external-link" disabled>
+        <i class="fab fa-github"></i>
+      </a>
+    </div>
+    <div class="columns is-centered">
+      <div class="column is-8">
+        <div class="content">
+          <p>
+            This website is licensed under a <a rel="license"
+                                                href="http://creativecommons.org/licenses/by-sa/4.0/">Creative
+            Commons Attribution-ShareAlike 4.0 International License</a>.
+          </p>
+          <p>
+            This means you are free to borrow the <a
+              href="https://github.com/nerfies/nerfies.github.io">source code</a> of this website,
+            we just ask that you link back to this page in the footer.
+            Please remember to remove the analytics code included in the header of the website which
+            you do not want on your website.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
