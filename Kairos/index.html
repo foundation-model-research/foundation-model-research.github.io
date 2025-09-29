@@ -1,0 +1,335 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="icon" href="/static/images/favicon.ico" type="image/x-icon">
+  <meta charset="utf-8">
+  <meta name="description"
+        content="KAIROS: TOWARDS ADAPTIVE AND GENERALIZABLE TIME SERIES FOUNDATION MODELS">
+  <meta name="keywords" content="Time Series, Foundation Models, Deep Learning, Forecasting, KAIROS">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Kairos: Towards Adaptive and Generalizable Time Series Foundation Models</title>
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-PYVRSFMDRL"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+
+    gtag('js', new Date());
+
+    gtag('config', 'G-PYVRSFMDRL');
+  </script>
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
+        rel="stylesheet">
+
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+  <link rel="icon" href="./static/images/favicon.ico" type="image/x-icon">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script src="./static/js/bulma-carousel.min.js"></script>
+  <script src="./static/js/bulma-slider.min.js"></script>
+  <script src="./static/js/index.js"></script>
+  <style>
+    /*
+     * 新增的 small-caps 样式
+     * font-variant: small-caps; 是实现 \textsc 的关键
+    */
+    @import url('https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,700;1,400&display=swap');
+
+    .small-caps {
+      font-family: 'EB Garamond', serif;
+      font-variant: small-caps;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      font-size: 1.05em;
+    }
+    .table-container {
+      overflow-x: auto;
+    }
+  </style>
+</head>
+<body>
+
+<section class="hero">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column has-text-centered">
+          <h1 class="title is-1 publication-title"><span class="small-caps">Kairos</span>: Towards Adaptive and Generalizable Time Series Foundation Models</h1>
+
+          <div class="has-text-centered" style="color: #FF6F00; margin: 0.5rem 0;">
+            <h2 class="title is-4" style="color: inherit;">
+              Preprint
+            </h2>
+          </div>
+
+          <div class="is-size-5 publication-authors">
+            <span class="author-block">Kun Feng<sup>1*</sup>,</span>
+            <span class="author-block">Shaocheng Lan<sup>1*</sup>,</span>
+            <span class="author-block">Yuchen Fang<sup>2*</sup>,</span>
+            <span class="author-block">Wenchao He<sup>1</sup>,</span>
+            <span class="author-block">Lintao Ma<sup>2</sup>,</span>
+            <span class="author-block">Xingyu Lu<sup>2</sup>,</span>
+            <span class="author-block">Kan Ren<sup>1†</sup></span>
+          </div>
+
+          <div class="is-size-5 publication-authors">
+            <div class="author-affiliation">
+              <span class="author-block"><sup>1</sup>ShanghaiTech University</span>
+              <span class="separator" style="margin: 0 20px;"></span>
+              <span class="author-block"><sup>2</sup>Ant Group</span>
+            </div>
+            <span class="author-block"><sup>*</sup>Equal contribution</span><br>
+            <span class="author-block"><sup>†</sup>Corresponding author</span>
+          </div>
+
+          <div class="column has-text-centered">
+            <div class="publication-links">
+              <span class="link-block">
+                <a href="https://foundation-model-research.github.io/Kairos/"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fas fa-file-pdf"></i>
+                  </span>
+                  <span>Paper</span>
+                </a>
+              </span>
+              <span class="link-block">
+                <a href="https://foundation-model-research.github.io/Kairos/"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="ai ai-arxiv"></i>
+                  </span>
+                  <span>arXiv</span>
+                </a>
+              </span>
+              <span class="link-block">
+                <a href="https://foundation-model-research.github.io/Kairos/"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fab fa-github"></i>
+                  </span>
+                  <span>Code</span>
+                  </a>
+              </span>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="hero teaser">
+  <div class="container is-max-desktop">
+    <div class="content has-text-centered">
+      <p class="subtitle">
+        <span class="small-caps">Kairos</span> achieves superior performance with fewer parameters on zero-shot forecasting benchmarks.
+      </p>
+      <img src="./static/images/intro.png"
+                 class="interpolation-image"
+                 alt="KAIROS Performance vs Parameters"
+                 >
+      <p class="content has-text-centered">
+        (a) shows the trade-off between performance (MASE) and the number of parameters on GIFT-Eval. <span class="small-caps">Kairos</span> series (red) achieves better performance with significantly fewer parameters compared to other models.
+        (b) and (c) highlight the significant variation in information density, both across different datasets and within individual time series.
+        (d) contrasts different tokenization strategies.
+      </p>
+    </div>
+  </div>
+</section>
+
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Abstract</h2>
+        <div class="content has-text-justified">
+          <p>
+            Time series foundation models (TSFMs) have emerged as a powerful paradigm for time series analysis, driven by large-scale pretraining on diverse data corpora. However, time series inherently exhibit heterogeneous information density over time, influenced by system states and signal complexity, presenting significant modeling challenges especially in a zero-shot scenario. Current TSFMs rely on non-adaptive processing pipelines that fail to capture this dynamic nature. For example, common tokenization strategies such as fixed-size patching enforce rigid observational granularity, limiting their ability to adapt to varying information densities. Similarly, conventional positional encodings impose a uniform temporal scale, making it difficult to model diverse periodicities and trends across series. To overcome these limitations, we propose <span class="small-caps">Kairos</span>, a flexible TSFM framework that integrates a dynamic patching tokenizer and an instance-adaptive positional embedding. <span class="small-caps">Kairos</span> adaptively selects tokenization granularity and tailors positional encodings to the unique characteristics of each time series instance. Trained on a large-scale Predictability-Stratified Time Series (PreSTS) corpus comprising over 300 billion time points and adopting a multi-patch prediction strategy in the inference stage, <span class="small-caps">Kairos</span> achieves superior performance with much fewer parameters on two common zero-shot benchmarks, GIFT-Eval and the Time-Series-Library benchmark, consistently outperforming established methods across diverse tasks.
+          </p>
+        </div>
+      </div>
+    </div>
+    </div>
+</section>
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Methodology</h2>
+        <div class="content has-text-justified">
+          <p>
+            The <span class="small-caps">Kairos</span> architecture consists of three main components. First, the input time series is tokenized by a <strong>Mixture-of-Size Dynamic Patching (MoS-DP)</strong> module to extract multi-granularity local information. These embeddings are then processed by a Transformer encoder, which uses our proposed <strong>Instance-Adaptive Rotary Position Embedding (IAROPE)</strong> to model complex temporal relationships. Finally, a Transformer decoder utilizes a multi-patch prediction strategy for forecasting.
+          </p>
+        </div>
+        <img src="./static/images/method.png" alt="KAIROS Architecture">
+        <p class="content has-text-centered">
+          The overall architecture of <span class="small-caps">Kairos</span>, showing the MoS-DP and IAROPE modules.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+    <div class="container is-max-desktop">
+        <h2 class="title is-3 has-text-centered">GIFT-Eval Benchmark Results</h2>
+        <div class="content has-text-justified">
+            <p>
+                Performance evaluation on the GIFT-Eval benchmark using normalized MASE and CRPS metrics, where lower values indicate higher forecasting accuracy. The baseline models fall into three categories: statistical methods, deep learning (DL) models, and Time Series Foundation Models (TSFMs). TSFMs are further subdivided based on whether the training set included test data (TestData Leakage).
+            </p>
+        </div>
+        <div class="table-container">
+            <table class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth">
+                <thead>
+                    <tr>
+                        <th rowspan="2" style="vertical-align: middle; text-align: center;">Type</th>
+                        <th colspan="1" style="text-align: center;">Statistical</th>
+                        <th colspan="2" style="text-align: center;">DL (Full-Shot)</th>
+                        <th colspan="4" style="text-align: center;">TSFMs (TestData Leakage)</th>
+                        <th colspan="7" style="text-align: center;">TSFMs (Zero-Shot)</th>
+                    </tr>
+                    <tr>
+                        <th style="text-align: center;">Seasonal<br>Naïve</th>
+                        <th style="text-align: center;">DLinear</th>
+                        <th style="text-align: center;">PTST.</th>
+                        <th style="text-align: center;">TTM</th>
+                        <th style="text-align: center;">Chronos</th>
+                        <th style="text-align: center;">Chronos<br>Bolt</th>
+                        <th style="text-align: center;">TimesFM</th>
+                        <th style="text-align: center;">Moirai</th>
+                        <th style="text-align: center;">VisionTS</th>
+                        <th style="text-align: center;">Ying.</th>
+                        <th style="text-align: center;">Toto</th>
+                        <th style="text-align: center;">Sundial</th>
+                        <th style="text-align: center;"><span class="small-caps">Kairos</span> <b>(ours)</b></th>
+                        <th style="text-align: center;"><span class="small-caps">Kairos</span> <b>(ours)</b></th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <th>#Params</th>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>-</td>
+                        <td>5M</td>
+                        <td>709M</td>
+                        <td>205M</td>
+                        <td>500M</td>
+                        <td>311M</td>
+                        <td>112M</td>
+                        <td>300M</td>
+                        <td>151M</td>
+                        <td>128M</td>
+                        <td>23M</td>
+                        <td>50M</td>
+                    </tr>
+                    <tr>
+                        <th>MASE</th>
+                        <td>1.000</td>
+                        <td>1.061</td>
+                        <td>0.849</td>
+                        <td>1.020</td>
+                        <td>0.870</td>
+                        <td>0.808</td>
+                        <td>0.758</td>
+                        <td>0.875</td>
+                        <td>0.863</td>
+                        <td>0.798</td>
+                        <td>0.750</td>
+                        <td>0.750</td>
+                        <td><u>0.748</u></td>
+                        <td><b>0.742</b></td>
+                    </tr>
+                    <tr>
+                        <th>CRPS</th>
+                        <td>1.000</td>
+                        <td>0.846</td>
+                        <td>0.587</td>
+                        <td>0.873</td>
+                        <td>0.574</td>
+                        <td>0.574</td>
+                        <td>0.550</td>
+                        <td>0.599</td>
+                        <td>0.755</td>
+                        <td><u>0.548</u></td>
+                        <td><b>0.517</b></td>
+                        <td>0.559</td>
+                        <td>0.554</td>
+                        <td><u>0.548</u></td>
+                    </tr>
+                </tbody>
+            </table>
+        </div>
+    </div>
+</section>
+
+
+<section class="section">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered has-text-centered">
+        <div class="column is-four-fifths">
+          <h2 class="title is-3">TSLib Benchmark Results</h2>
+          <div class="content has-text-justified">
+            <p>
+              <span class="small-caps">Kairos</span> demonstrates remarkable zero-shot forecasting capabilities, outperforming both recent advanced TSFMs and the majority of full-shot deep learning models on the TSLib benchmark. The charts below show the aggregate average Mean Absolute Error (MAE) and Mean Squared Error (MSE), where lower values indicate better performance.
+            </p>
+          </div>
+          <img src="./static/images/tslib-zs.png" alt="TSLib Benchmark Results">
+          <p class="content has-text-centered">
+            Zero-shot forecasting performance on TSLib. <span class="small-caps">Kairos</span> (Ours) models consistently achieve the lowest error rates.
+          </p>
+        </div>
+      </div>
+    </div>
+</section>
+
+
+<footer class="footer">
+  <div class="container">
+    <div class="content has-text-centered">
+      <a class="icon-link"
+         href="./static/videos/nerfies_paper.pdf">
+        <i class="fas fa-file-pdf"></i>
+      </a>
+      <a class="icon-link" href="https://github.com/keunhong" class="external-link" disabled>
+        <i class="fab fa-github"></i>
+      </a>
+    </div>
+    <div class="columns is-centered">
+      <div class="column is-8">
+        <div class="content">
+          <p>
+            This website is licensed under a <a rel="license"
+                                                href="http://creativecommons.org/licenses/by-sa/4.0/">Creative
+            Commons Attribution-ShareAlike 4.0 International License</a>.
+          </p>
+          <p>
+            This means you are free to borrow the <a
+              href="https://github.com/nerfies/nerfies.github.io">source code</a> of this website,
+            we just ask that you link back to this page in the footer.
+            Please remember to remove the analytics code included in the header of the website which
+            you do not want on your website.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
