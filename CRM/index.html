@@ -1,0 +1,624 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="description" content="CRM: Linking Process to Outcome via Conditional Reward Modeling for LLM Reasoning">
+  <meta name="keywords" content="LLM Reasoning, Process Reward Model, Reward Hacking, Credit Assignment, Reinforcement Learning">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Linking Process to Outcome: Conditional Reward Modeling (CRM) for LLM Reasoning</title>
+
+  <link rel="icon" href="./static/images/favicon.ico" type="image/x-icon">
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro" rel="stylesheet">
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script src="./static/js/bulma-carousel.min.js"></script>
+  <script src="./static/js/bulma-slider.min.js"></script>
+  <script src="./static/js/index.js"></script>
+
+  <!-- MathJax -->
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$', '$$'], ['\\[', '\\]']]
+      }
+    };
+  </script>
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,700;1,400&display=swap');
+    .small-caps {
+      font-family: 'EB Garamond', serif;
+      font-variant: small-caps;
+      font-weight: 700;
+      letter-spacing: 0.6px;
+      font-size: 1.05em;
+    }
+    .figure-card {
+      background: #fff;
+      border: 1px solid #eaeaea;
+      border-radius: 12px;
+      padding: 14px;
+      box-shadow: 0 6px 18px rgba(0,0,0,0.05);
+    }
+    .caption {
+      margin-top: 10px;
+      font-style: italic;
+      color: #666;
+      line-height: 1.45;
+    }
+    .tagline {
+      color: #FF6F00;
+      margin: 0.6rem 0 0.2rem 0;
+    }
+  </style>
+</head>
+
+<body>
+
+<!-- ===================== HERO ===================== -->
+<section class="hero">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column has-text-centered">
+          <h1 class="title is-1 publication-title">
+            Linking Process to Outcome: Conditional Reward Modeling for LLM Reasoning
+          </h1>
+
+          <div class="has-text-centered tagline">
+            <h2 class="title is-4" style="color: inherit;">
+              International Conference on Learning Representations (ICLR) 2026
+            </h2>
+          </div>
+
+          <div class="is-size-5 publication-authors">
+            <span class="author-block">
+              <a href="https://openreview.net/profile?id=~Zheng_Zhang52">Zheng Zhang</a><sup>1,2</sup>,</span>
+            <span class="author-block">
+              <a href="https://openreview.net/profile?id=~Ziwei_Shan1">Ziwei Shan</a><sup>1</sup>,</span>
+            <span class="author-block">
+              <a href="https://openreview.net/profile?id=~Kaitao_Song1">Kaitao Song</a><sup>3</sup>,</span>
+            <span class="author-block">
+              <a href="https://liyexn.github.io/">Yexin Li</a><sup>2*</sup>,</span>
+            <span class="author-block">
+              <a href="https://www.saying.ren/">Kan Ren</a><sup>1*</sup></span>
+          </div>
+
+          <div class="is-size-6 publication-authors" style="margin-top: 0.4rem;">
+            <span class="author-block"><sup>1</sup>ShanghaiTech University</span>
+            <span class="separator" style="margin: 0 16px;"></span>
+            <span class="author-block"><sup>2</sup>State Key Laboratory of General AI, BIGAI</span>
+            <span class="separator" style="margin: 0 16px;"></span>
+            <span class="author-block"><sup>3</sup>Independent Researcher</span>
+            <div style="margin-top: 6px;"><span class="author-block"><sup>*</sup>Corresponding author</span></div>
+          </div>
+
+          <div class="column has-text-centered">
+            <div class="publication-links">
+              <span class="link-block">
+                <a href="https://openreview.net/pdf?id=4DJoBOQNd0"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon"><i class="fas fa-file-pdf"></i></span>
+                  <span>Paper</span>
+                </a>
+              </span>
+              <span class="link-block">
+                <a href="https://openreview.net/pdf?id=4DJoBOQNd0"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon"><i class="fab fa-github"></i></span>
+                  <span>Code</span>
+                </a>
+              </span>
+            </div>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== TEASER (Figure 1) ===================== -->
+<!-- <section class="hero teaser">
+  <div class="container is-max-desktop">
+    <div class="content has-text-centered">
+      <div class="figure-card">
+        <img src="./static/images/RL_benchmark.png" alt="Figure 1" style="max-width: 100%; height: auto;">
+        <p class="caption">
+          <strong>Figure 1.</strong> Reward modeling paradigms comparison and RL behavior. CRM explicitly conditions each
+          step reward on previous steps and links it to the final outcome; empirically, CRM is more robust to reward hacking.
+        </p>
+      </div>
+    </div>
+  </div>
+</section> -->
+<section class="hero teaser">
+  <div class="container is-max-desktop">
+    <div class="content has-text-centered">
+      <div class="figure-card">
+          <div style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 10px;">
+          <div style="width: 63%;">
+            <img src="./static/images/intro.png" alt="Figure 1a" style="max-width: 100%; height: auto;">
+          </div>
+          <div style="width: 36%;">
+            <img src="./static/images/RL_benchmark.png" alt="Figure 1b" style="max-width: 100%; height: auto;">
+            </div>
+        </div>
+        <p class="caption">
+          <strong>Figure 1.</strong> Reward modeling paradigms comparison and RL behavior. CRM explicitly conditions each
+          step reward on previous steps and links it to the final outcome; empirically, CRM is more robust to reward hacking.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ===================== MAIN CONTENT ===================== -->
+<section class="section">
+  <div class="container is-max-desktop">
+
+    <!-- Abstract -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Abstract</h2>
+        <div class="content has-text-justified">
+          <p>
+            Process Reward Models (PRMs) have emerged as a promising approach to enhance the reasoning capabilities of large language models (LLMs) by guiding 
+            their step-by-step reasoning toward a final answer. However, existing PRMs either treat each reasoning step in isolation, failing to capture 
+            inter-step dependencies, or struggle to align process rewards with the final outcome. Consequently, the reward signal fails to respect temporal 
+            causality in sequential reasoning and faces ambiguous credit assignment. These limitations make downstream models vulnerable to reward hacking 
+            and lead to suboptimal performance. In this work, we propose Conditional Reward Modeling (CRM) that frames LLM reasoning as a temporal process 
+            leading to a correct answer. The reward of each reasoning step is not only conditioned on the preceding steps but also explicitly linked to 
+            the final outcome of the reasoning trajectory. By enforcing conditional probability rules, our design captures the causal relationships among 
+            reasoning steps, with the link to the outcome allowing precise attribution of each intermediate step, thereby resolving credit assignment ambiguity. 
+            Further, through this consistent probabilistic modeling, the rewards produced by CRM enable more reliable cross-sample comparison. 
+            Experiments across Best-of-N sampling, beam search and reinforcement learning demonstrate that CRM consistently outperforms existing reward models, 
+            offering a principled framework for enhancing LLM reasoning. In particular, CRM is more robust to reward hacking and delivers stable downstream 
+            improvements without relying on verifiable rewards derived from ground truth.
+          <!-- <span class="small-caps">CRM</span> -->
+          </p>
+        </div>
+      </div>
+    </div>
+
+
+
+    <!-- Motivation (Concise Version) -->
+    <div class="columns is-centered has-text-centered" style="margin-top: 2rem;">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Motivation</h2>
+        <div class="content has-text-justified">
+          <p>
+            Process Reward Models (PRMs) provide step-wise supervision for multi-step reasoning,
+            yet existing approaches suffer from two key limitations.
+          </p>
+          <ul>
+            <li>
+              <strong>Isolated step modeling.</strong>
+              Many PRMs score each step independently, ignoring the causal dependency
+              that later steps rely on the correctness of earlier ones.
+            </li>
+            <li>
+              <strong>Weak linkage to the final outcome.</strong>
+              Step rewards are not explicitly tied to the final correctness,
+              leading to ambiguous credit assignment and vulnerability to reward hacking
+              (rewards increase while task accuracy declines).
+            </li>
+          </ul>
+          <p>
+            To address this, we propose CRM, which models each step’s reward
+            as a conditional probability given all previous steps,
+            and explicitly connects process rewards to the final outcome
+            through the conditional probability chain rule,
+            enabling principled and consistent credit assignment.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Methodology -->
+    <div class="columns is-centered has-text-centered" style="margin-top: 2rem;">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Methodology</h2>
+
+        <div class="content has-text-justified">
+          <p>
+            CRM models LLM reasoning as a temporal process where the probability of reaching a correct answer evolves with the step index <em>t</em>.
+            Since it is difficult to directly quantify “how close” a trajectory is to the correct answer, we instead model the complementary event:
+            the reasoning process entering a wrong state such that the trajectory can no longer yield the correct final answer.
+            We define <strong>$z$</strong> as the index of the <em>first</em> step where the trajectory enters this wrong state.
+            If no wrong state occurs throughout a trajectory of length $T$, then $z > T$ and the final answer is correct; otherwise $z \le T$ and the final answer is incorrect.
+          </p>
+        </div>
+
+        <!-- Core modeling definitions -->
+        <div class="content has-text-centered" style="margin: 18px 0;">
+          <div style="background-color: #f8f9fa; padding: 18px; border-radius: 10px; display: inline-block; text-align:left;">
+            $$W(t)=\Pr(z\le t)=\sum_{i=1}^{t}p(i), \qquad S(t)=\Pr(z>t)=1-W(t)$$
+          </div>
+        </div>
+
+        <div class="content has-text-justified">
+          <p>
+            A reasoning trajectory is inherently causal: the correctness of step $t$ depends on all previous steps.
+            To capture this dependency, CRM introduces the <strong>conditional wrong-state probability</strong>:
+          </p>
+        </div>
+
+        <div class="content has-text-centered" style="margin: 18px 0;">
+          <div style="background-color: #f8f9fa; padding: 18px; border-radius: 10px; display: inline-block; text-align:left;">
+            $$h(t)=\Pr(z=t\mid z\ge t)=\frac{p(t)}{S(t-1)}$$
+          </div>
+        </div>
+
+        <div class="content has-text-justified">
+          <p>
+            Naturally, $1-h(t)$ is the probability that the current step is correct given all previous steps were correct.
+            To explicitly link intermediate steps to the final outcome, CRM applies the <strong>chain rule of probability</strong>:
+          </p>
+        </div>
+
+        <div class="content has-text-centered" style="margin: 18px 0;">
+          <div style="background-color: #f8f9fa; padding: 18px; border-radius: 10px; display: inline-block; text-align:left;">
+            $$S(t)=\Pr(z>t)=\prod_{k=1}^{t}(1-h(k))$$
+          </div>
+        </div>
+
+        <div class="content has-text-justified">
+          <p>
+            With $S(T)$ representing the probability that the reasoning process reaches the correct final answer,
+            CRM then seeks a dense step-wise reward aligned with this outcome probability. We apply
+            <strong>Potential-Based Reward Shaping (PBRS)</strong> and choose the potential function as:
+          </p>
+        </div>
+
+        <div class="content has-text-centered" style="margin: 18px 0;">
+          <div style="background-color: #f8f9fa; padding: 18px; border-radius: 10px; display: inline-block; text-align:left;">
+            $$\Phi(s_t)\equiv \log S(t)=\sum_{k=1}^{t}\log(1-h(k))$$
+          </div>
+        </div>
+
+        <div class="content has-text-justified">
+          <p>
+            Substituting this potential into PBRS yields an explicit <strong>process reward</strong> for each step transition:
+          </p>
+        </div>
+
+        <div class="content has-text-centered" style="margin: 18px 0;">
+          <div style="background-color: #f8f9fa; padding: 18px; border-radius: 10px; display: inline-block; text-align:left;">
+            $$r_t=\log(1-h(t))$$
+          </div>
+        </div>
+
+        <!-- Training objective -->
+        <div class="content has-text-justified">
+          <p>
+            <strong>Training objective.</strong> At step $t$, CRM takes the question $x$ and the first $t$ reasoning steps as input,
+            and predicts $h(t)=f_\phi(x,a_{\le t})$. For correct trajectories ($l=1$), we maximize $S(T)$:
+          </p>
+        </div>
+
+        <div class="content has-text-centered" style="margin: 18px 0;">
+          <div style="background-color: #f8f9fa; padding: 18px; border-radius: 10px; display: inline-block; text-align:left;">
+            $$\mathcal{L}_S(x,y)=-\log S(T)=-\log\prod_{t=1}^{T}(1-h(t))$$
+          </div>
+        </div>
+
+        <div class="content has-text-justified">
+          <p>
+            For incorrect trajectories ($l=0$), we minimize $S(T)$ and encourage the model to localize the first wrong step $z$
+            by maximizing $p(z)$:
+          </p>
+        </div>
+
+        <div class="content has-text-centered" style="margin: 18px 0;">
+          <div style="background-color: #f8f9fa; padding: 18px; border-radius: 10px; display: inline-block; text-align:left;">
+            $$\mathcal{L}_W(x,y)=-\log(1-S(T)),$$
+            $$\mathcal{L}_z(x,y,z)=-\log p(z)=-\log\left(h(z)\prod_{t=1}^{z-1}(1-h(t))\right)$$
+          </div>
+        </div>
+
+        <div class="content has-text-justified">
+          <p>
+            The overall loss is:
+          </p>
+        </div>
+
+        <div class="content has-text-centered" style="margin: 18px 0;">
+          <div style="background-color: #f8f9fa; padding: 18px; border-radius: 10px; display: inline-block; text-align:left;">
+            $$\mathcal{L}=\frac{1}{|D|}\sum_{i=1}^{|D|}\Big[l_i\mathcal{L}_S(x_i,y_i)+(1-l_i)\big(\mathcal{L}_W(x_i,y_i)+\mathcal{L}_z(x_i,y_i,z_i)\big)\Big]$$
+          </div>
+        </div>
+
+        <div class="content has-text-justified">
+          <p class="muted">
+            This consistent probabilistic modeling ensures that $S(t)$ has the same semantics across different samples,
+            enabling more reliable cross-sample comparison than prior approaches.
+          </p>
+        </div>
+
+      </div>
+    </div>
+
+    <!-- Figures 2 & 3 -->
+    <div class="columns is-centered" style="margin-top: 2rem;">
+      <div class="column is-half">
+        <div class="figure-card has-text-centered">
+          <img src="./static/images/modeling_loss.png" alt="Figure 2" style="max-width: 100%; height: auto;">
+          <p class="caption">
+            <strong>Figure 2.</strong> Training objective components and their roles (e.g., correctness likelihood vs. wrong-state localization).
+          </p>
+        </div>
+      </div>
+      <div class="column is-half">
+        <div class="figure-card has-text-centered">
+          <img src="./static/images/BoN_auprc.png" alt="Figure 3" style="max-width: 100%; height: auto;">
+          <p class="caption">
+            <strong>Figure 3.</strong> Cross-sample comparability: CRM yields more consistent ranking signals across questions.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Experiments Overview -->
+    <div class="columns is-centered has-text-centered" style="margin-top: 2rem;">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Experimental Results</h2>
+        <div class="content has-text-justified">
+          <p>
+            CRM is evaluated in three downstream settings:
+            <strong>Best-of-N sampling</strong> (trajectory selection), <strong>beam search</strong> (step-level guidance),
+            and <strong>RL optimization</strong> (policy improvement under dense process rewards).
+            Across settings, CRM improves accuracy and exhibits strong robustness to reward hacking.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- ================= Best-of-N Results ================= -->
+    <div class="columns is-centered" style="margin-top:2rem;">
+      <div class="column is-full">
+        <h3 class="title is-4">Best-of-N Accuracy</h3>
+        <div class="table-container">
+          <table class="table is-bordered is-striped is-hoverable is-fullwidth">
+            <thead>
+              <tr>
+                <th rowspan="2">Model</th>
+                <th rowspan="2">Method</th>
+                <th colspan="5">GSM-Plus</th>
+                <th colspan="5">MATH500</th>
+              </tr>
+              <tr>
+                <th>@8</th><th>@16</th><th>@32</th><th>@64</th><th>@128</th>
+                <th>@8</th><th>@16</th><th>@32</th><th>@64</th><th>@128</th>
+              </tr>
+            </thead>
+            <tbody>
+
+              <!-- Qwen2.5-3B -->
+              <tr>
+                <td rowspan="5"><b>Qwen2.5-3B-Instruct</b></td>
+                <td>ORM</td>
+                <td>66.8</td><td>67.2</td><td>66.4</td><td>65.7</td><td>65.7</td>
+                <td>51.6</td><td>51.4</td><td>51.8</td><td>49.0</td><td>49.2</td>
+              </tr>
+              <tr>
+                <td>PRM</td>
+                <td>67.6</td><td>67.9</td><td>67.7</td><td>66.9</td><td>66.7</td>
+                <td><b>54.2</b></td><td>55.2</td><td>55.2</td><td>54.2</td><td>54.6</td>
+              </tr>
+              <tr>
+                <td>PQM</td>
+                <td><b>68.5</b></td><td><b>69.2</b></td><td><b>68.5</b></td><td>68.2</td><td>68.0</td>
+                <td>53.2</td><td>54.4</td><td>54.8</td><td>54.8</td><td>55.8</td>
+              </tr>
+              <tr>
+                <td>IPRM</td>
+                <td>65.5</td><td>66.2</td><td>66.8</td><td>66.5</td><td>66.2</td>
+                <td>52.4</td><td>52.0</td><td>52.0</td><td>52.2</td><td>53.0</td>
+              </tr>
+              <tr style="background-color:#eef6ff;">
+                <td><b>CRM (ours)</b></td>
+                <td>67.8</td><td>68.6</td><td>67.9</td><td><b>68.4</b></td><td><b>68.7</b></td>
+                <td>53.0</td><td><b>56.4</b></td><td><b>56.6</b></td><td><b>55.8</b></td><td><b>56.6</b></td>
+              </tr>
+
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+
+    <!-- ================= Beam Search Results ================= -->
+    <div class="columns is-centered" style="margin-top:3rem;">
+      <div class="column is-full">
+        <h3 class="title is-4">Beam Search Accuracy</h3>
+
+        <div class="table-container">
+          <table class="table is-bordered is-striped is-hoverable is-fullwidth">
+            <thead>
+              <tr>
+                <th rowspan="2">Model</th>
+                <th rowspan="2">Method</th>
+                <th colspan="4">MATH500</th>
+                <th colspan="4">GAOKAO2023</th>
+              </tr>
+              <tr>
+                <th>N=4</th><th>N=8</th><th>N=20</th><th>N=100</th>
+                <th>N=4</th><th>N=8</th><th>N=20</th><th>N=100</th>
+              </tr>
+            </thead>
+            <tbody>
+
+              <tr>
+                <td rowspan="5"><b>Qwen2.5-Math-1.5B</b></td>
+                <td>ORM</td>
+                <td>50.73</td><td>54.80</td><td>56.80</td><td>58.07</td>
+                <td>35.58</td><td>38.18</td><td>38.44</td><td>40.17</td>
+              </tr>
+              <tr>
+                <td>PRM</td>
+                <td>51.80</td><td>55.73</td><td>56.87</td><td>58.00</td>
+                <td>34.72</td><td>37.84</td><td>38.70</td><td>38.96</td>
+              </tr>
+              <tr>
+                <td>PQM</td>
+                <td>52.67</td><td>56.60</td><td>58.87</td><td>58.80</td>
+                <td>36.88</td><td>38.61</td><td>40.61</td><td>39.83</td>
+              </tr>
+              <tr>
+                <td>IPRM</td>
+                <td>44.27</td><td>47.27</td><td>48.33</td><td>47.47</td>
+                <td>32.55</td><td>34.46</td><td>35.32</td><td>34.55</td>
+              </tr>
+              <tr style="background-color:#eef6ff;">
+                <td><b>CRM (ours)</b></td>
+                <td><b>54.07</b></td><td><b>58.40</b></td><td><b>61.00</b></td><td><b>63.00</b></td>
+                <td><b>38.70</b></td><td><b>39.74</b></td><td><b>41.04</b></td><td><b>43.55</b></td>
+              </tr>
+
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- ================= RL Optimization Results ================= -->
+    <div class="columns is-centered" style="margin-top:3rem;">
+      <div class="column is-full">
+        <h3 class="title is-4">RL Optimization (Pass@1)</h3>
+
+        <div class="table-container">
+          <table class="table is-bordered is-striped is-hoverable is-fullwidth">
+            <thead>
+              <tr>
+                <th>VR Setting</th>
+                <th>Method</th>
+                <th>MATH500</th>
+                <th>MinervaMath</th>
+                <th>OlympiadBench</th>
+                <th>AIME25</th>
+                <th>AIME24</th>
+                <th>AMC23</th>
+              </tr>
+            </thead>
+            <tbody>
+
+              <!-- VR Disabled -->
+              <tr>
+                <td rowspan="4"><b>VR Disabled</b></td>
+                <td>PURE</td>
+                <td>76.0</td><td>30.8</td><td>36.7</td><td>13.3</td><td>26.6</td><td><b>70.0</b></td>
+              </tr>
+              <tr>
+                <td>PRM</td>
+                <td>71.6</td><td>36.3</td><td>32.5</td><td>13.3</td><td>10.0</td><td>57.5</td>
+              </tr>
+              <tr>
+                <td>PQM</td>
+                <td>72.0</td><td>34.1</td><td>34.3</td><td>13.3</td><td>13.3</td><td>52.5</td>
+              </tr>
+              <tr style="background-color:#eef6ff;">
+                <td><b>CRM (ours)</b></td>
+                <td><b>77.8</b></td><td><b>40.0</b></td><td><b>39.3</b></td><td><b>23.3</b></td><td><b>43.3</b></td><td>67.5</td>
+              </tr>
+
+              <!-- VR Enabled -->
+              <tr>
+                <td rowspan="4"><b>VR Enabled</b></td>
+                <td>Prime</td>
+                <td>81.2</td><td>29.4</td><td>40.8</td><td>16.6</td><td>26.6</td><td><b>72.5</b></td>
+              </tr>
+              <tr>
+                <td>PURE</td>
+                <td><b>82.4</b></td><td>40.0</td><td>41.3</td><td>23.3</td><td>23.3</td><td>70.0</td>
+              </tr>
+              <tr>
+                <td>VR</td>
+                <td>76.2</td><td>38.6</td><td>38.0</td><td>16.6</td><td>30.0</td><td>62.5</td>
+              </tr>
+              <tr style="background-color:#eef6ff;">
+                <td><b>CRM + VR</b></td>
+                <td>80.4</td><td><b>43.0</b></td><td><b>42.1</b></td><td><b>26.6</b></td><td><b>33.3</b></td><td><b>72.5</b></td>
+              </tr>
+
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+        <div class="content has-text-justified" style="margin-top: 0.8rem;">
+          <p>
+            <strong>Note:</strong> “VR” denotes verifiable reward from outcome ground-truth. “VR Disabled” means training without any verifier-based reward.
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <div class="columns is-centered" style="margin-top: 2rem;">
+      <div class="column is-full">
+        <div class="figure-card has-text-centered">
+          <img src="./static/images/four_metrics.png" alt="Figure 4" style="max-width: 65%; height: auto;">
+          <p class="caption">
+            <strong>Figure 4.</strong> RL dynamics and reward hacking analysis (reward, length, repetition, and downstream accuracy over training).
+          </p>
+        </div>
+      </div>
+    </div>
+
+    <!-- Takeaways -->
+    <div class="columns is-centered has-text-centered" style="margin-top: 2rem;">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Key Takeaways</h2>
+        <div class="content has-text-justified">
+          <ul>
+            <li><strong>Principled credit assignment</strong>: step rewards are causally aligned with the final outcome through conditional probability rules.</li>
+            <li><strong>Better selection & guidance</strong>: improves Best-of-N and beam search by producing more comparable reward signals across trajectories.</li>
+            <li><strong>Robust RL</strong>: mitigates reward hacking and achieves strong pass@1 even without verifiable rewards.</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- BibTeX -->
+    <div class="columns is-centered" style="margin-top: 2rem;">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3" id="BibTeX">BibTeX</h2>
+        <pre><code>@inproceedings{zhang2026crm,
+  title     = {Linking Process to Outcome: Conditional Reward Modeling for LLM Reasoning},
+  author    = {Zheng Zhang and Ziwei Shan and Kaitao Song and Yexin Li and Kan Ren},
+  booktitle = {International Conference on Learning Representations (ICLR)},
+  year      = {2026}
+}</code></pre>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<!-- ===================== FOOTER ===================== -->
+<footer class="footer">
+  <div class="container">
+    <div class="content has-text-centered">
+      <p>
+        This page template is adapted from academic project-page styles (Bulma-based).
+      </p>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
