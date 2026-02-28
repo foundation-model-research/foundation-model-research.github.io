@@ -1,0 +1,204 @@
+body {
+  font-family: 'Noto Sans', sans-serif;
+}
+
+
+.footer .icon-link {
+    font-size: 25px;
+    color: #000;
+}
+
+.link-block a {
+    margin-top: 5px;
+    margin-bottom: 5px;
+}
+
+.dnerf {
+  font-variant: small-caps;
+}
+
+
+.teaser .hero-body {
+  padding-top: 0;
+  padding-bottom: 3rem;
+}
+
+.teaser {
+  font-family: 'Google Sans', sans-serif;
+}
+
+
+.publication-title {
+}
+
+.publication-banner {
+  max-height: parent;
+
+}
+
+.publication-banner video {
+  position: relative;
+  left: auto;
+  top: auto;
+  transform: none;
+  object-fit: fit;
+}
+
+.publication-header .hero-body {
+}
+
+.publication-title {
+    font-family: 'Google Sans', sans-serif;
+}
+
+.publication-authors {
+    font-family: 'Google Sans', sans-serif;
+}
+
+.publication-venue {
+    color: #555;
+    width: fit-content;
+    font-weight: bold;
+}
+
+.publication-awards {
+    color: #ff3860;
+    width: fit-content;
+    font-weight: bolder;
+}
+
+.publication-authors {
+}
+
+.publication-authors a {
+   color: hsl(204, 86%, 53%) !important;
+}
+
+.publication-authors a:hover {
+    text-decoration: underline;
+}
+
+.author-block {
+  display: inline-block;
+}
+
+.publication-banner img {
+}
+
+.publication-authors {
+  /*color: #4286f4;*/
+}
+
+.publication-video {
+    position: relative;
+    width: 100%;
+    height: 0;
+    padding-bottom: 56.25%;
+
+    overflow: hidden;
+    border-radius: 10px !important;
+}
+
+.publication-video iframe {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+}
+
+.publication-body img {
+}
+
+.results-carousel {
+  overflow: hidden;
+}
+
+.results-carousel .item {
+  margin: 5px;
+  overflow: hidden;
+  border: 1px solid #bbb;
+  border-radius: 10px;
+  padding: 0;
+  font-size: 0;
+}
+
+.results-carousel video {
+  margin: 0;
+}
+
+
+.interpolation-panel {
+  background: #f5f5f5;
+  border-radius: 10px;
+}
+
+.interpolation-panel .interpolation-image {
+  width: 100%;
+  border-radius: 5px;
+}
+
+.interpolation-video-column {
+}
+
+.interpolation-panel .slider {
+  margin: 0 !important;
+}
+
+.interpolation-panel .slider {
+  margin: 0 !important;
+}
+
+#interpolation-image-wrapper {
+  width: 100%;
+}
+#interpolation-image-wrapper img {
+  border-radius: 5px;
+}
+
+image-caption {
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-weight: 500; 
+  color: #222222; 
+  font-size: 0.9rem;
+  margin-top: 12px;
+  line-height: 1.6;
+  text-align: left; 
+}
+
+.spaced-list li {
+  margin-bottom: 2.5rem; /* Adjust this value between 1rem and 2rem until the heights look balanced */
+}
+
+.academic-table tbody tr {
+  transition: background-color 0.15s ease-in-out;
+}
+
+.academic-table tbody tr:hover {
+  background-color: #f0f0f0; /* A subtle light gray */
+}
+
+/* 1. Add vertical lines to the table body */
+/* Targets the 2nd column (First Enhancement) and 5th column (First Removal) */
+.academic-table tbody td:nth-child(2),
+.academic-table tbody td:nth-child(5) {
+  border-left: 1px solid #d3d3d3; 
+}
+
+/* 2. Add vertical lines to the top header row */
+/* Targets the 'Enhancement' and 'Removal' spanning headers */
+.academic-table thead tr:first-child th:nth-child(2),
+.academic-table thead tr:first-child th:nth-child(3) {
+  border-left: 1px solid #d3d3d3;
+}
+
+/* 3. Add vertical lines to the bottom header row */
+/* Targets the first 'ResNet-50' under both Enhancement and Removal */
+.academic-table thead tr:last-child th:nth-child(1),
+.academic-table thead tr:last-child th:nth-child(4) {
+  border-left: 1px solid #d3d3d3;
+}
+/* Center text vertically in all body cells */
+.academic-table tbody td {
+  vertical-align: middle;
+}

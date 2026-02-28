@@ -1,0 +1,678 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="icon" href="/static/images/favicon.png">
+  <meta charset="utf-8">
+  <meta name="description"
+        content="MICLIP: Learning to Interpret Representation in Vision Models">
+  <meta name="keywords" content="Mechanistic Interpretability, Contrastive Learning, Sparse Autoencoder">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>MICLIP: Learning to Interpret Representation in Vision Models</title>
+
+  <!-- Global site tag (gtag.js) - Google Analytics -->
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-PYVRSFMDRL"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+
+    gtag('js', new Date());
+
+    gtag('config', 'G-PYVRSFMDRL');
+  </script>
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
+        rel="stylesheet">
+
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+  <link rel="icon" href="./static/images/favicon.png">
+
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script src="./static/js/bulma-carousel.min.js"></script>
+  <script src="./static/js/bulma-slider.min.js"></script>
+  <script src="./static/js/index.js"></script>
+
+  <!-- MathJax -->
+  <script src="https://polyfill.io/v3/polyfill.min.js?features=es6"></script>
+  <script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js"></script>
+  <script>
+    window.MathJax = {
+      tex: {
+        inlineMath: [['$', '$'], ['\\(', '\\)']],
+        displayMath: [['$$', '$$'], ['\\[', '\\]']]
+      }
+    };
+  </script>
+
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,700;1,400&display=swap');
+    
+    .small-caps {
+      font-family: 'EB Garamond', serif;
+      font-variant: small-caps;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      font-size: 1.1em;
+    }
+  </style>
+</head>
+<body>
+
+<section class="hero">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column has-text-centered">
+          <!-- Title -->
+          <h1 class="title is-1 publication-title">
+            <span class="small-caps">MiClip</span>: Learning to Interpret Representation in Vision Models
+          </h1>
+          <!-- Conference -->
+          <div class="has-text-centered" style="color: #FF6F00; margin: 0.5rem 0;">
+            <h2 class="title is-4" style="color: inherit;">
+              International Conference on Learning Representations (ICLR) 2026
+            </h2>
+          </div>
+          <!-- Author List -->
+          <div class="is-size-5 publication-authors">
+            <span class="author-block">
+              <a href="https://openreview.net/profile?id=~Yingdong_Shi1">Yingdong Shi</a><sup>*</sup>,
+            </span>
+            <span class="author-block">
+              <a href="https://openreview.net/profile?id=%7EZhiyu_Yang6">Zhiyu Yang</a><sup>*</sup>,
+            </span>
+            <span class="author-block">
+              <a href="https://openreview.net/profile?id=~Changming_Li1">Changming Li</a>,
+            </span>
+            <span class="author-block">
+              <a href="">Jingyi Yu</a>,
+            </span>
+            <span class="author-block">
+              <a href="https://www.saying.ren/">Kan Ren</a><sup>†</sup>
+            </span>
+          </div>
+          
+          <div class="is-size-5 publication-authors">
+            <div class="author-affiliation">
+              <span class="author-block">ShanghaiTech University</span>
+              <!-- <span class="separator" style="margin: 0 20px;"></span>
+              <span class="author-block"><sup>2</sup>Stony Brook University</span>
+              <span class="separator" style="margin: 0 20px;"></span>
+              <span class="author-block"><sup>3</sup>Tencent PCG</span> -->
+            </div>
+            <span class="author-block"><sup>*</sup>Equal contribution</span>,
+            <span class="author-block"><sup>†</sup>Corresponding author</span>
+          </div>
+
+          <div class="column has-text-centered">
+            <div class="publication-links">
+              <!-- PDF Link. -->
+              <span class="link-block">
+                <a href="https://openreview.net/pdf?id=28Hfz8RLcD"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fas fa-file-pdf"></i>
+                  </span>
+                  <span>Paper</span>
+                </a>
+              </span>
+              <!-- <span class="link-block">
+                <a href="https://arxiv.org/abs/2503.20483"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="ai ai-arxiv"></i>
+                  </span>
+                  <span>arXiv</span>
+                </a>
+              </span> -->
+              <!-- Code Link. -->
+              <!-- <span class="link-block">
+                <a href="https://github.com/foundation-model-research/DiffLens"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fab fa-github"></i>
+                  </span>
+                  <span>Code</span>
+                  </a>
+              </span>               -->
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="hero teaser">
+  <div class="container is-max-desktop">
+    <figure class="content has-text-justified" style="margin: 0;">
+      <img src="./static/images/method.png"
+           class="interpolation-image"
+           alt="Interpolation end reference image."
+           style="width: 100%; height: auto;">
+      <figcaption class="image-caption">
+        <b>Figure 1.</b> Framework of <span class="small-caps">MiClip</span>:
+        <b>(a)</b> the target models (frozen);
+        <b>(b)</b> contrastive learning of the shared embedding space;
+        <b>(c)</b> mechanistic feature localization and description;
+        <b>(d)</b> model steering;
+        <b>(e)</b> feature disentanglement with k-SAE (Optional).
+      </figcaption>
+    </figure>
+  </div>
+</section>
+
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <!-- Abstract. -->
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Abstract</h2>
+        <div class="content has-text-justified">
+          <p>
+            Vision models have demonstrated remarkable capabilities, yet their decision-making processes remain largely opaque.
+            Mechanistic interpretability (MI) offers a promising avenue to decode these internal workings. 
+            However, existing interpretation methods suffer from two key limitations.
+            First, they rely on the flawed <u><i>activation-magnitude assumption</i></u>, assuming that the importance of a neuron is directly reflected by the magnitude of its activation, which ignores more nuanced causal roles.
+            Second, they are predominantly <u><i>input-centric</i></u>, failing to capture the causal mechanisms that drive a model's output.
+            These shortcomings lead to inaccurate and unreliable internal representation interpretations, especially in cases of incorrect predictions. 
+            We propose <span class="small-caps">MiClip</span> (Mechanism-Interpretability via Contrastive Learning), a novel framework that extends CLIP’s contrastive learning to align internal mechanisms of vision models with general semantic concepts, enabling interpretable and controllable representations.
+            Our approach circumvents previous limitations by performing multimodal alignment between a model's internal representations and both its input concepts and output semantics via contrastive learning.
+            We demonstrate that <span class="small-caps">MiClip</span> is a general framework applicable to diverse representation unit types, including individual neurons and sparse autoencoder (SAE) features. 
+            By enabling precise, causal-aware interpretation, <span class="small-caps">MiClip</span> not only reveals the semantic properties of a model's internals but also paves the way for effective and targeted manipulation of model behaviors.
+          </p>
+        </div>
+      </div>
+    </div>
+    <!--/ Abstract. -->
+
+  </div>
+</section>
+
+<!-- ################################################################################# -->
+<!-- Motivation -->
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <h2 class="title is-3">Motivation</h2> 
+
+    <div class="content has-text-justified">
+      <p>
+        A range of interpretability methodologies have been proposed to decode the internal representations of vision models into human-understandable semantics.
+        Despite these advances, existing approaches face notable limitations as follows (<b>Figure 2</b>).
+      </p>
+      <div class="columns is-vcentered">
+  
+        <div class="column is-half">
+          <div class="content">
+            <ul class="spaced-list">
+              <li>
+                Relying on <b>activation-magnitude assumption</b>: 
+                for any representation unit, a larger activation value is interpreted as indicating a stronger presence of the unit’s associated concept in the model’s information-processing pipeline.
+              </li>
+              <li>
+                Remains <b>input-centric</b>. 
+                Many methods only focus on aligning internal representations with concepts present in the input, missing the model's internal concept processing result.
+              </li>
+            </ul>
+          </div>
+        </div>
+      
+        <div class="column is-half">
+          <figure style="margin: 0;">
+            <img src="./static/images/motivation.png" alt="Concept diagram" style="width: 75%; height: auto;">
+            <figcaption class="image-caption" style="font-style: normal;">
+              <b>Figure 2.</b>
+              Comparison between <span class="small-caps">MiClip</span> and previously proposed methods with mentioned limitations.
+            </figcaption>
+          </figure>
+        </div>
+      
+      </div>
+      <p>
+        To overcome these issues, we propose <span class="small-caps">MiClip</span>, a representation-based automated mechanistic interpretability framework that bridges the gap between the internal mechanisms of vision models and human-understandable concepts, through aligning them in a shared semantic embedding space.
+        It eliminates the reliance on the activation-magnitude assumption and jointly leverages <u>semantic signals from both the inputs and outputs</u> of vision models, thereby capturing a more comprehensive and faithful view of the model’s reasoning process.
+      </p>
+    </div>
+
+</section>
+
+<!-- ################################################################################# -->
+<!-- Methodology -->
+
+<section class="section">
+  <div class="container is-max-desktop">
+    
+    <h2 class="title is-3">Methodology</h2> 
+    <div class="content has-text-justified">
+      <p>
+        <span class="small-caps">MiClip</span> is a two-phase framework that aligns the model internals with human-understandable concepts: 
+        <b>1.</b> Create a shared embedding space for model mechanisms and human semantics through Contrastive Learning;
+        <b>2.</b> Describe model internals with texts or localize human-understandable concepts in the model.
+        The above two procedures enable <span class="small-caps">MiClip</span> to <u>support fine-grained model steering</u> through unit-level interventions.
+      </p>
+    </div>
+  
+    <div style="margin-top: 2rem;"> 
+      <h3 class="title is-4">
+        Mechanism-Concept Alignment via Contrastive Learning
+      </h3>
+      <div class="content has-text-justified">
+        <p>
+          With pretrained CLIP models, <span class="small-caps">MiClip</span> <u>avoids relying on manual heuristics</u> and directly maps the internal representations of vision models into the human-understandable visual-language semantic space of CLIP.
+        </p>
+        <p>
+          Specifically, we project the input image $x_i \in \mathcal{X}$ and the model's predicted label $\hat{c}_i$ with CLIP's vision encoder $\mathrm{E}_{\text{i}}(\cdot)$ and text encoder $\mathrm{E}_{\text{c}} (\cdot)$ into the embedding space. We then learn a neuron encoder $\mathrm{E}_{\text{n}}(\cdot; \theta_{\text{n}})$ that maps the model's hidden representations $\mathbf{a}_i \in \mathcal{A}$ to the same space.
+          Finally, we optimize the symmetric InfoNCE loss to align the model's internal space with the visual-language semantic space.
+        </p>
+        $$ \mathcal{L}_{\mathrm{alignment}} = \underbrace{\mathcal{L}_{\mathrm{CLIP}}^{\text{out}} \left(\mathrm{E_n}(\mathcal{A}; \theta_{\text{n}}), \mathrm{E_c}(\{\hat{c}_i\}_{i=1}^N) \right)}_{\text{neuron-concept loss}} + 
+        \underbrace{\mathcal{L}_{\mathrm{CLIP}}^{\text{in}} \left(\mathrm{E_n}(\mathcal{A}; \theta_{\text{n}}), \mathrm{E_i}(\mathcal{X}) \right)}_{\text{neuron-image loss}} $$
+      </div>
+    </div>
+    
+    <div style="margin-top: 2rem;">
+      <h3 class="title is-4">
+        Mechanism Localization and Description
+      </h3>
+      <div class="content has-text-justified">
+        <p>
+          Once trained, <span class="small-caps">MiClip</span> enables both <b>Concept-to-Mechanism Localization</b> with open-vocabulary concepts, and <b>Mechanism-to-Concept Description</b> for either activation neurons or learned Sparse Autoencoder (SAE) features.
+          This is achieved by comparing the cosine similarities $\operatorname{sim}(\cdot,\cdot)$ between embeddings.
+        </p>
+      </div>
+
+      <div>
+        <h4 class="title is-5">
+          Concept-to-Mechanism Localization
+        </h4>
+        <div class="content has-text-justified">
+          <p>
+            Given a concept $c$, we want to locate the neurons or features that closely align with it from the set $\mathcal{U}$ of all possible representation units.
+            We identify the top $\tau$ $(\text{SelectTop-}\tau)$ representation units related to $c$ and record their indices according to their similarity score in the set $\mathbf{L}_c$:
+          </p>
+          $$
+          \mathbf{L}_c = \underset{i}{\text{SelectTop-}\tau} \left( \{\mathbf{sim}(u_i, c)\}_{u_i \in \mathcal{U}} \right).
+          $$
+        </div>
+      </div>
+
+      <div>
+        <h4 class="title is-5">
+          Mechanism-to-Concept Description
+        </h4>
+        <div class="content has-text-justified">
+          <p>
+            Given a representation unit $u$ (either a neuron or an SAE feature), find the concepts from a set $\mathcal{C}$ that best describe the mechanism.
+            We identify the top $\tau$ concepts related to a representation unit $u$ and record the concepts according to their relevance score in the set $\mathbf{D}_u$:
+          </p>
+          $$
+          \mathbf{D}_u = \underset{j}{\text{SelectTop-}\tau} \left( \{\mathbf{sim}(u, c_j)\}_{c_j \in \mathcal{C}} \right).
+          $$
+        </div>
+      </div>
+    </div>
+
+    <div style="margin-top: 2rem;">
+      <h3 class="title is-4">
+        Model Control with Mechanism Intervention
+      </h3>
+      <div class="content has-text-justified">
+        <p>
+          For a given concept $c$, we collect its corresponding units indexed by $\mathbf{L}_c$ (neurons or SAE features), 
+          and adjust their activations to suppress or amplify the concept’s influence on the model. 
+        </p>
+        <p>
+          For each representation unit $u$ ($u=a_i \cdot e^{(i)}$ or $u=f_i$) indexed within $\mathbf{L}_{c}$, 
+          we either apply a scalar multiplication or add an additive bias as 
+        </p>
+        $$
+        \tilde{u}_i = \beta u_i \text{ (Scaling)}
+        \quad
+        \text{or}
+        \quad 
+        \tilde{u}_i = u_i + \beta\text{ (Adding)}, 
+        \quad \forall i \in \mathbf{L}_{c}, \beta \in \mathbb{R}. \quad
+        $$
+        <p>
+          By applying a distinct parameter $\beta$, we can suppress or amplify the target feature to adjust the model. 
+        </p>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+<!-- ################################################################################# -->
+<!-- Results -->
+<section class="section">
+  <div class="container is-max-desktop">
+    <h2 class="title is-3">Results</h2> 
+
+    <!-- Experiment 1 -->
+    <div style="margin-top: 2rem;">
+      <h3 class="title is-4">
+        Intervention on Discriminative Vision Models
+      </h3>
+      <div class="content has-text-justified">
+        <p>
+          We verify our localization by intervening on the top-5 neurons or features for each ImageNet-1k concept.
+          We measure the change in classification accuracy $\Delta Acc$ after applying either <i>enhancement</i> ($\times 2$ scaling) or <i>removal</i> ($\times 0$ scaling) after interventions on the activations of the following layers:
+          the <b>10th</b> layer for ViT-B/16 and CLIP/ViT-B-16, and the <b>stages.3.layers.1.shortcut</b> layer for ResNet-50.
+        </p>
+        <p>
+          Results show that <span class="small-caps">MiClip</span> enables precise localization of the mechanisms that govern model classification.
+          Baselines, like Act-Values, even exhibit an inconsistent responses, as shown in <span style="color:red">red</span>.
+        </p>
+      </div>
+    </div>
+
+    <figure style="margin-top: 1.5rem; overflow-x: auto;">
+      
+      <p class="has-text-centered" style="margin-bottom: 1rem;">
+        (a) Intervention on neurons
+      </p>
+
+      <table class="academic-table" style="width: 85%; margin: 0 auto 2rem auto; border-collapse: collapse; text-align: center; font-size: 0.95em;">
+        <thead>
+          <tr style="border-top: 2px solid black;">
+            <th rowspan="2" style="vertical-align: middle; text-align: left; padding: 8px;">Method</th>
+            <th colspan="3" style="border-bottom: 1px solid black; padding: 8px;">Enhancement ΔAcc (%) (↑)</th>
+            <th colspan="3" style="border-bottom: 1px solid black; padding: 8px;">Removal ΔAcc (%) (↓)</th>
+          </tr>
+          <tr style="border-bottom: 1px solid black;">
+            <th style="padding: 8px;">ResNet-50</th>
+            <th style="padding: 8px;">ViT-B/16</th>
+            <th style="padding: 8px;">CLIP</th>
+            <th style="padding: 8px;">ResNet-50</th>
+            <th style="padding: 8px;">ViT-B/16</th>
+            <th style="padding: 8px;">CLIP</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style="text-align: left; padding: 8px;">Act-Values</td>
+            <td>2.27 (± 0.03)</td>
+            <td style="color: red;">-0.19 (± 0.01)</td>
+            <td style="color: red;">-8.05 (± 0.02)</td>
+            <td>-8.98 (± 0.08)</td>
+            <td><b>-1.43 (± 0.01)</b></td>
+            <td><b>-23.30 (± 0.00)</b></td>
+          </tr>
+          <tr>
+            <td style="text-align: left; padding: 8px;">Network Dissection</td>
+            <td>0.78 (± 0.02)</td>
+            <td><b>0.35 (± 0.01)</b></td>
+            <td>0.23 (± 0.02)</td>
+            <td>-2.95 (± 0.15)</td>
+            <td>-0.37 (± 0.03)</td>
+            <td>-0.88 (± 0.05)</td>
+          </tr>
+          <tr>
+            <td style="text-align: left; padding: 8px;">CLIP-dissect</td>
+            <td>3.05 (± 0.18)</td>
+            <td>0.19 (± 0.03)</td>
+            <td style="color: red;">-0.04 (± 0.03)</td>
+            <td>-12.31 (± 0.67)</td>
+            <td>-0.04 (± 0.02)</td>
+            <td>-1.16 (± 0.14)</td>
+          </tr>
+          <tr>
+            <td style="text-align: left; padding: 8px;">V-Interp</td>
+            <td>1.71 (± 0.22)</td>
+            <td style="color: red;">-0.04 (± 0.02)</td>
+            <td style="color: red;">-0.29 (± 0.10)</td>
+            <td>-8.04 (± 0.71)</td>
+            <td>-0.04 (± 0.00)</td>
+            <td>-0.14 (± 0.05)</td>
+          </tr>
+          <tr style="border-bottom: 2px solid black;">
+            <td style="text-align: left; padding: 8px;"><b><span class="small-caps">MiClip</span> (Ours)</b></td>
+            <td><b>5.32 (± 0.03)</b></td>
+            <td>0.18 (± 0.01)</td>
+            <td><b>1.10 (± 0.05)</b></td>
+            <td><b>-17.24 (± 0.05)</b></td>
+            <td>-0.04 (± 0.02)</td>
+            <td>-1.50 (± 0.08)</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <p class="has-text-centered" style="margin-bottom: 1rem;">
+        (b) Intervention on SAE features
+      </p>
+
+      <table class="academic-table" style="width: 85%; margin: 0 auto 1.5rem auto; border-collapse: collapse; text-align: center; font-size: 0.95em;">
+        <thead>
+          <tr style="border-top: 2px solid black;">
+            <th rowspan="2" style="vertical-align: middle; text-align: left; padding: 8px;">Method</th>
+            <th colspan="3" style="border-bottom: 1px solid black; padding: 8px;">Enhancement ΔAcc (%) (↑)</th>
+            <th colspan="3" style="border-bottom: 1px solid black; padding: 8px;">Removal ΔAcc (%) (↓)</th>
+          </tr>
+          <tr style="border-bottom: 1px solid black;">
+            <th style="padding: 8px;">ResNet-50</th>
+            <th style="padding: 8px;">ViT-B/16</th>
+            <th style="padding: 8px;">CLIP</th>
+            <th style="padding: 8px;">ResNet-50</th>
+            <th style="padding: 8px;">ViT-B/16</th>
+            <th style="padding: 8px;">CLIP</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style="text-align: left; padding: 8px;">Act-Values</td>
+            <td><b>4.34 (± 0.00)</b></td>
+            <td>3.68 (± 0.02)</td>
+            <td>0.43 (± 0.08)</td>
+            <td><b>-11.98 (± 0.00)</b></td>
+            <td>-22.77 (± 0.11)</td>
+            <td>-15.94 (± 0.06)</td>
+          </tr>
+          <tr>
+            <td style="text-align: left; padding: 8px;">Network Dissection</td>
+            <td>0.02 (± 0.04)</td>
+            <td>1.12 (± 0.05)</td>
+            <td>0.50 (± 0.06)</td>
+            <td>-0.08 (± 0.05)</td>
+            <td>-4.03 (± 0.13)</td>
+            <td>-1.99 (± 0.05)</td>
+          </tr>
+          <tr>
+            <td style="text-align: left; padding: 8px;">CLIP-dissect</td>
+            <td>2.27 (± 0.09)</td>
+            <td>5.04 (± 0.05)</td>
+            <td>4.85 (± 0.03)</td>
+            <td>-7.30 (± 0.03)</td>
+            <td>-27.78 (± 0.09)</td>
+            <td>-11.05 (± 0.12)</td>
+          </tr>
+          <tr>
+            <td style="text-align: left; padding: 8px;">V-Interp</td>
+            <td>0.91 (± 0.02)</td>
+            <td>1.90 (± 0.01)</td>
+            <td>1.33 (± 0.00)</td>
+            <td>-2.88 (± 0.09)</td>
+            <td>-7.55 (± 0.06)</td>
+            <td>-2.83 (± 0.00)</td>
+          </tr>
+          <tr style="border-bottom: 2px solid black;">
+            <td style="text-align: left; padding: 8px;"><b><span class="small-caps">MiClip</span> (Ours)</b></td>
+            <td>3.89 (± 0.03)</td>
+            <td><b>5.57 (± 0.02)</b></td>
+            <td><b>5.88 (± 0.03)</b></td>
+            <td>-10.99 (± 0.02)</td>
+            <td><b>-32.04 (± 0.20)</b></td>
+            <td><b>-17.70 (± 0.02)</b></td>
+          </tr>
+        </tbody>
+      </table>
+
+      <figcaption class="image-caption" style="text-align: justify; margin-top: 1rem;">
+        <b>Table 2:</b> Accuracy deviations of enhancement and removal interventions on neurons and features. 
+        Best performing methods are highlighted in <b>bold</b>. Values that contradict the expected outcome (e.g., enhancement leading to a decrease in accuracy) are marked in <span style="color: red;">red</span>.
+      </figcaption>
+
+    </figure>
+    <!-- End 1 -->
+
+    <!-- Experiment 2 -->
+    <div style="margin-top: 2rem;">
+      <h3 class="title is-4">
+        Attention-Map Visualization of Localized Features
+      </h3>
+      <div class="content has-text-justified">
+        <p>
+          We investigate the spatial grounding of the learned features by examining their activations within the model's attention maps.
+          To show the generalization of <span class="small-caps">MiClip</span>, we test both high-level concept like "kit fox" and low-level concepts like colors and textures.
+        </p>
+        <p>
+          Experimental results highlight that <span class="small-caps">MiClip</span> can identify feature consistently activates around the ears of the "kit fox", a key visual identifier for this class.
+          Also, the visualization for concept "green" confirms that our method can ground foundational visual concepts, like specific colors, to their corresponding spatial locations within an image.
+        </p>
+      </div>
+    </div>
+
+    <figure style="margin-top: 1.5rem;">
+  
+      <img src="./static/images/fox_top5.jpg" 
+           alt="Top attention map visualization" 
+           style="width: 100%; height: auto; display: block; margin-bottom: 0.5rem; padding: 0;">
+      
+      <img src="./static/images/green.jpg" 
+           alt="Bottom attention map visualization" 
+           style="width: 100%; height: auto; display: block; margin: 0; padding: 0;">
+      
+      <figcaption class="image-caption" style="margin-top: 12px; text-align: justify;">
+        <b>Figure 3.</b> We visualize the spatial grounding of localized SAE features. 
+        The attention map highlights the precise location of both high-level, specific concept like "kit fox",
+        as well as low-level color concept "green".
+        Images are from ImageNet-1k.
+      </figcaption>
+    
+    </figure>
+    <!-- End 2 -->
+    <!-- Experiment 3 -->
+    <div style="margin-top: 2rem;">
+      <h3 class="title is-4">
+        Discover Flawed Visual Reasoning in Model Prediction
+      </h3>
+      <div class="content has-text-justified">
+        <p>
+          We leverage <span class="small-caps">MiClip</span> to diagnose failures in visual reasoning in the CLIP/ViT-B-16 model by tracing the semantic trajectory of an image's internal representations across layers.
+        </p>
+      </div>
+    </div>
+
+    <figure style="margin-top: 1.5rem;">
+      <div class="columns is-centered">
+        
+        <div class="column is-half">
+          <img src="./static/images/flaw_sea.jpg" 
+               alt="Diagnose on sea" 
+               style="width: 100%; height: auto; display: block; margin: 0 auto;">
+        </div>
+        
+        <div class="column is-half">
+          <img src="./static/images/flaw_lawn.jpg" 
+               alt="Diagnose on lawn" 
+               style="width: 100%; height: auto; display: block; margin: 0 auto;">
+        </div>
+        
+      </div>
+      
+      <figcaption class="image-caption" style="margin-top: 12px; text-align: justify;">
+        <b>Figure 4.</b> The plot shows cosine similarities between layer-wise representation embeddings and text embeddings of the ground-truth (GT; <span style="color: blue;">blue</span>) and misclassified label (Mis.; <span style="color: orange;">orange</span>).
+        <span style="color: green;">①</span> marks the layer where GT dominates most, while <span style="color: red;">②</span> marks where Mis. overtakes GT, revealing the failure point.
+      </figcaption>  
+    </figure>
+    <!-- End 3 -->
+  </div>
+</section>
+
+<!-- ################################################################################# -->
+<!-- Conclusion -->
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <h2 class="title is-3">Contributions</h2> 
+
+    <div class="content has-text-justified">
+      <ol>
+        <li>Challenging the "Activation-Magnitude" Assumption.</li>
+        <li>An early exploration to interpret models with <u>dual-anchored input-output grounding</u> paradigm.</li>
+        <li>An alignment framework able to discover different granularities of concepts across various representation units and layers in different models.</li>
+        <li>Thorough and multi-faceted validations.</li>
+      </ol>
+    </div>
+
+  
+  </div>
+
+</section>
+
+<style>
+.gif-image {
+  width: 100%;
+  height: auto;
+  max-width: 200px;
+  border-radius: 5px;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+}
+</style>
+
+
+<section class="section" id="BibTeX">
+  <div class="container is-max-desktop content">
+    <h2 class="title">Citation</h2>
+    <pre><code>@inproceedings{
+  shi2026miclip,
+  title={{MICLIP}: Learning to Interpret Representation in Vision Models},
+  author={Yingdong Shi and Zhiyu Yang and Changming Li and Jingyi Yu and Kan Ren},
+  booktitle={The Fourteenth International Conference on Learning Representations},
+  year={2026},
+  url={https://openreview.net/forum?id=28Hfz8RLcD}
+}
+  </code></pre>
+  </div>
+</section>
+
+
+<footer class="footer">
+  <div class="container">
+    <div class="content has-text-centered">
+      <a class="icon-link"
+         href="https://openreview.net/pdf?id=28Hfz8RLcD">
+        <i class="fas fa-file-pdf"></i>
+      </a>
+      <a class="icon-link" href="https://github.com/felomid/foundation-model-research.github.io/tree/main" class="external-link" disabled>
+        <i class="fab fa-github"></i>
+      </a>
+    </div>
+    <div class="columns is-centered">
+      <div class="column is-8">
+        <div class="content">
+          <p>
+            This website is licensed under a <a rel="license"
+                                                href="http://creativecommons.org/licenses/by-sa/4.0/">Creative
+            Commons Attribution-ShareAlike 4.0 International License</a>.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
