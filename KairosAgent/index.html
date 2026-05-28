@@ -71,7 +71,15 @@
     }
 
     .intro-figure {
-      max-width: 82%;
+      max-width: 60%;
+    }
+
+    .radar-figure {
+      width: 70%;
+    }
+
+    .tstar-figure {
+      width: 60%;
     }
 
     .table-container {
@@ -170,7 +178,7 @@
   <div class="container is-max-desktop">
     <div class="columns is-centered has-text-centered">
       <div class="column is-full-width">
-        <img class="intro-figure" src="./static/images/intro.png" alt="Forecasting paradigm comparison">
+        <img class="intro-figure" src="./static/images/intro.svg" alt="Forecasting paradigm comparison">
         <p class="content has-text-centered figure-caption">
           <strong>Figure 1.</strong> Unlike LLM-only models that suffer numerical hallucinations and TSFM-only models that lack semantic reasoning, <span class="small-caps">KairosAgent</span> bridges semantic reasoning and numerical forecasting.
         </p>
@@ -199,7 +207,7 @@
     <div class="columns is-centered has-text-centered">
       <div class="column is-full-width">
         <h2 class="title is-3">Overview</h2>
-        <img src="./static/images/teaser.png" alt="KairosAgent overview">
+        <img src="./static/images/teaser.svg" alt="KairosAgent overview">
         <p class="content has-text-centered figure-caption">
           <strong>Figure 2.</strong> <span class="small-caps">KairosAgent</span> bridges semantic reasoning and numerical forecasting through an LLM reasoner, tool-grounded morphology analysis, and a TSFM forecaster.
         </p>
@@ -249,7 +257,7 @@
             <span class="small-caps">KairosAgent</span> is trained with <span class="small-caps">T-STAR</span>, a 40k-trajectory time series reasoning corpus with tool augmentation. The corpus covers diverse domains and provides process-level supervision for multi-turn analytical reasoning.
           </p>
         </div>
-        <img src="./static/images/t-star.png" alt="T-STAR corpus overview">
+        <img class="tstar-figure" src="./static/images/t-star.svg" alt="T-STAR corpus overview">
         <p class="content has-text-centered figure-caption">
           <strong>Figure 3.</strong> Overview of the <span class="small-caps">T-STAR</span> corpus and its tool-augmented trajectory generation pipeline.
         </p>
@@ -264,7 +272,7 @@
     <div class="columns is-centered methodology-cards">
       <div class="column">
         <div class="pipeline-card">
-          <h3 class="title is-5">Stage I: Supervised Fine-Tuning</h3>
+          <h3 class="title is-5">Stage I: SFT of the Reasoner</h3>
           <p class="content has-text-justified">
             SFT warms up the LLM reasoner on <span class="small-caps">T-STAR</span> trajectories, teaching it when to invoke tools, how to interpret tool feedback, and how to write structured morphology descriptions for downstream forecasting.
           </p>
@@ -272,7 +280,7 @@
       </div>
       <div class="column">
         <div class="pipeline-card">
-          <h3 class="title is-5">Stage II: Multimodal Alignment</h3>
+          <h3 class="title is-5">Stage II: Multimodal Alignment of the Forecaster</h3>
           <p class="content has-text-justified">
             The TSFM forecaster is trained to consume morphology descriptions as semantic priors. A text encoder maps morphology descriptions into compact semantic embeddings, while cross-modal fusion modules inject these priors into the Kairos decoder under the quantile forecasting objective.
           </p>
@@ -537,7 +545,7 @@
     <h3 class="title is-4 has-text-centered">Irregular Forecasting Evaluation</h3>
     <div class="columns is-centered">
       <div class="column is-three-quarters has-text-centered">
-        <img src="./static/images/timeimm-radar.png" alt="Time-IMM radar results">
+        <img class="radar-figure" src="./static/images/timeimm-radar.svg" alt="Time-IMM radar results">
         <p class="content has-text-centered figure-caption">
           <strong>Figure 4.</strong> Time-IMM MAE comparison across irregular multimodal time series forecasting tasks.
         </p>
@@ -556,7 +564,7 @@
             The agent learns a data-dependent tool selection policy rather than a fixed calling pattern. Tool usage shifts across reasoning turns and adapts to dataset-specific temporal properties.
           </p>
         </div>
-        <img src="./static/images/tool-heatmaps.png" alt="Tool usage heatmaps">
+        <img src="./static/images/tool-heatmaps.svg" alt="Tool usage heatmaps">
         <p class="content has-text-centered figure-caption">
           <strong>Figure 5.</strong> Tool usage distributions over reasoning turns and datasets in <span class="small-caps">T-STAR</span> trajectories.
         </p>
@@ -581,8 +589,7 @@
             Commons Attribution-ShareAlike 4.0 International License</a>.
           </p>
           <p>
-            This page is adapted from the <a href="https://foundation-model-research.github.io/Kairos/">Kairos</a> project page and the
-            <a href="https://github.com/nerfies/nerfies.github.io">source code</a> of the Nerfies website.
+            This website is adapted from the <a href="https://github.com/nerfies/nerfies.github.io">source code</a> of the Nerfies website.
           </p>
         </div>
       </div>
