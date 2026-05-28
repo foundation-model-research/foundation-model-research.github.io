@@ -1,0 +1,606 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <link rel="icon" href="./static/images/favicon.ico" type="image/x-icon">
+  <meta charset="utf-8">
+  <meta name="description"
+        content="KairosAgent: Agentic Time Series Forecasting with Fused Semantic Reasoning">
+  <meta name="keywords" content="Time Series, Foundation Models, Large Language Models, Forecasting, Agents, KairosAgent">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>KairosAgent: Agentic Time Series Forecasting with Fused Semantic Reasoning</title>
+
+  <script async src="https://www.googletagmanager.com/gtag/js?id=G-PYVRSFMDRL"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+
+    function gtag() {
+      dataLayer.push(arguments);
+    }
+
+    gtag('js', new Date());
+
+    gtag('config', 'G-PYVRSFMDRL');
+  </script>
+
+  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
+        rel="stylesheet">
+
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
+  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script src="./static/js/bulma-carousel.min.js"></script>
+  <script src="./static/js/bulma-slider.min.js"></script>
+  <script src="./static/js/index.js"></script>
+  <style>
+    @import url('https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,700;1,400&display=swap');
+
+    .small-caps {
+      font-family: 'EB Garamond', serif;
+      font-variant: small-caps;
+      font-weight: 600;
+      letter-spacing: 0.5px;
+      font-size: 1.05em;
+    }
+
+    .pipeline-card {
+      height: 100%;
+      border-radius: 14px;
+      border: 1px solid #eeeeee;
+      padding: 1.25rem;
+      background: #ffffff;
+      box-shadow: 0 0.5em 1em -0.75em rgba(10, 10, 10, 0.2);
+    }
+
+    .methodology-cards .pipeline-card .title {
+      margin-bottom: 0.6rem;
+    }
+
+    .methodology-cards .content {
+      text-align: left !important;
+    }
+
+    .figure-caption {
+      margin-top: 0.75rem;
+    }
+
+    .intro-figure {
+      max-width: 82%;
+    }
+
+    .table-container {
+      overflow-x: auto;
+    }
+
+    .table.is-centered-content th,
+    .table.is-centered-content td {
+      text-align: center !important;
+      vertical-align: middle !important;
+      white-space: nowrap;
+    }
+
+    .ours-row {
+      background-color: #fff1f0;
+    }
+
+    .best {
+      color: #d7191c;
+      font-weight: 700;
+    }
+
+    .second {
+      color: #2c7bb6;
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+
+<section class="hero">
+  <div class="hero-body">
+    <div class="container is-max-desktop">
+      <div class="columns is-centered">
+        <div class="column has-text-centered">
+          <h1 class="title is-1 publication-title"><span class="small-caps">KairosAgent</span>: Agentic Time Series Forecasting with Fused Semantic Reasoning</h1>
+
+          <div class="has-text-centered" style="color: #FF6F00; margin: 0.5rem 0;">
+            <h2 class="title is-4" style="color: inherit;">
+              Preprint
+            </h2>
+          </div>
+
+          <div class="is-size-5 publication-authors">
+            <span class="author-block"><a href="https://openreview.net/profile?id=~Kun_Feng4">Kun Feng</a><sup>1,2*</sup>,</span>
+            <span class="author-block"><a href="https://openreview.net/profile?id=~Ziwei_Shan1">Ziwei Shan</a><sup>1,2*</sup>,</span>
+            <span class="author-block"><a href="https://openreview.net/profile?id=~Yuchen_Fang2">Yuchen Fang</a><sup>2</sup>,</span>
+            <span class="author-block"><a href="https://openreview.net/profile?id=~Yiyang_Tan1">Yiyang Tan</a><sup>1</sup>,</span>
+            <br>
+            <span class="author-block"><a href="https://openreview.net/profile?id=~Sihan_Lu3">Sihan Lu</a><sup>1</sup>,</span>
+            <span class="author-block"><a href="https://openreview.net/profile?id=~Shuqi_Gu1">Shuqi Gu</a><sup>1</sup>,</span>
+            <span class="author-block"><a href="https://openreview.net/profile?id=~Lintao_Ma1">Lintao Ma</a><sup>2</sup>,</span>
+            <span class="author-block"><a href="https://openreview.net/profile?id=~Xingyu_Lu2">Xingyu Lu</a><sup>2</sup>,</span>
+            <span class="author-block"><a href="https://www.saying.ren/">Kan Ren</a><sup>1†</sup></span>
+          </div>
+
+          <div class="is-size-5 publication-authors">
+            <div class="author-affiliation">
+              <span class="author-block"><sup>1</sup>ShanghaiTech University</span>
+              <span class="separator" style="margin: 0 20px;"></span>
+              <span class="author-block"><sup>2</sup>Ant Group</span>
+            </div>
+            <span class="author-block"><sup>*</sup>Equal contribution, Work done during an internship at Ant Group</span><br>
+            <span class="author-block"><sup>†</sup>Corresponding author: renkan@shanghaitech.edu.cn</span>
+          </div>
+
+          <div class="column has-text-centered">
+            <div class="publication-links">
+              <span class="link-block">
+                <a href="https://foundation-model-research.github.io/KairosAgent/"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fas fa-file-pdf"></i>
+                  </span>
+                  <span>Paper</span>
+                </a>
+              </span>
+              <span class="link-block">
+                <a href="https://foundation-model-research.github.io/KairosAgent/"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="ai ai-arxiv"></i>
+                  </span>
+                  <span>arXiv</span>
+                </a>
+              </span>
+              <span class="link-block">
+                <a href="https://github.com/foundation-model-research/KairosAgent"
+                   class="external-link button is-normal is-rounded is-dark">
+                  <span class="icon">
+                      <i class="fab fa-github"></i>
+                  </span>
+                  <span>Code</span>
+                </a>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-full-width">
+        <img class="intro-figure" src="./static/images/intro.png" alt="Forecasting paradigm comparison">
+        <p class="content has-text-centered figure-caption">
+          <strong>Figure 1.</strong> Unlike LLM-only models that suffer numerical hallucinations and TSFM-only models that lack semantic reasoning, <span class="small-caps">KairosAgent</span> bridges semantic reasoning and numerical forecasting.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3">Abstract</h2>
+        <div class="content has-text-justified">
+          <p>
+            Cross-domain multimodal time series forecasting is a challenging task, requiring models to integrate precise numerical comprehension, cross-domain semantic understanding, and effective multimodal fusion. Existing approaches either build Time Series Foundation Models (TSFMs) from scratch or leverage pretrained Large Language Models (LLMs). However, TSFMs often overlook semantic understanding and lack the ability to perform future-oriented semantic reasoning, and LLMs struggle with numerical comprehension and accurate quantitative forecasting. To overcome these limitations, we propose <span class="small-caps">KairosAgent</span>, a novel agentic framework for multimodal time series forecasting, including an LLM-based reasoner and a TSFM-based forecaster. <span class="small-caps">KairosAgent</span> unifies textual reasoning and numerical forecasting by dynamically invoking analytical tools to enhance the numerical understanding and semantic reasoning capabilities of LLMs. The reasoning results are subsequently fused into the TSFM pipeline, enabling more accurate and reliable future predictions. To further improve the reasoning, we curate a large-scale corpus of high-quality trajectories, alongside a reinforcement learning from forecasting paradigm with multi-turn refinement and turn-level credit assignment. Experiments demonstrate that <span class="small-caps">KairosAgent</span> achieves superior zero-shot forecasting performance while maximizing the utility of pretrained LLMs and TSFMs, presenting a promising direction for efficient and interpretable time series agents.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-full-width">
+        <h2 class="title is-3">Overview</h2>
+        <img src="./static/images/teaser.png" alt="KairosAgent overview">
+        <p class="content has-text-centered figure-caption">
+          <strong>Figure 2.</strong> <span class="small-caps">KairosAgent</span> bridges semantic reasoning and numerical forecasting through an LLM reasoner, tool-grounded morphology analysis, and a TSFM forecaster.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <h2 class="title is-3 has-text-centered">Methodology</h2>
+    <div class="content has-text-justified">
+      <p>
+        <span class="small-caps">KairosAgent</span> follows a modular reason-then-forecast design: the LLM reasoner handles semantic pattern analysis, while the TSFM forecaster preserves precise numerical prediction.
+      </p>
+    </div>
+
+    <h3 class="title is-4 has-text-centered">Overall Framework</h3>
+    <div class="columns is-centered methodology-cards">
+      <div class="column">
+        <div class="pipeline-card">
+          <h4 class="title is-5">Stage I: Tool-Augmented Morphological Reasoning</h4>
+          <p class="content has-text-justified">
+            Given historical observations and textual context, the LLM reasoner interacts with statistical tools over multiple turns to inspect trend, periodicity, volatility, and regime changes. It then synthesizes a compact morphology description that captures anticipated future patterns without committing to exact numeric values.
+          </p>
+        </div>
+      </div>
+      <div class="column">
+        <div class="pipeline-card">
+          <h4 class="title is-5">Stage II: Morphology-Conditioned Forecasting</h4>
+          <p class="content has-text-justified">
+            The morphology description is encoded as a semantic prior and fused into the TSFM decoder through lightweight gated cross-modal fusion. This keeps numerical generation inside the native time series model while injecting future-oriented semantic reasoning into the forecasting pipeline.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-four-fifths">
+        <h3 class="title is-4">T-STAR Corpus</h3>
+        <div class="content has-text-justified">
+          <p>
+            <span class="small-caps">KairosAgent</span> is trained with <span class="small-caps">T-STAR</span>, a 40k-trajectory time series reasoning corpus with tool augmentation. The corpus covers diverse domains and provides process-level supervision for multi-turn analytical reasoning.
+          </p>
+        </div>
+        <img src="./static/images/t-star.png" alt="T-STAR corpus overview">
+        <p class="content has-text-centered figure-caption">
+          <strong>Figure 3.</strong> Overview of the <span class="small-caps">T-STAR</span> corpus and its tool-augmented trajectory generation pipeline.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <h3 class="title is-4 has-text-centered">Training Strategy</h3>
+    <div class="columns is-centered methodology-cards">
+      <div class="column">
+        <div class="pipeline-card">
+          <h3 class="title is-5">Stage I: Supervised Fine-Tuning</h3>
+          <p class="content has-text-justified">
+            SFT warms up the LLM reasoner on <span class="small-caps">T-STAR</span> trajectories, teaching it when to invoke tools, how to interpret tool feedback, and how to write structured morphology descriptions for downstream forecasting.
+          </p>
+        </div>
+      </div>
+      <div class="column">
+        <div class="pipeline-card">
+          <h3 class="title is-5">Stage II: Multimodal Alignment</h3>
+          <p class="content has-text-justified">
+            The TSFM forecaster is trained to consume morphology descriptions as semantic priors. A text encoder maps morphology descriptions into compact semantic embeddings, while cross-modal fusion modules inject these priors into the Kairos decoder under the quantile forecasting objective.
+          </p>
+        </div>
+      </div>
+      <div class="column">
+        <div class="pipeline-card">
+          <h3 class="title is-5">Stage III: RL with Fine-Grained Credit Assignment</h3>
+          <p class="content has-text-justified">
+            GRPO refines the reasoner with the frozen Stage II forecaster as a reward module. Instead of assigning only a final trajectory reward, turn-level credit assignment scores the marginal forecasting utility of each reasoning turn and tool call.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <h2 class="title is-3 has-text-centered">Zero-Shot Reasoning Results</h2>
+    <div class="content has-text-justified">
+      <p>
+        <span class="small-caps">KairosAgent</span> improves future morphology reasoning by grounding LLM analysis in statistical tool observations. With turn-level RL, the 4B reasoner achieves the best accuracy among comparable-scale models across all evaluated Time-MMD domains.
+      </p>
+    </div>
+    <div class="table-container">
+      <table class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth is-centered-content">
+        <thead>
+          <tr>
+            <th>Model</th>
+            <th>Climate</th>
+            <th>Energy</th>
+            <th>Traffic</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td colspan="4"><em>Advanced Models (reference only)</em></td>
+          </tr>
+          <tr>
+            <td>GPT-5.2</td>
+            <td>97.80</td>
+            <td>84.12</td>
+            <td>34.95</td>
+          </tr>
+          <tr>
+            <td>DeepSeek-R1</td>
+            <td>99.18</td>
+            <td>79.51</td>
+            <td>37.76</td>
+          </tr>
+          <tr>
+            <td colspan="4"><em>Comparable-Scale Models</em></td>
+          </tr>
+          <tr>
+            <td>Llama-3.1-8B-Instruct</td>
+            <td>52.47</td>
+            <td>38.72</td>
+            <td><span class="second">43.62</span></td>
+          </tr>
+          <tr>
+            <td>DeepSeek-R1-Distill-Qwen-7B</td>
+            <td>42.86</td>
+            <td>5.08</td>
+            <td>14.29</td>
+          </tr>
+          <tr class="ours-row">
+            <td><span class="small-caps">KairosAgent</span>-4B (SFT-Only)</td>
+            <td><span class="second">97.80</span></td>
+            <td><span class="second">45.21</span></td>
+            <td>40.56</td>
+          </tr>
+          <tr class="ours-row">
+            <td><span style="padding-left: 1.25rem;">+ Outcome-Level Reward RL</span></td>
+            <td>96.70</td>
+            <td>43.33</td>
+            <td>38.27</td>
+          </tr>
+          <tr class="ours-row">
+            <td><span style="padding-left: 1.25rem;">+ Turn-Level Reward RL</span></td>
+            <td><span class="best">98.08</span></td>
+            <td><span class="best">50.47</span></td>
+            <td><span class="best">43.88</span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="content is-size-7 has-text-grey">
+      Morphology reasoning accuracy (%) on Time-MMD. Red bold and blue underline mark best and second-best among open-source models.
+    </p>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <h2 class="title is-3 has-text-centered">Zero-Shot Forecasting Results</h2>
+    <div class="content has-text-justified">
+      <p>
+        <span class="small-caps">KairosAgent</span> achieves strong zero-shot forecasting on both regular Time-MMD and irregular Time-IMM benchmarks. The Time-MMD table summarizes domain-level MSE and MAE against zero-shot TSFMs and full-shot baselines, while the Time-IMM radar chart shows robustness under temporal irregularities.
+      </p>
+    </div>
+    <h3 class="title is-4 has-text-centered">Regular Forecasting Evaluation</h3>
+    <div class="table-container">
+      <table class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth is-centered-content">
+        <thead>
+          <tr>
+            <th>Type</th>
+            <th colspan="10">Zero-Shot Models</th>
+            <th colspan="6">Full-Shot Multimodal Models</th>
+            <th colspan="4">Full-Shot Unimodal Models</th>
+          </tr>
+          <tr>
+            <th rowspan="2">Models</th>
+            <th colspan="2"><span class="small-caps">KairosAgent</span></th>
+            <th colspan="2">Aurora</th>
+            <th colspan="2">Sundial</th>
+            <th colspan="2">Moirai</th>
+            <th colspan="2">ChronosBolt</th>
+            <th colspan="2">T3Time</th>
+            <th colspan="2">TimeCMA</th>
+            <th colspan="2">CALF</th>
+            <th colspan="2">PatchTST</th>
+            <th colspan="2">DLinear</th>
+          </tr>
+          <tr>
+            <th>MSE</th><th>MAE</th>
+            <th>MSE</th><th>MAE</th>
+            <th>MSE</th><th>MAE</th>
+            <th>MSE</th><th>MAE</th>
+            <th>MSE</th><th>MAE</th>
+            <th>MSE</th><th>MAE</th>
+            <th>MSE</th><th>MAE</th>
+            <th>MSE</th><th>MAE</th>
+            <th>MSE</th><th>MAE</th>
+            <th>MSE</th><th>MAE</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Agriculture</td>
+            <td><span class="best">0.194</span></td><td><span class="best">0.282</span></td>
+            <td>0.282</td><td>0.356</td>
+            <td>0.327</td><td>0.366</td>
+            <td>0.239</td><td>0.306</td>
+            <td><span class="second">0.218</span></td><td><span class="second">0.302</span></td>
+            <td>0.229</td><td>0.303</td>
+            <td>0.318</td><td>0.360</td>
+            <td>0.241</td><td>0.311</td>
+            <td>0.248</td><td>0.308</td>
+            <td>0.377</td><td>0.396</td>
+          </tr>
+          <tr>
+            <td>Climate</td>
+            <td><span class="best">0.863</span></td><td><span class="best">0.739</span></td>
+            <td><span class="best">0.863</span></td><td><span class="second">0.747</span></td>
+            <td>0.920</td><td>0.765</td>
+            <td>0.982</td><td>0.792</td>
+            <td>0.948</td><td>0.788</td>
+            <td>1.206</td><td>0.894</td>
+            <td>1.282</td><td>0.926</td>
+            <td>1.199</td><td>0.895</td>
+            <td>1.176</td><td>0.891</td>
+            <td>1.036</td><td>0.807</td>
+          </tr>
+          <tr>
+            <td>Economy</td>
+            <td><span class="best">0.186</span></td><td><span class="best">0.335</span></td>
+            <td>0.275</td><td>0.412</td>
+            <td>0.216</td><td>0.348</td>
+            <td>0.198</td><td>0.345</td>
+            <td><span class="second">0.192</span></td><td><span class="second">0.342</span></td>
+            <td>0.239</td><td>0.384</td>
+            <td>0.262</td><td>0.412</td>
+            <td>0.223</td><td>0.370</td>
+            <td>0.223</td><td>0.380</td>
+            <td>0.218</td><td>0.370</td>
+          </tr>
+          <tr>
+            <td>Energy</td>
+            <td><span class="best">0.217</span></td><td><span class="best">0.330</span></td>
+            <td>0.251</td><td>0.370</td>
+            <td>0.234</td><td><span class="second">0.337</span></td>
+            <td>0.261</td><td>0.347</td>
+            <td>0.263</td><td>0.355</td>
+            <td>0.266</td><td>0.378</td>
+            <td>0.351</td><td>0.447</td>
+            <td>0.258</td><td>0.373</td>
+            <td>0.243</td><td>0.353</td>
+            <td><span class="second">0.233</span></td><td>0.346</td>
+          </tr>
+          <tr>
+            <td>Environment</td>
+            <td><span class="second">0.378</span></td><td><span class="second">0.435</span></td>
+            <td><span class="best">0.276</span></td><td><span class="best">0.379</span></td>
+            <td>0.379</td><td>0.443</td>
+            <td>0.412</td><td>0.446</td>
+            <td>0.427</td><td>0.462</td>
+            <td>0.489</td><td>0.507</td>
+            <td>0.536</td><td>0.533</td>
+            <td>0.537</td><td>0.509</td>
+            <td>0.496</td><td>0.513</td>
+            <td>0.591</td><td>0.627</td>
+          </tr>
+          <tr>
+            <td>Security</td>
+            <td>76.658</td><td>4.340</td>
+            <td>72.763</td><td>4.085</td>
+            <td>83.403</td><td>4.836</td>
+            <td>74.249</td><td>4.129</td>
+            <td>73.977</td><td>4.117</td>
+            <td><span class="second">72.113</span></td><td><span class="second">4.070</span></td>
+            <td><span class="best">72.011</span></td><td>4.113</td>
+            <td>73.267</td><td><span class="best">4.040</span></td>
+            <td>76.105</td><td>4.445</td>
+            <td>82.521</td><td>4.891</td>
+          </tr>
+          <tr>
+            <td>Social Good</td>
+            <td><span class="best">0.769</span></td><td><span class="best">0.376</span></td>
+            <td>0.828</td><td>0.506</td>
+            <td><span class="second">0.819</span></td><td><span class="second">0.377</span></td>
+            <td>0.868</td><td>0.391</td>
+            <td>0.951</td><td>0.388</td>
+            <td>0.998</td><td>0.432</td>
+            <td>1.092</td><td>0.578</td>
+            <td>0.890</td><td>0.416</td>
+            <td>0.959</td><td>0.475</td>
+            <td>0.891</td><td>0.448</td>
+          </tr>
+          <tr>
+            <td>Traffic</td>
+            <td><span class="best">0.151</span></td><td><span class="best">0.231</span></td>
+            <td><span class="second">0.162</span></td><td>0.289</td>
+            <td>0.228</td><td>0.292</td>
+            <td>0.186</td><td>0.263</td>
+            <td>0.222</td><td><span class="second">0.249</span></td>
+            <td>0.289</td><td>0.368</td>
+            <td>0.297</td><td>0.412</td>
+            <td>0.227</td><td>0.305</td>
+            <td>0.209</td><td>0.316</td>
+            <td>0.219</td><td>0.315</td>
+          </tr>
+          <tr class="ours-row">
+            <td><strong>1st Count</strong></td>
+            <td><span class="best">6</span></td><td><span class="best">6</span></td>
+            <td><span class="second">2</span></td><td><span class="second">1</span></td>
+            <td>0</td><td>0</td>
+            <td>0</td><td>0</td>
+            <td>0</td><td>0</td>
+            <td>0</td><td>0</td>
+            <td>1</td><td>0</td>
+            <td>0</td><td><span class="second">1</span></td>
+            <td>0</td><td>0</td>
+            <td>0</td><td>0</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+    <p class="content is-size-7 has-text-grey">
+      Time-MMD performance across diverse domains. Lower MSE and MAE are better. Red bold and blue underline mark best and second-best results.
+    </p>
+    <h3 class="title is-4 has-text-centered">Irregular Forecasting Evaluation</h3>
+    <div class="columns is-centered">
+      <div class="column is-three-quarters has-text-centered">
+        <img src="./static/images/timeimm-radar.png" alt="Time-IMM radar results">
+        <p class="content has-text-centered figure-caption">
+          <strong>Figure 4.</strong> Time-IMM MAE comparison across irregular multimodal time series forecasting tasks.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section class="section">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered has-text-centered">
+      <div class="column is-full-width">
+        <h2 class="title is-3">Tool Usage Analysis</h2>
+        <div class="content has-text-justified">
+          <p>
+            The agent learns a data-dependent tool selection policy rather than a fixed calling pattern. Tool usage shifts across reasoning turns and adapts to dataset-specific temporal properties.
+          </p>
+        </div>
+        <img src="./static/images/tool-heatmaps.png" alt="Tool usage heatmaps">
+        <p class="content has-text-centered figure-caption">
+          <strong>Figure 5.</strong> Tool usage distributions over reasoning turns and datasets in <span class="small-caps">T-STAR</span> trajectories.
+        </p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer class="footer">
+  <div class="container">
+    <div class="content has-text-centered">
+      <a class="icon-link" href="https://foundation-model-research.github.io/KairosAgent/">
+        <i class="fas fa-file-pdf"></i>
+      </a>
+      <a class="icon-link" href="https://github.com/foundation-model-research/KairosAgent">
+        <i class="fab fa-github"></i>
+      </a>
+    </div>
+    <div class="columns is-centered">
+      <div class="column is-8">
+        <div class="content">
+          <p>
+            This website is licensed under a <a rel="license"
+                                                href="http://creativecommons.org/licenses/by-sa/4.0/">Creative
+            Commons Attribution-ShareAlike 4.0 International License</a>.
+          </p>
+          <p>
+            This page is adapted from the <a href="https://foundation-model-research.github.io/Kairos/">Kairos</a> project page and the
+            <a href="https://github.com/nerfies/nerfies.github.io">source code</a> of the Nerfies website.
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</footer>
+
+</body>
+</html>
