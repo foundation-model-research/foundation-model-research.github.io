@@ -41,6 +41,10 @@
   <style>
     @import url('https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,700;1,400&display=swap');
 
+    html {
+      scroll-behavior: smooth;
+    }
+
     .small-caps {
       font-family: 'EB Garamond', serif;
       font-variant: small-caps;
@@ -70,6 +74,34 @@
       margin-top: 0.75rem;
     }
 
+    .section-heading {
+      display: inline-block;
+      position: relative;
+      padding-bottom: 0.75rem;
+      color: #1a1a1a;
+      font-weight: 700;
+    }
+
+    .section-heading::after {
+      content: "";
+      position: absolute;
+      left: 50%;
+      bottom: 0;
+      width: 4rem;
+      height: 4px;
+      border-radius: 999px;
+      transform: translateX(-50%);
+      background: linear-gradient(90deg, #3273dc, #7aa7ff);
+    }
+
+    .subsection-heading {
+      display: inline-block;
+      border-bottom: 2px solid #e9ecef;
+      padding-bottom: 0.6rem;
+      color: #2c3e50;
+      font-weight: 650;
+    }
+
     .intro-figure {
       max-width: 60%;
     }
@@ -85,6 +117,98 @@
     .publication-email {
       color: #4a4a4a;
       letter-spacing: 0.01em;
+    }
+
+    .bibtex-box {
+      position: relative;
+      overflow-x: auto;
+      margin-top: 1rem;
+      padding: 1.375rem 1.5rem;
+      color: #cbd5e1;
+      background: #1e293b;
+      border: 1px solid #334155;
+      border-radius: 12px;
+      box-shadow: 0 18px 44px rgba(15, 23, 42, 0.16);
+    }
+
+    .bibtex-box pre {
+      margin: 0;
+      padding: 0;
+      color: inherit;
+      background: transparent;
+      white-space: pre;
+    }
+
+    .bibtex-box code {
+      color: inherit;
+      background: transparent;
+      font-size: 0.82rem;
+      line-height: 1.6;
+    }
+
+    .copy-btn {
+      position: absolute;
+      top: 12px;
+      right: 12px;
+      padding: 6px 14px;
+      color: #a5b4fc;
+      background: rgba(124, 58, 237, 0.20);
+      border: 1px solid rgba(124, 58, 237, 0.30);
+      border-radius: 6px;
+      cursor: pointer;
+      font-size: 0.78rem;
+      font-weight: 600;
+      transition: background 0.2s ease, border-color 0.2s ease, color 0.2s ease;
+    }
+
+    .copy-btn:hover {
+      background: rgba(124, 58, 237, 0.35);
+    }
+
+    .copy-btn.copied {
+      color: #86efac;
+      background: rgba(34, 197, 94, 0.20);
+      border-color: rgba(34, 197, 94, 0.30);
+    }
+
+    .subnav {
+      position: sticky;
+      top: 0;
+      z-index: 30;
+      background: rgba(255, 255, 255, 0.92);
+      backdrop-filter: saturate(1.2) blur(8px);
+      border-bottom: 1px solid #eeeeee;
+      box-shadow: 0 4px 12px rgba(10, 10, 10, 0.06);
+    }
+
+    .subnav .inner {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.5rem 0.75rem;
+      align-items: center;
+      justify-content: center;
+      min-height: 3.25rem;
+      padding: 0 1rem;
+    }
+
+    .subnav a {
+      display: inline-flex;
+      align-items: center;
+      height: 2.25rem;
+      padding: 0 0.75rem;
+      border-radius: 8px;
+      color: #4a4a4a;
+      font-weight: 600;
+      text-decoration: none;
+    }
+
+    .subnav a:hover {
+      color: #111111;
+      background: #f5f5f5;
+    }
+
+    section[id] {
+      scroll-margin-top: 4.5rem;
     }
 
     .table-container {
@@ -182,6 +306,17 @@
   </div>
 </section>
 
+<nav class="subnav" role="navigation" aria-label="Section navigation">
+  <div class="inner">
+    <a href="#abstract">Abstract</a>
+    <a href="#overview">Overview</a>
+    <a href="#methodology">Methodology</a>
+    <a href="#results">Results</a>
+    <a href="#analysis">Analysis</a>
+    <a href="#citation">Citation</a>
+  </div>
+</nav>
+
 <section class="section">
   <div class="container is-max-desktop">
     <div class="columns is-centered has-text-centered">
@@ -195,11 +330,11 @@
   </div>
 </section>
 
-<section class="section">
+<section class="section" id="abstract">
   <div class="container is-max-desktop">
     <div class="columns is-centered has-text-centered">
       <div class="column is-four-fifths">
-        <h2 class="title is-3">Abstract</h2>
+        <h2 class="title is-3 has-text-centered"><span class="section-heading">Abstract</span></h2>
         <div class="content has-text-justified">
           <p>
             Cross-domain multimodal time series forecasting is a challenging task, requiring models to integrate precise numerical comprehension, cross-domain semantic understanding, and effective multimodal fusion. Existing approaches either build Time Series Foundation Models (TSFMs) from scratch or leverage pretrained Large Language Models (LLMs). However, TSFMs often overlook semantic understanding and lack the ability to perform future-oriented semantic reasoning, and LLMs struggle with numerical comprehension and accurate quantitative forecasting. To overcome these limitations, we propose <span class="small-caps">KairosAgent</span>, a novel agentic framework for multimodal time series forecasting, including an LLM-based reasoner and a TSFM-based forecaster. <span class="small-caps">KairosAgent</span> unifies textual reasoning and numerical forecasting by dynamically invoking analytical tools to enhance the numerical understanding and semantic reasoning capabilities of LLMs. The reasoning results are subsequently fused into the TSFM pipeline, enabling more accurate and reliable future predictions. To further improve the reasoning, we curate a large-scale corpus of high-quality trajectories, alongside a reinforcement learning from forecasting paradigm with multi-turn refinement and turn-level credit assignment. Experiments demonstrate that <span class="small-caps">KairosAgent</span> achieves superior zero-shot forecasting performance while maximizing the utility of pretrained LLMs and TSFMs, presenting a promising direction for efficient and interpretable time series agents.
@@ -210,11 +345,11 @@
   </div>
 </section>
 
-<section class="section">
+<section class="section" id="overview">
   <div class="container is-max-desktop">
     <div class="columns is-centered has-text-centered">
       <div class="column is-full-width">
-        <h2 class="title is-3">Overview</h2>
+        <h2 class="title is-3 has-text-centered"><span class="section-heading">Overview</span></h2>
         <img src="./static/images/teaser.svg" alt="KairosAgent overview">
         <p class="content has-text-centered figure-caption">
           <strong>Figure 2.</strong> <span class="small-caps">KairosAgent</span> bridges semantic reasoning and numerical forecasting through an LLM reasoner, tool-grounded morphology analysis, and a TSFM forecaster.
@@ -224,16 +359,16 @@
   </div>
 </section>
 
-<section class="section">
+<section class="section" id="methodology">
   <div class="container is-max-desktop">
-    <h2 class="title is-3 has-text-centered">Methodology</h2>
+    <h2 class="title is-3 has-text-centered"><span class="section-heading">Methodology</span></h2>
     <div class="content has-text-justified">
       <p>
         <span class="small-caps">KairosAgent</span> follows a modular reason-then-forecast design: the LLM reasoner handles semantic pattern analysis, while the TSFM forecaster preserves precise numerical prediction.
       </p>
     </div>
 
-    <h3 class="title is-4 has-text-centered">Overall Framework</h3>
+    <h3 class="title is-4 has-text-centered"><span class="subsection-heading">Overall Framework</span></h3>
     <div class="columns is-centered methodology-cards">
       <div class="column">
         <div class="pipeline-card">
@@ -259,7 +394,7 @@
   <div class="container is-max-desktop">
     <div class="columns is-centered has-text-centered">
       <div class="column is-four-fifths">
-        <h3 class="title is-4">T-STAR Corpus</h3>
+        <h3 class="title is-4 has-text-centered"><span class="subsection-heading">T-STAR Corpus</span></h3>
         <div class="content has-text-justified">
           <p>
             <span class="small-caps">KairosAgent</span> is trained with <span class="small-caps">T-STAR</span>, a 40k-trajectory time series reasoning corpus with tool augmentation. The corpus covers diverse domains and provides process-level supervision for multi-turn analytical reasoning.
@@ -276,7 +411,7 @@
 
 <section class="section">
   <div class="container is-max-desktop">
-    <h3 class="title is-4 has-text-centered">Training Strategy</h3>
+    <h3 class="title is-4 has-text-centered"><span class="subsection-heading">Training Strategy</span></h3>
     <div class="columns is-centered methodology-cards">
       <div class="column">
         <div class="pipeline-card">
@@ -306,9 +441,10 @@
   </div>
 </section>
 
-<section class="section">
+<section class="section" id="results">
   <div class="container is-max-desktop">
-    <h2 class="title is-3 has-text-centered">Zero-Shot Reasoning Results</h2>
+    <h2 class="title is-3 has-text-centered"><span class="section-heading">Results</span></h2>
+    <h3 class="title is-4 has-text-centered"><span class="subsection-heading">Zero-Shot Reasoning Results</span></h3>
     <div class="content has-text-justified">
       <p>
         <span class="small-caps">KairosAgent</span> improves future morphology reasoning by grounding LLM analysis in statistical tool observations. With turn-level RL, the 4B reasoner achieves the best accuracy among comparable-scale models across all evaluated Time-MMD domains.
@@ -384,13 +520,13 @@
 
 <section class="section">
   <div class="container is-max-desktop">
-    <h2 class="title is-3 has-text-centered">Zero-Shot Forecasting Results</h2>
+    <h3 class="title is-4 has-text-centered"><span class="subsection-heading">Zero-Shot Forecasting Results</span></h3>
     <div class="content has-text-justified">
       <p>
         <span class="small-caps">KairosAgent</span> achieves strong zero-shot forecasting on both regular Time-MMD and irregular Time-IMM benchmarks. The Time-MMD table summarizes domain-level MSE and MAE against zero-shot TSFMs and full-shot baselines, while the Time-IMM radar chart shows robustness under temporal irregularities.
       </p>
     </div>
-    <h3 class="title is-4 has-text-centered">Regular Forecasting Evaluation</h3>
+    <h3 class="title is-4 has-text-centered"><span class="subsection-heading">Regular Forecasting Evaluation</span></h3>
     <div class="table-container">
       <table class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth is-centered-content">
         <thead>
@@ -550,7 +686,7 @@
     <p class="content is-size-7 has-text-grey">
       Time-MMD performance across diverse domains. Lower MSE and MAE are better. Red bold and blue underline mark best and second-best results.
     </p>
-    <h3 class="title is-4 has-text-centered">Irregular Forecasting Evaluation</h3>
+    <h3 class="title is-4 has-text-centered"><span class="subsection-heading">Irregular Forecasting Evaluation</span></h3>
     <div class="columns is-centered">
       <div class="column is-three-quarters has-text-centered">
         <img class="radar-figure" src="./static/images/timeimm-radar.svg" alt="Time-IMM radar results">
@@ -562,11 +698,11 @@
   </div>
 </section>
 
-<section class="section">
+<section class="section" id="analysis">
   <div class="container is-max-desktop">
     <div class="columns is-centered has-text-centered">
       <div class="column is-full-width">
-        <h2 class="title is-3">Tool Usage Analysis</h2>
+        <h2 class="title is-3 has-text-centered"><span class="section-heading">Tool Usage Analysis</span></h2>
         <div class="content has-text-justified">
           <p>
             The agent learns a data-dependent tool selection policy rather than a fixed calling pattern. Tool usage shifts across reasoning turns and adapts to dataset-specific temporal properties.
@@ -580,6 +716,43 @@
     </div>
   </div>
 </section>
+
+<section class="section" id="citation">
+  <div class="container is-max-desktop">
+    <div class="columns is-centered">
+      <div class="column is-four-fifths">
+        <h2 class="title is-3 has-text-centered"><span class="section-heading">Citation</span></h2>
+        <p class="content has-text-centered">
+          If you find <span class="small-caps">KairosAgent</span> useful in your research, please cite our paper:
+        </p>
+        <div class="bibtex-box">
+          <button class="copy-btn" type="button" onclick="copyBibtex(this)">Copy</button>
+          <pre><code>@article{feng2026kairosagent,
+  title={KairosAgent: Agentic Time Series Forecasting with Fused Semantic Reasoning},
+  author={Feng, Kun and Shan, Ziwei and Fang, Yuchen and Tan, Yiyang and Lu, Sihan and Gu, Shuqi and Ma, Lintao and Lu, Xingyu and Ren, Kan},
+  journal={arXiv preprint arXiv:2605.30002},
+  year={2026}
+}</code></pre>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<script>
+  function copyBibtex(btn) {
+    const box = btn.closest(".bibtex-box");
+    const text = box ? box.querySelector("code").textContent : "";
+    navigator.clipboard.writeText(text).then(() => {
+      btn.textContent = "Copied!";
+      btn.classList.add("copied");
+      setTimeout(() => {
+        btn.textContent = "Copy";
+        btn.classList.remove("copied");
+      }, 2000);
+    });
+  }
+</script>
 
 <footer class="footer">
   <div class="container">
