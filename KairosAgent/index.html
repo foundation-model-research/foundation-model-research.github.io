@@ -53,6 +53,13 @@
       font-size: 1.05em;
     }
 
+    @media screen and (min-width: 1216px) {
+      .publication-title-line {
+        display: block;
+        white-space: nowrap;
+      }
+    }
+
     .pipeline-card {
       height: 100%;
       border-radius: 14px;
@@ -241,14 +248,17 @@
 
 <section class="hero">
   <div class="hero-body">
-    <div class="container is-max-desktop">
+    <div class="container is-max-widescreen">
       <div class="columns is-centered">
         <div class="column has-text-centered">
-          <h1 class="title is-1 publication-title"><span class="small-caps">KairosAgent</span>: Agentic Time Series Forecasting with Fused Semantic Reasoning</h1>
+          <h1 class="title is-1 publication-title">
+            <span class="publication-title-line"><span class="small-caps">KairosAgent</span>: Agentic Time Series Forecasting</span>
+            <span class="publication-title-line">with Fused Semantic Reasoning</span>
+          </h1>
 
           <div class="has-text-centered" style="color: #FF6F00; margin: 0.5rem 0;">
             <h2 class="title is-4" style="color: inherit;">
-              Preprint
+              EMNLP 2026
             </h2>
           </div>
 
@@ -260,8 +270,8 @@
             <br>
             <span class="author-block"><a href="https://openreview.net/profile?id=~Sihan_Lu3">Sihan Lu</a><sup>1</sup>,</span>
             <span class="author-block"><a href="https://openreview.net/profile?id=~Shuqi_Gu1">Shuqi Gu</a><sup>1</sup>,</span>
-            <span class="author-block"><a href="https://openreview.net/profile?id=~Lintao_Ma1">Lintao Ma</a><sup>2</sup>,</span>
             <span class="author-block"><a href="https://openreview.net/profile?id=~Xingyu_Lu2">Xingyu Lu</a><sup>2</sup>,</span>
+            <span class="author-block"><a href="https://openreview.net/profile?id=~Lintao_Ma1">Lintao Ma</a><sup>2</sup>,</span>
             <span class="author-block"><a href="https://www.saying.ren/">Kan Ren</a><sup>1†</sup></span>
           </div>
 
