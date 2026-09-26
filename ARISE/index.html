@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>ARISE: Adapting to Evolving Capability Gaps in Agentic Reinforcement Learning</title>
+  <meta name="description" content="ARISE adapts evaluation rubrics, skill-guided exploration, and task sampling to evolving capability gaps in long-horizon agent reinforcement learning.">
+  <meta name="keywords" content="ARISE, Agentic Reinforcement Learning, Rubrics, Skills, Adaptive Sampling, SkillsBench, Terminal-Bench">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="ARISE: Adapting to Evolving Capability Gaps in Agentic Reinforcement Learning">
+  <meta property="og:description" content="Adaptive Rubric-Skill Co-Evolution for long-horizon agents. A preprint from ShanghaiTech University and Ant Group.">
+  <meta name="theme-color" content="#285fac">
+  <link rel="icon" href="./static/images/favicon.svg" type="image/svg+xml">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Google+Sans%7CNoto+Sans:400,600,700&amp;display=swap">
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+  <script defer src="./static/js/index.js"></script>
+</head>
+<body>
+  <a class="skip-link" href="#abstract">Skip to content</a>
+  <header class="hero">
+    <div class="hero-body">
+      <div class="container is-max-widescreen has-text-centered">
+        <h1 class="title publication-title">
+          <span class="title-line"><span class="brand">ARISE</span>: Adapting to Evolving Capability Gaps</span>
+          <span class="title-line">in Agentic Reinforcement Learning</span>
+        </h1>
+        <p class="preprint">Preprint</p>
+        <div class="publication-authors">
+          <span class="author-block"><a href="https://openreview.net/profile?id=~Kun_Feng4">Kun Feng</a><sup>1,2*</sup>,</span>
+          <span class="author-block"><a href="https://openreview.net/profile?id=~Yuchen_Fang2">Yuchen Fang</a><sup>2*</sup>,</span>
+          <span class="author-block"><a href="https://openreview.net/profile?id=~Yiyang_Tan1">Yiyang Tan</a><sup>1</sup>,</span>
+          <span class="author-block"><a href="https://openreview.net/profile?id=~Shuqi_Gu1">Shuqi Gu</a><sup>1</sup>,</span>
+          <span class="author-block"><a href="https://openreview.net/profile?id=~Yongxiang_Zhao1">Yongxiang Zhao</a><sup>1</sup>,</span><br>
+          <span class="author-block"><a href="https://openreview.net/profile?id=~Yu_Liu28">Yu Liu</a><sup>2</sup>,</span>
+          <span class="author-block"><a href="https://openreview.net/profile?id=~Xingyu_Lu2">Xingyu Lu</a><sup>2</sup>,</span>
+          <span class="author-block"><a href="https://openreview.net/profile?id=~Lintao_Ma1">Lintao Ma</a><sup>2</sup>,</span>
+          <span class="author-block"><a href="https://www.saying.ren/">Kan Ren</a><sup>1&dagger;</sup></span>
+        </div>
+        <div class="affiliations">
+          <span><sup>1</sup> ShanghaiTech University</span>
+          <span><sup>2</sup> Ant Group</span>
+        </div>
+        <div class="author-notes">
+          <p><sup>*</sup> Equal contribution. Kun Feng conducted this work during an internship at Ant Group.</p>
+          <p><sup>&dagger;</sup> Corresponding author: <a href="mailto:renkan@shanghaitech.edu.cn">renkan@shanghaitech.edu.cn</a></p>
+          <p><a href="mailto:fengkun2025@shanghaitech.edu.cn">fengkun2025@shanghaitech.edu.cn</a> &middot; <a href="mailto:yuchen.fyc@antgroup.com">yuchen.fyc@antgroup.com</a></p>
+        </div>
+        <div class="publication-links" aria-label="Project resources">
+          <span class="resource-pending">Paper <small>Coming soon</small></span>
+          <span class="resource-pending">arXiv <small>Coming soon</small></span>
+          <span class="resource-pending">Code <small>Coming soon</small></span>
+        </div>
+        <p class="hero-summary">As agents improve, what they need to learn changes.<br><strong>ARISE adapts what to evaluate, how to explore, and which tasks to learn from.</strong></p>
+      </div>
+    </div>
+  </header>
+
+  <nav class="subnav" aria-label="Section navigation">
+    <div class="inner">
+      <a href="#abstract">Abstract</a>
+      <a href="#overview">Overview</a>
+      <a href="#methodology">Methodology</a>
+      <a href="#results">Results</a>
+      <a href="#analysis">Analysis</a>
+      <a href="#citation">Citation</a>
+    </div>
+  </nav>
+
+  <main>
+    <section class="section" aria-label="Motivation and highlights">
+      <div class="container is-max-desktop">
+        <figure class="figure">
+          <a href="./static/images/intro.svg" aria-label="Open the motivation and performance figure at full size">
+            <img src="./static/images/intro.svg" alt="SkillsBench performance versus model size, and an illustration of how evolving capability gaps and repeated rollout failures motivate adaptive rubrics, skills, and task selection." fetchpriority="high" width="995" height="502">
+          </a>
+          <figcaption class="figure-caption"><strong>Learning needs evolve.</strong> Fixed criteria can miss new capability gaps, while failed rollouts can hide partial behavioral progress. ARISE turns rollout evidence into evolving evaluation criteria, targeted guidance, and task priorities.</figcaption>
+        </figure>
+        <div class="metric-grid">
+          <div class="metric">
+            <p class="metric-label">SkillsBench v1.1</p>
+            <p class="metric-value">23.4% &rarr; 45.6%</p>
+            <p class="metric-note">Qwen3.5-27B &rarr; ARISE<br>+22.2 percentage points</p>
+          </div>
+          <div class="metric">
+            <p class="metric-label">Terminal-Bench v2.1</p>
+            <p class="metric-value">41.6% &rarr; 50.6%</p>
+            <p class="metric-note">Qwen3.5-27B &rarr; ARISE<br>+9.0 percentage points</p>
+          </div>
+          <div class="metric">
+            <p class="metric-label">Training efficiency</p>
+            <p class="metric-value">50 vs. 150 steps</p>
+            <p class="metric-note">Matches outcome-only RL performance<br>with the same per-step rollout budget</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section class="section section-tinted" id="abstract">
+      <div class="container is-max-desktop">
+        <h2 class="title is-3 has-text-centered"><span class="section-heading">Abstract</span></h2>
+        <div class="content abstract-copy">
+          <p>As a long-horizon agent improves through experience, previously observed weaknesses may recede while new limitations emerge, continually changing what it still needs to learn. Yet the learning process often remains tied to a static view of these needs: fixed behavioral criteria and training priorities can become misaligned with evolving agent capabilities, while sparse task-level feedback makes such misalignment more difficult to detect. Even when capability gaps are identified, rollouts from the current policy may repeatedly reproduce the same failures rather than explore better alternatives. To address this, we introduce <strong>A</strong>daptive <strong>R</strong>ubr<strong>i</strong>c&ndash;<strong>S</strong>kill Co-<strong>E</strong>volution (<strong>ARISE</strong>), a reinforcement learning framework that uses rollout evidence to continually adapt evaluation criteria, exploration guidance, and training priorities. Rubrics evolve to reward partial behavioral progress, while their paired skills are refined and selectively activated to guide exploration toward unresolved weaknesses. Alongside this co-evolution, capability-based adaptive sampling prioritizes tasks that target behaviors needing further improvement. Experiments on two challenging long-horizon agent benchmarks, SkillsBench and Terminal-Bench, demonstrate that ARISE successfully enhances both overall task performance and training efficiency.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="section" id="overview">
+      <div class="container is-max-desktop">
+        <h2 class="title is-3 has-text-centered"><span class="section-heading">Overview</span></h2>
+        <p class="section-lead">A continuous feedback loop aligns behavioral evaluation, exploration guidance, and training data with the agent's changing capabilities.</p>
+        <figure class="figure">
+          <a href="./static/images/framework.svg" aria-label="Open the ARISE framework figure at full size">
+            <img src="./static/images/framework.svg" alt="ARISE framework: capability-based sampling selects tasks, activated skills guide agent rollouts, task verifiers and rubric judges evaluate trajectories, and the resulting evidence updates both the policy and the rubric-skill pool." loading="lazy" width="1185" height="622">
+          </a>
+          <figcaption class="figure-caption"><strong>The ARISE training loop.</strong> Shared rollout evidence drives rubric&ndash;skill co-evolution and capability-based adaptive sampling. Task outcomes and behavioral feedback jointly inform policy optimization.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section class="section" id="methodology">
+      <div class="container is-max-desktop">
+        <h2 class="title is-3 has-text-centered"><span class="section-heading">Methodology</span></h2>
+        <p class="section-lead">Two coupled components keep training focused on behavioral gaps that still offer opportunities for improvement.</p>
+        <div class="columns">
+          <div class="column">
+            <article class="method-card">
+              <p class="card-kicker">Evaluate &amp; guide</p>
+              <h3 class="title is-4">Rubric&ndash;Skill Co-Evolution</h3>
+              <p>Each behavioral criterion pairs a <strong>rubric</strong> for evaluating observable progress with a <strong>skill</strong> that provides actionable guidance. A reflection model uses recent rollout evidence to discover emerging gaps and add new pairs.</p>
+              <div class="lifecycle" aria-label="Rubric and skill lifecycle operations"><span>Add</span><span>Activate</span><span>Refine</span><span>Hide</span><span>Retire</span></div>
+              <p>Low rubric pass rates activate paired skills; persistent failures prompt refinement. As performance improves, guidance is hidden while evaluation continues. Consistently mastered pairs are retired, making room for new learning needs.</p>
+            </article>
+          </div>
+          <div class="column">
+            <article class="method-card">
+              <p class="card-kicker">Select &amp; learn</p>
+              <h3 class="title is-4">Capability-Based Adaptive Sampling</h3>
+              <p>Rubric judgments estimate capability performance within each task type, revealing behavioral weaknesses that task-level success rates alone can obscure.</p>
+              <div class="lifecycle" aria-label="Task sampling components"><span>Discover</span><span>Estimate</span><span>Prioritize</span></div>
+              <p>Coverage-guided discovery explores less-evaluated tasks. Adaptive selection prioritizes task-type&ndash;capability pairs with informative success probabilities, balancing learning potential against repeated failure. As rubrics evolve, unchanged evidence is retained and obsolete contributions are discarded.</p>
+            </article>
+          </div>
+        </div>
+        <p class="training-note"><strong>Training strategy.</strong> The rubric&ndash;skill pool starts empty, so initial training uses task rewards alone. As criteria emerge, task rewards and per-rubric feedback are normalized separately and combined for GRPO-style policy optimization with importance-ratio filtering. Updates apply to model-generated tokens, excluding tool outputs and environment observations.</p>
+      </div>
+    </section>
+
+    <section class="section section-tinted" id="results">
+      <div class="container is-max-widescreen">
+        <h2 class="title is-3 has-text-centered"><span class="section-heading">Results</span></h2>
+        <p class="section-lead">ARISE achieves the highest overall pass rates among comparable-scale models on both benchmarks, with gains that transfer from the Kilo Code harness to Terminus-2.</p>
+        <div class="table-container" tabindex="0" role="region" aria-label="Benchmark results; scroll horizontally to view all domains" aria-describedby="results-note">
+          <table class="table results-table">
+            <caption class="is-sr-only">Task pass rates in percent on SkillsBench v1.1 and Terminal-Bench v2.1.</caption>
+            <thead>
+              <tr><th rowspan="2" scope="col">Model</th><th colspan="9" scope="colgroup">SkillsBench v1.1</th><th scope="colgroup">TB v2.1</th></tr>
+              <tr><th scope="col">SE</th><th scope="col">NS</th><th scope="col">OW</th><th scope="col">IP</th><th scope="col">FE</th><th scope="col">MR</th><th scope="col">CS</th><th scope="col">MC</th><th scope="col">Overall</th><th scope="col">Overall</th></tr>
+            </thead>
+            <tbody>
+              <tr class="group-row"><th colspan="11">Proprietary Models</th></tr>
+              <tr><th scope="row">GPT-5.4 Mini</th><td>27.1</td><td>35.7</td><td>45.2</td><td>21.4</td><td>25.9</td><td>41.7</td><td>33.3</td><td>66.7</td><td>34.5</td><td>59.2</td></tr>
+              <tr><th scope="row">GPT-5.5</th><td>63.4</td><td>77.9</td><td>76.2</td><td>57.5</td><td>37.0</td><td>95.0</td><td>69.0</td><td>60.0</td><td>67.3</td><td>84.3</td></tr>
+              <tr><th scope="row">Claude Opus-4.7</th><td>58.3</td><td>83.3</td><td>54.8</td><td>54.8</td><td>44.4</td><td>50.0</td><td>57.1</td><td>53.3</td><td>58.6</td><td>83.1</td></tr>
+              <tr class="group-row"><th colspan="11">Open-Weight Models</th></tr>
+              <tr><th scope="row">GPT-OSS-120B</th><td>&mdash;</td><td>&mdash;</td><td>&mdash;</td><td>&mdash;</td><td>&mdash;</td><td>&mdash;</td><td>&mdash;</td><td>&mdash;</td><td>&mdash;</td><td>26.2</td></tr>
+              <tr><th scope="row">MiniMax-M2.7</th><td>14.6</td><td>59.5</td><td>28.6</td><td>19.0</td><td>33.3</td><td>29.2</td><td>23.8</td><td>13.3</td><td>28.7</td><td>55.4</td></tr>
+              <tr><th scope="row">GLM-5.1</th><td>41.7</td><td>76.2</td><td>69.0</td><td>45.2</td><td>33.3</td><td>37.5</td><td>47.6</td><td>80.0</td><td>53.6</td><td>61.8</td></tr>
+              <tr><th scope="row">Kimi-K2.6</th><td>39.6</td><td>76.2</td><td>57.1</td><td>50.0</td><td>44.4</td><td>66.7</td><td>47.6</td><td>66.7</td><td>55.2</td><td>65.9</td></tr>
+              <tr><th scope="row">DeepSeek-V3.2</th><td>&mdash;</td><td>&mdash;</td><td>&mdash;</td><td>&mdash;</td><td>&mdash;</td><td>&mdash;</td><td>&mdash;</td><td>&mdash;</td><td>&mdash;</td><td>46.8</td></tr>
+              <tr><th scope="row">DeepSeek-V4-Pro</th><td>37.5</td><td>73.8</td><td>52.4</td><td>42.9</td><td>29.6</td><td>66.7</td><td>42.9</td><td>80.0</td><td>51.3</td><td>64.8</td></tr>
+              <tr><th scope="row">DeepSeek-V4-Pro-0813</th><td>62.5</td><td>81.0</td><td>64.3</td><td>47.6</td><td>48.1</td><td>50.0</td><td>42.9</td><td>60.0</td><td>59.0</td><td>78.7</td></tr>
+              <tr><th scope="row">Qwen3.5-122B-A10B</th><td>18.8</td><td>40.5</td><td>23.8</td><td>16.7</td><td>22.2</td><td>33.3</td><td>19.0</td><td>13.3</td><td>24.1</td><td>47.6</td></tr>
+              <tr><th scope="row">Qwen3.5-397B-A17B</th><td>16.7</td><td>45.2</td><td>38.1</td><td>31.0</td><td>22.2</td><td>37.5</td><td>23.8</td><td>20.0</td><td>30.3</td><td>51.3</td></tr>
+              <tr><th scope="row">Nemotron-3-Ultra-550B-A55B</th><td>&mdash;</td><td>&mdash;</td><td>&mdash;</td><td>&mdash;</td><td>&mdash;</td><td>&mdash;</td><td>&mdash;</td><td>&mdash;</td><td>&mdash;</td><td>53.9</td></tr>
+              <tr class="group-row"><th colspan="11">Comparable-Scale Models</th></tr>
+              <tr><th scope="row">Qwen3.5-27B (Base Model)</th><td>14.6</td><td>40.5</td><td>26.2</td><td>23.8</td><td>18.5</td><td>29.2</td><td>14.3</td><td>6.7</td><td>23.4</td><td>41.6</td></tr>
+              <tr><th scope="row">VADE</th><td>25.0</td><td>54.8</td><td>38.1</td><td>31.0</td><td>33.3</td><td><strong>50.0</strong></td><td>23.8</td><td>73.3</td><td>38.7</td><td>43.8</td></tr>
+              <tr><th scope="row">OnlineRubrics</th><td>29.2</td><td><strong>64.3</strong></td><td>38.1</td><td>31.0</td><td>37.0</td><td>33.3</td><td><strong>28.6</strong></td><td>73.3</td><td>40.2</td><td>46.1</td></tr>
+              <tr><th scope="row">RuscaRL</th><td>33.3</td><td>57.1</td><td>42.9</td><td>26.2</td><td><strong>40.7</strong></td><td>29.2</td><td>23.8</td><td>73.3</td><td>39.5</td><td>44.9</td></tr>
+              <tr class="ours-row"><th scope="row"><strong>ARISE</strong></th><td><strong>41.7</strong></td><td>59.5</td><td><strong>52.4</strong></td><td><strong>38.1</strong></td><td><strong>40.7</strong></td><td>33.3</td><td>23.8</td><td><strong>80.0</strong></td><td><strong>45.6</strong></td><td><strong>50.6</strong></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <p class="table-note" id="results-note">Pass rates (%); higher is better. <strong>Bold red values</strong> mark the best results within comparable-scale models. Dashes indicate unreported results.<br>SE: software engineering; NS: natural science; OW: office and white collar; IP: industrial and physical systems; FE: finance and economics; MR: mathematics and operations research/formal reasoning; CS: cybersecurity; MC: media and content production.</p>
+        <div class="protocol-note"><strong>Evaluation protocol.</strong> SkillsBench uses Kilo Code with benchmark-provided curated skills. These differ from the rubric-paired skills evolved by ARISE, which are <strong>withheld on both evaluation benchmarks</strong>. Terminal-Bench uses Terminus-2. Our evaluations average three independent runs. SkillsBench GPT-5.5 results and Terminal-Bench results outside the comparable-scale group come from official leaderboards.</div>
+      </div>
+    </section>
+
+    <section class="section" id="analysis">
+      <div class="container is-max-desktop">
+        <h2 class="title is-3 has-text-centered"><span class="section-heading">Analysis</span></h2>
+        <article class="analysis-block">
+          <h3 class="title is-4 has-text-centered">Each component contributes to learning</h3>
+          <div class="content"><p>Dynamic rubric evolution, skill-guided exploration, and capability-based sampling each contribute to performance. Under the same per-step rollout budget, ARISE reaches the step-150 performance of outcome-only RL by step 50 and continues improving. This comparison measures training steps and rollout efficiency.</p></div>
+          <figure class="figure">
+            <a href="./static/images/skillsbench-ablation-efficiency.svg" aria-label="Open the ablation and training efficiency figure at full size"><img src="./static/images/skillsbench-ablation-efficiency.svg" alt="Ablation comparison of ARISE against frozen rubrics, no skill injection, alternative sampling, and outcome-only RL, alongside SkillsBench pass rates over training steps." loading="lazy" width="654" height="200"></a>
+            <figcaption class="figure-caption"><strong>Ablations and training efficiency.</strong> Variants use matched initialization, data, and training budgets. Even the full lifecycle rubric pool, when kept fixed, does not replace dynamic evolution.</figcaption>
+          </figure>
+        </article>
+        <article class="analysis-block">
+          <h3 class="title is-4 has-text-centered">Behavioral feedback evolves with the policy</h3>
+          <div class="content"><p>Starting from an empty pool, ARISE introduces <strong>36 criteria</strong> and retires <strong>21</strong>, leaving <strong>15 active</strong>. Supervision changes through replacement, not just accumulation. On a fixed task set, skill guidance reduces all-failure rollout groups compared with the variant without skill injection, with the largest gap early in training.</p></div>
+          <figure class="figure">
+            <a href="./static/images/coevo_dynamics.svg" aria-label="Open the co-evolution dynamics figure at full size"><img src="./static/images/coevo_dynamics.svg" alt="Training dynamics showing active, added, and retired rubrics; rubric reward and task pass rates; and lower all-failure rollout group rates with skill injection." loading="lazy" width="711" height="183"></a>
+            <figcaption class="figure-caption"><strong>Co-evolution dynamics.</strong> The active criteria change as capabilities develop, while paired skills help the policy explore beyond repeated failures.</figcaption>
+          </figure>
+        </article>
+        <article class="analysis-block">
+          <h3 class="title is-4 has-text-centered">Training priorities shift toward emerging gaps</h3>
+          <div class="content"><p>Early adaptive sampling emphasizes execution and verification. Later stages increasingly target debugging and efficiency as new criteria enter the pool. Blank cells indicate limited coverage or absent active rubrics; discovery sampling continues to explore these tasks.</p></div>
+          <figure class="figure">
+            <a href="./static/images/task_heatmap.svg" aria-label="Open the task sampling heatmaps at full size"><img src="./static/images/task_heatmap.svg" alt="Heatmaps of task-type and capability sampling probabilities across early, middle, and late training, showing changing priorities from execution and verification toward debugging and efficiency." loading="lazy" width="669" height="266"></a>
+            <figcaption class="figure-caption"><strong>Adaptive data allocation.</strong> Probabilities exclude discovery sampling. Early, middle, and late stages correspond to steps 1&ndash;50, 51&ndash;100, and 101&ndash;150.</figcaption>
+          </figure>
+        </article>
+      </div>
+    </section>
+
+    <section class="section" id="citation">
+      <div class="container is-max-desktop">
+        <h2 class="title is-3 has-text-centered"><span class="section-heading">Citation</span></h2>
+        <p class="has-text-centered">If you find ARISE useful in your research, please cite our preprint.</p>
+        <div class="bibtex-box">
+          <button class="copy-btn" id="copy-bibtex" type="button" aria-label="Copy BibTeX citation">Copy</button>
+          <pre tabindex="0" aria-label="BibTeX citation"><code id="bibtex">@misc{feng2026arise,
+  title={ARISE: Adapting to Evolving Capability Gaps in Agentic Reinforcement Learning},
+  author={Feng, Kun and Fang, Yuchen and Tan, Yiyang and Gu, Shuqi and Zhao, Yongxiang
+          and Liu, Yu and Lu, Xingyu and Ma, Lintao and Ren, Kan},
+  year={2026},
+  note={Preprint}
+}</code></pre>
+        </div>
+        <p class="copy-status" id="copy-status" role="status" aria-live="polite"></p>
+      </div>
+    </section>
+  </main>
+
+  <footer class="footer">
+    <div class="container is-max-desktop has-text-centered">
+      <p><strong>ARISE</strong> &middot; ShanghaiTech University &amp; Ant Group</p>
+      <p>This website is adapted from <a href="../KairosAgent/">KairosAgent</a> and the <a href="https://github.com/nerfies/nerfies.github.io">Nerfies website</a>.</p>
+      <p>Website content is licensed under <a rel="license" href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>.</p>
+    </div>
+  </footer>
+</body>
+</html>
