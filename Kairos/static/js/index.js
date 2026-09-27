@@ -1,78 +1,89 @@
-window.HELP_IMPROVE_VIDEOJS = false;
+"use strict";
 
-// var INTERP_BASE = "./static/interpolation/stacked";
-// var NUM_INTERP_FRAMES = 240;
+const copyButton = document.querySelector("#copy-bibtex");
+const citation = document.querySelector("#bibtex");
+const copyStatus = document.querySelector("#copy-status");
 
-// var interp_images = [];
-// function preloadInterpolationImages() {
-//   for (var i = 0; i < NUM_INTERP_FRAMES; i++) {
-//     var path = INTERP_BASE + '/' + String(i).padStart(6, '0') + '.jpg';
-//     interp_images[i] = new Image();
-//     interp_images[i].src = path;
-//   }
-// }
+if (copyButton && citation && copyStatus) {
+  let resetTimer;
+  copyButton.addEventListener("click", async () => {
+    clearTimeout(resetTimer);
+    try {
+      if (!navigator.clipboard || !window.isSecureContext) {
+        throw new Error("Clipboard is unavailable");
+      }
+      await navigator.clipboard.writeText(citation.textContent.trim());
+      copyButton.textContent = "Copied!";
+      copyStatus.textContent = "Citation copied to clipboard.";
+    } catch (error) {
+      const selection = window.getSelection();
+      const range = document.createRange();
+      range.selectNodeContents(citation);
+      selection.removeAllRanges();
+      selection.addRange(range);
+      copyButton.textContent = "Copy";
+      copyStatus.textContent = "Automatic copying is unavailable. The citation is selected; copy it using your browser or keyboard.";
+    }
+    resetTimer = setTimeout(() => {
+      copyButton.textContent = "Copy";
+    }, 2500);
+  });
+}
 
-// function setInterpolationImage(i) {
-//   var image = interp_images[i];
-//   image.ondragstart = function() { return false; };
-//   image.oncontextmenu = function() { return false; };
-//   $('#interpolation-image-wrapper').empty().append(image);
-// }
+async function loadDownloadSnapshot() {
+  const totalElement = document.querySelector("#download-total");
+  const statusElement = document.querySelector("#download-status");
+  if (!totalElement || !statusElement) return;
 
+  const models = [
+    "mldi-lab/Kairos_50m",
+    "mldi-lab/Kairos_23m",
+    "mldi-lab/Kairos_10m",
+  ];
 
-$(document).ready(function() {
-    // Check for click events on the navbar burger icon
-    $(".navbar-burger").click(function() {
-      // Toggle the "is-active" class on both the "navbar-burger" and the "navbar-menu"
-      $(".navbar-burger").toggleClass("is-active");
-      $(".navbar-menu").toggleClass("is-active");
-
+  try {
+    const response = await fetch("./static/data/downloads.json", {
+      cache: "no-cache",
     });
-
-    var options = {
-			slidesToScroll: 1,
-			slidesToShow: 3,
-			loop: true,
-			infinite: true,
-			autoplay: false,
-			autoplaySpeed: 3000,
+    if (!response.ok) throw new Error("Snapshot unavailable");
+    const snapshot = await response.json();
+    if (
+      snapshot.metric !== "downloadsAllTime" ||
+      !Array.isArray(snapshot.models) ||
+      snapshot.models.length !== models.length ||
+      typeof snapshot.updated_at !== "string" ||
+      !Number.isFinite(Date.parse(snapshot.updated_at))
+    ) {
+      throw new Error("Incomplete snapshot");
     }
 
-		// Initialize all div with carousel class
-    var carousels = bulmaCarousel.attach('.carousel', options);
-
-    // Loop on each carousel initialized
-    for(var i = 0; i < carousels.length; i++) {
-    	// Add listener to  event
-    	carousels[i].on('before:show', state => {
-    		console.log(state);
-    	});
+    const reportedTotal = snapshot.source === "project-maintainer";
+    const counts = models.map(modelId => {
+      const entries = snapshot.models.filter(model => model.id === modelId);
+      if (entries.length !== 1) throw new Error("Invalid model coverage");
+      const count = entries[0].downloads;
+      if (reportedTotal && count === null) return null;
+      if (!Number.isSafeInteger(count) || count < 0) {
+        throw new Error("Missing cumulative count");
+      }
+      return count;
+    });
+    const total = reportedTotal
+      ? snapshot.total
+      : counts.reduce((sum, count) => sum + count, 0);
+    if (!Number.isSafeInteger(total) || total < 0) throw new Error("Invalid total");
+    if (reportedTotal && !counts.every(count => count === null)) {
+      throw new Error("Reported total must not include unverified model counts");
     }
 
-    // Access to bulmaCarousel instance of an element
-    var element = document.querySelector('#my-element');
-    if (element && element.bulmaCarousel) {
-    	// bulmaCarousel instance is available as element.bulmaCarousel
-    	element.bulmaCarousel.on('before-show', function(state) {
-    		console.log(state);
-    	});
-    }
+    totalElement.textContent = total.toLocaleString("en-US");
+    const date = new Date(snapshot.updated_at).toLocaleDateString("en-US", {
+      year: "numeric", month: "short", day: "numeric", timeZone: "UTC",
+    });
+    statusElement.textContent = `As of ${date}`;
+  } catch (error) {
+    // Keep the dated static snapshot visible when a refresh is unavailable.
+  }
+}
 
-    /*var player = document.getElementById('interpolation-video');
-    player.addEventListener('loadedmetadata', function() {
-      $('#interpolation-slider').on('input', function(event) {
-        console.log(this.value, player.duration);
-        player.currentTime = player.duration / 100 * this.value;
-      })
-    }, false);*/
-    // preloadInterpolationImages();
-
-    // $('#interpolation-slider').on('input', function(event) {
-    //   setInterpolationImage(this.value);
-    // });
-    // setInterpolationImage(0);
-    // $('#interpolation-slider').prop('max', NUM_INTERP_FRAMES - 1);
-
-    bulmaSlider.attach();
-
-})
+loadDownloadSnapshot();

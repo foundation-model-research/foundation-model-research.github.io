@@ -1,15 +1,24 @@
 <!DOCTYPE html>
-<html>
+<html lang="en">
 <head>
-  <link rel="icon" href="/static/images/favicon.ico" type="image/x-icon">
   <meta charset="utf-8">
-  <meta name="description"
-        content="KAIROS: Toward Adaptive and Parameter-Efficient Time Series Foundation Models">
-  <meta name="keywords" content="Time Series, Foundation Models, Deep Learning, Forecasting, KAIROS">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <title>KAIROS: Toward Adaptive and Parameter-Efficient Time Series Foundation Models</title>
-
-  <script async src="https://www.googletagmanager.com/gtag/js?id=G-PYVRSFMDRL"></script>
+  <title>Kairos: Toward Adaptive and Parameter-Efficient Time Series Foundation Models</title>
+  <meta name="description" content="Kairos is an adaptive and parameter-efficient time series foundation model. Accepted at NeurIPS 2026.">
+  <meta name="keywords" content="Time Series, Foundation Models, Deep Learning, Forecasting, Kairos, NeurIPS 2026">
+  <meta property="og:type" content="website">
+  <meta property="og:title" content="Kairos: Toward Adaptive and Parameter-Efficient Time Series Foundation Models">
+  <meta property="og:description" content="Adaptive tokenization and efficient zero-shot forecasting. Accepted at NeurIPS 2026.">
+  <meta name="theme-color" content="#285fac">
+  <link rel="icon" href="./static/images/favicon.ico" type="image/x-icon">
+  <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Google+Sans%7CNoto+Sans:400,600,700&amp;display=swap">
+  <link rel="stylesheet" href="./static/css/bulma.min.css">
+  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
+  <link rel="stylesheet" href="./static/css/index.css">
+  <script defer src="./static/js/fontawesome.all.min.js"></script>
+  <script defer src="./static/js/index.js"></script>
+  <script async="" src="https://www.googletagmanager.com/gtag/js?id=G-PYVRSFMDRL"></script>
   <script>
     window.dataLayer = window.dataLayer || [];
 
@@ -21,346 +30,397 @@
 
     gtag('config', 'G-PYVRSFMDRL');
   </script>
-
-  <link href="https://fonts.googleapis.com/css?family=Google+Sans|Noto+Sans|Castoro"
-        rel="stylesheet">
-
-  <link rel="stylesheet" href="./static/css/bulma.min.css">
-  <link rel="stylesheet" href="./static/css/bulma-carousel.min.css">
-  <link rel="stylesheet" href="./static/css/bulma-slider.min.css">
-  <link rel="stylesheet" href="./static/css/fontawesome.all.min.css">
-  <link rel="stylesheet"
-        href="https://cdn.jsdelivr.net/gh/jpswalsh/academicons@1/css/academicons.min.css">
-  <link rel="stylesheet" href="./static/css/index.css">
-  <link rel="icon" href="./static/images/favicon.ico" type="image/x-icon">
-
-  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
-  <script defer src="./static/js/fontawesome.all.min.js"></script>
-  <script src="./static/js/bulma-carousel.min.js"></script>
-  <script src="./static/js/bulma-slider.min.js"></script>
-  <script src="./static/js/index.js"></script>
-  <style>
-    /*
-     * 新增的 small-caps 样式
-     * font-variant: small-caps; 是实现 \textsc 的关键
-    */
-    @import url('https://fonts.googleapis.com/css2?family=EB+Garamond:ital,wght@0,400;0,700;1,400&display=swap');
-
-    .small-caps {
-      font-family: 'EB Garamond', serif;
-      font-variant: small-caps;
-      font-weight: 600;
-      letter-spacing: 0.5px;
-      font-size: 1.05em;
-    }
-    .table-container {
-      overflow-x: auto;
-    }
-    .table.is-centered-content th,
-    .table.is-centered-content td {
-        text-align: center !important;
-        vertical-align: middle !important;
-    }
-    .publication-email {
-      color: #4a4a4a;
-      letter-spacing: 0.01em;
-    }
-  </style>
 </head>
 <body>
+  <a class="skip-link" href="#impact">Skip to content</a>
+  <header class="hero">
+    <div class="hero-body">
+      <div class="container is-max-widescreen has-text-centered">
+        <h1 class="title publication-title">
+          <span class="title-line"><span class="brand">Kairos</span>: Toward Adaptive and Parameter-Efficient</span>
+          <span class="title-line">Time Series Foundation Models</span>
+        </h1>
+        <p class="publication-venue">NeurIPS 2026</p>
+        <div class="publication-authors">
+          <span class="author-block"><a href="https://openreview.net/profile?id=~Kun_Feng4">Kun Feng</a><sup>1*</sup>,</span>
+          <span class="author-block"><a href="https://openreview.net/profile?id=~Shaocheng_Lan1">Shaocheng Lan</a><sup>1*</sup>,</span>
+          <span class="author-block"><a href="https://openreview.net/profile?id=~Yuchen_Fang2">Yuchen Fang</a><sup>2*</sup>,</span>
+          <span class="author-block"><a href="https://openreview.net/profile?id=~Wenchao_He1">Wenchao He</a><sup>1</sup>,</span>
+          <br/>
+          <span class="author-block"><a href="https://openreview.net/profile?id=~Sihan_Lu3">Sihan Lu</a><sup>1</sup>,</span>
+          <span class="author-block"><a href="https://openreview.net/profile?id=~Shuqi_Gu1">Shuqi Gu</a><sup>1</sup>,</span>
+          <span class="author-block"><a href="https://openreview.net/profile?id=~Lintao_Ma1">Lintao Ma</a><sup>2</sup>,</span>
+          <span class="author-block"><a href="https://openreview.net/profile?id=~Xingyu_Lu2">Xingyu Lu</a><sup>2</sup>,</span>
+          <span class="author-block"><a href="https://www.saying.ren/">Kan Ren</a><sup>1†</sup></span>
+        </div>
+        <div class="affiliations">
+          <span><sup>1</sup> ShanghaiTech University</span>
+          <span><sup>2</sup> Ant Group</span>
+        </div>
+        <div class="author-notes">
+          <p><sup>*</sup> Equal contribution. <sup>&dagger;</sup> Corresponding author.</p>
+          <p>{fengkun2025,lanshch2024,renkan}@shanghaitech.edu.cn</p>
+          <p><a href="mailto:yuchen.fyc@antgroup.com">yuchen.fyc@antgroup.com</a></p>
+        </div>
+        <div class="publication-links" aria-label="Project resources">
+          <a class="resource-link" href="https://arxiv.org/pdf/2509.25826">
+            <span class="icon" aria-hidden="true"><i class="fas fa-file-pdf"></i></span>
+            <span>Paper</span>
+          </a>
+          <a class="resource-link" href="https://arxiv.org/abs/2509.25826">
+            <span class="icon" aria-hidden="true"><i class="ai ai-arxiv"></i></span>
+            <span>arXiv</span>
+          </a>
+          <a class="resource-link" href="https://github.com/foundation-model-research/Kairos">
+            <span class="icon" aria-hidden="true"><i class="fab fa-github"></i></span>
+            <span>Code</span>
+          </a>
+          <a class="resource-link" href="https://huggingface.co/mldi-lab/Kairos_50m">
+            <span class="icon" aria-hidden="true">🤗</span>
+            <span>Hugging Face</span>
+          </a>
+        </div>
+        <p class="hero-summary">Adapt to temporal heterogeneity with fewer parameters.<br><strong>Dynamic tokenization, heterogeneity-aware modeling, and parallel forecasting.</strong></p>
+      </div>
+    </div>
+  </header>
 
-<section class="hero">
-  <div class="hero-body">
-    <div class="container is-max-desktop">
-      <div class="columns is-centered">
-        <div class="column has-text-centered">
-          <h1 class="title is-1 publication-title"><span class="small-caps">Kairos</span>: Toward Adaptive and Parameter-Efficient Time Series Foundation Models</h1>
+  <nav class="subnav" aria-label="Section navigation">
+    <div class="inner">
+      <a class="impact-nav" href="#impact">Impact</a>
+      <a href="#overview">Overview</a>
+      <a href="#abstract">Abstract</a>
+      <a href="#methodology">Methodology</a>
+      <a href="#results">Results</a>
+      <a href="#citation">Citation</a>
+    </div>
+  </nav>
 
-          <div class="has-text-centered" style="color: #FF6F00; margin: 0.5rem 0;">
-            <h2 class="title is-4" style="color: inherit;">
-              NeurIPS 2026
-            </h2>
+  <main>
+    <section class="section impact-section" id="impact">
+      <div class="container is-max-desktop">
+        <h2 class="title has-text-centered impact-title"><span class="section-heading">Impact</span></h2>
+        <p class="section-lead">Downloaded by the community. Built on and evaluated by leading research teams.</p>
+
+        <div class="download-panel" aria-labelledby="download-heading">
+          <div class="download-summary">
+            <p class="card-kicker">Community adoption</p>
+            <p class="download-total" id="download-total">38,997</p>
+            <h3 class="title is-4" id="download-heading">Hugging Face downloads</h3>
+            <p class="download-period">All-time cumulative downloads</p>
           </div>
-
-          <div class="is-size-5 publication-authors">
-            <span class="author-block"><a href="https://openreview.net/profile?id=~Kun_Feng4">Kun Feng</a><sup>1*</sup>,</span>
-            <span class="author-block"><a href="https://openreview.net/profile?id=~Shaocheng_Lan1">Shaocheng Lan</a><sup>1*</sup>,</span>
-            <span class="author-block"><a href="https://openreview.net/profile?id=~Yuchen_Fang2">Yuchen Fang</a><sup>2*</sup>,</span>
-            <span class="author-block"><a href="https://openreview.net/profile?id=~Wenchao_He1">Wenchao He</a><sup>1</sup>,</span>
-            <br>
-            <span class="author-block"><a href="https://openreview.net/profile?id=~Sihan_Lu3">Sihan Lu</a><sup>1</sup>,</span>
-            <span class="author-block"><a href="https://openreview.net/profile?id=~Shuqi_Gu1">Shuqi Gu</a><sup>1</sup>,</span>
-            <span class="author-block"><a href="https://openreview.net/profile?id=~Lintao_Ma1">Lintao Ma</a><sup>2</sup>,</span>
-            <span class="author-block"><a href="https://openreview.net/profile?id=~Xingyu_Lu2">Xingyu Lu</a><sup>2</sup>,</span>
-            <span class="author-block"><a href="https://www.saying.ren/">Kan Ren</a><sup>1†</sup></span>
-</div>
-
-          <div class="is-size-5 publication-authors">
-            <div class="author-affiliation">
-              <span class="author-block"><sup>1</sup>ShanghaiTech University</span>
-              <span class="separator" style="margin: 0 20px;"></span>
-              <span class="author-block"><sup>2</sup>Ant Group</span>
-            </div>
-            <span class="author-block publication-email">{fengkun2025,lanshch2024,renkan}@shanghaitech.edu.cn</span><br>
-            <span class="author-block publication-email">yuchen.fyc@antgroup.com</span><br>
-            <span class="author-block"><sup>*</sup>Equal contribution</span><br>
-            <span class="author-block"><sup>†</sup>Corresponding author</span>
-          </div>
-
-          <div class="column has-text-centered">
-            <div class="publication-links">
-              <span class="link-block">
-                <a href="https://arxiv.org/pdf/2509.25826"
-                   class="external-link button is-normal is-rounded is-dark">
-                  <span class="icon">
-                      <i class="fas fa-file-pdf"></i>
-                  </span>
-                  <span>Paper</span>
-                </a>
-              </span>
-              <span class="link-block">
-                <a href="https://arxiv.org/abs/2509.25826"
-                   class="external-link button is-normal is-rounded is-dark">
-                  <span class="icon">
-                      <i class="ai ai-arxiv"></i>
-                  </span>
-                  <span>arXiv</span>
-                </a>
-              </span>
-              <span class="link-block">
-                <a href="https://github.com/foundation-model-research/Kairos"
-                   class="external-link button is-normal is-rounded is-dark">
-                  <span class="icon">
-                      <i class="fab fa-github"></i>
-                  </span>
-                  <span>Code</span>
-                  </a>
-              </span>
-              <span class="link-block">
-                <a href="https://huggingface.co/mldi-lab/Kairos_50m"
-                   class="external-link button is-normal is-rounded is-dark">
-                  <span class="icon">
-                      🤗
-                  </span>
-                  <span>Hugging Face</span>
-                  </a>
-              </span>
-            </div>
-
+          <div class="download-breakdown">
+            <p class="download-scope">Across the Kairos model family</p>
+            <ul class="download-models" aria-label="Included model repositories">
+              <li><a href="https://huggingface.co/mldi-lab/Kairos_50m">Kairos_50m <span aria-hidden="true">&#8599;</span></a></li>
+              <li><a href="https://huggingface.co/mldi-lab/Kairos_23m">Kairos_23m <span aria-hidden="true">&#8599;</span></a></li>
+              <li><a href="https://huggingface.co/mldi-lab/Kairos_10m">Kairos_10m <span aria-hidden="true">&#8599;</span></a></li>
+            </ul>
+            <p class="download-note" id="download-status" role="status">As of Sep 27, 2026</p>
           </div>
         </div>
-      </div>
-    </div>
-  </div>
-</section>
 
-<section class="hero teaser">
-  <div class="container is-max-desktop">
-    <div class="content has-text-centered">
-      <p class="subtitle">
-        <span class="small-caps">Kairos</span> achieves superior performance with fewer parameters on zero-shot forecasting benchmarks.
-      </p>
-      <img src="./static/images/intro.png"
-                 class="interpolation-image"
-                 alt="KAIROS Performance vs Parameters"
-                 >
-      <div class="content has-text-centered">
-        <p>
-          <strong>Figure 1.</strong> (a) Comparison on the GIFT-Eval benchmark demonstrates that <span class="small-caps">Kairos</span> achieves superior zero-shot forecasting performance (lower normalized MASE) while requiring significantly fewer parameters than existing TSFMs. (b)(c) Significant variation exists in information density (signal complexity) across and within different time series datasets. (d) Unlike existing TSFMs that use point-wise or fixed-size patching, <span class="small-caps">Kairos</span> uses Mixture-of-Size Tokenization to dynamically adapt to information density.
-        </p>
-      </div>
-    </div>
-  </div>
-</section>
-
-
-<section class="section">
-  <div class="container is-max-desktop">
-    <div class="columns is-centered has-text-centered">
-      <div class="column is-four-fifths">
-        <h2 class="title is-3">Abstract</h2>
-        <div class="content has-text-justified">
-          <p>
-            Inherent temporal heterogeneity, such as varying sampling densities and periodic structures, has posed substantial challenges in zero-shot generalization for Time Series Foundation Models (TSFMs). Existing TSFMs predominantly rely on massive parameterization to absorb such heterogeneity, as their static tokenization and positional encoding schemes entangle diverse temporal patterns into a fixed representation space, encouraging memorization rather than adaptation. To address this limitation, we propose <span class="small-caps">Kairos</span>, a flexible and parameter-efficient TSFM that decouples temporal heterogeneity from model capacity through a novel tokenization perspective. <span class="small-caps">Kairos</span> introduces a dynamic patching tokenizer and a mixture-of-size encoding that adapt observational granularity to local information density, enabling fine-grained temporal abstraction without increasing model width or depth. In addition, we design a multi-granularity positional embedding based on dynamic rotary encodings, which conditions on instance-level spectral features and temporal structure induced by dynamic patching tokenization, allowing robust modeling of diverse temporal dependencies. Trained on a novel Predictability-Stratified Time-Series (PreSTS) corpus, <span class="small-caps">Kairos</span> achieves superior zero-shot performance with substantially fewer parameters on two mainstream benchmarks, GIFT-Eval and Time-Series-Library.
-          </p>
+        <div class="impact-featured">
+          <article class="impact-card">
+            <p class="impact-kind">Method reuse</p>
+            <h3 class="impact-organization">MIT &middot; Ai2 &middot; QRT<span class="impact-partners">MIT &middot; Allen Institute for AI &middot; Qube Research &amp; Technologies</span></h3>
+            <p class="impact-paper">Reverso</p>
+            <blockquote>&ldquo;Spike Process Generation, adapted from Kairos&rdquo;</blockquote>
+            <p>Reverso adapts Kairos's spike-process generation method for synthetic training data. Its appendix explicitly credits Kairos in Algorithm 2.</p>
+            <a class="impact-source" href="https://arxiv.org/html/2602.17634v2#alg2">Read Algorithm 2 <span aria-hidden="true">&#8599;</span></a>
+          </article>
+          <article class="impact-card">
+            <p class="impact-kind">Efficiency evaluation</p>
+            <h3 class="impact-organization">Salesforce AI Research</h3>
+            <p class="impact-paper">Moirai 2.0</p>
+            <blockquote>&ldquo;Among baseline models, Kairos-50M emerges as the fastest&rdquo;</blockquote>
+            <p>The authors identify Kairos-50M as the fastest baseline in their inference-efficiency comparison.</p>
+            <p class="impact-context">The same comparison reports lower benchmark accuracy and nearly five times the parameter count relative to Moirai 2.0.</p>
+            <a class="impact-source" href="https://arxiv.org/html/2511.11698v3#S5.SS2">Read Section 5.2 <span aria-hidden="true">&#8599;</span></a>
+          </article>
         </div>
-      </div>
-    </div>
-  </div>
-</section>
 
-<section class="section">
-  <div class="container is-max-desktop">
-    <div class="columns is-centered has-text-centered">
-      <div class="column is-four-fifths">
-        <h2 class="title is-3">Methodology</h2>
-        <div class="content has-text-justified">
-          <p>
-            The <span class="small-caps">Kairos</span> architecture is designed to handle temporal heterogeneity efficiently through three key components:
-          </p>
+        <div class="impact-featured impact-studies">
+          <article class="impact-card">
+            <p class="impact-kind">Independent benchmark</p>
+            <h3 class="impact-organization">Datadog &middot; Squirrel Ai</h3>
+            <p class="impact-paper">It&rsquo;s TIME</p>
+            <p>Coauthored by researchers affiliated with Datadog and Squirrel Ai, TIME evaluates Kairos among 12 time series foundation models across 50 datasets and 98 forecasting tasks.</p>
+            <a class="impact-source" href="https://arxiv.org/html/2602.12147v4#S6.SS1">Read the evaluation setup <span aria-hidden="true">&#8599;</span></a>
+          </article>
+          <article class="impact-card">
+            <p class="impact-kind">Cloud-resource evaluation</p>
+            <h3 class="impact-organization">State Street Technology &middot; Richoo AI</h3>
+            <p class="impact-paper">CloudCons</p>
+            <p>Researchers from Zhejiang University, State Street Technology (Zhejiang), and Richoo AI include Kairos-50M in an end-to-end benchmark for cloud workload forecasting and resource consolidation.</p>
+            <p class="impact-context">A coauthor lists Datadog AI Research as their affiliation and notes that the work was completed before joining Datadog.</p>
+            <a class="impact-source" href="https://arxiv.org/html/2606.13513v1#S4">Read the benchmark <span aria-hidden="true">&#8599;</span></a>
+          </article>
+        </div>
+
+        <div class="impact-additional">
+          <article class="impact-card impact-card-compact">
+            <p class="impact-kind">Framework integration</p>
+            <h3 class="impact-organization">Simulacrum</h3>
+            <p class="impact-paper">TempusBench</p>
+            <p>The open-source evaluation framework integrates Kairos 10M, 23M, and 50M with dedicated model adapters and configurations that load the public checkpoints.</p>
+            <div class="impact-sources">
+              <a class="impact-source" href="https://github.com/Smlcrm/TempusBench/blob/prod/tempus_bench/models/kairos_50m/kairos_50m_model.py">View integration <span aria-hidden="true">&#8599;</span></a>
+              <a class="impact-source" href="https://arxiv.org/abs/2604.11529v2">Paper <span aria-hidden="true">&#8599;</span></a>
+            </div>
+          </article>
+          <article class="impact-card impact-card-compact">
+            <p class="impact-kind">Independent benchmark</p>
+            <h3 class="impact-organization">IBM Research</h3>
+            <p class="impact-paper">FlowState</p>
+            <p>The FlowState study includes Kairos among state-of-the-art zero-shot models with publicly available verification code in its GIFT-Eval comparison.</p>
+            <a class="impact-source" href="https://arxiv.org/html/2508.05287v3#S6.SS1">Read Section 6.1 <span aria-hidden="true">&#8599;</span></a>
+          </article>
+          <article class="impact-card impact-card-compact">
+            <p class="impact-kind">Financial-domain evaluation</p>
+            <h3 class="impact-organization">LG AI Research</h3>
+            <p class="impact-paper">EXAONE Finance 1.0</p>
+            <p>Kairos 10M, 23M, and 50M are evaluated on FinVerse as part of a comparison of 44 models for financial time series forecasting.</p>
+            <a class="impact-source" href="https://arxiv.org/html/2609.04239v2#S5.T7">View Table 7 <span aria-hidden="true">&#8599;</span></a>
+          </article>
+        </div>
+
+        <section class="selected-citations" aria-labelledby="selected-citations-heading">
+          <h3 id="selected-citations-heading">Selected citations</h3>
           <ul>
-            <li><strong>Mixture-of-Size Encoder:</strong> A dynamic patching tokenizer that adaptively models time series at multiple granularities. It uses a Top-K Granularity Router with null experts to sparsely select optimal patch sizes based on local information density.</li>
-            <li><strong>Heterogeneity-Aware Transformer:</strong> The encoder output is processed by a Transformer equipped with Dynamic Rotary Position Embedding (DRoPE). Unlike standard RoPE, DRoPE modulates temporal scales using instance-level spectral features (via FFT) and calibrates positions to account for the varying physical durations of dynamic patches.</li>
-            <li><strong>Multi-Patch Decoder:</strong> To mitigate error accumulation in autoregressive generation, the decoder uses learnable forecast tokens to predict multiple future patches in parallel, offering flexibility for variable-length prediction horizons.</li>
+            <li>
+              <p class="citation-organizations">Datadog &middot; Nankai University &middot; Academic collaborators</p>
+              <a href="https://arxiv.org/html/2602.14024v1#S3.SS3">EIDOS: Latent-Space Predictive Learning for Time Series Foundation Models <span aria-hidden="true">&#8599;</span></a>
+              <p class="citation-context">Cites Kairos in its discussion of encoder&ndash;decoder architectures and time series pretraining data curation.</p>
+            </li>
+            <li>
+              <p class="citation-organizations">Indian Institute of Science (IISc) &middot; BITS Pilani</p>
+              <a href="https://arxiv.org/html/2607.19381v1">Air Quality Arena: A Large-Scale Multi-Region Ground Monitoring Dataset and Benchmark for Air Quality Forecasting with Time-Series Foundation Models <span aria-hidden="true">&#8599;</span></a>
+              <p class="citation-context">Includes Kairos-50M in a multi-region air quality forecasting benchmark using a 168-hour input window.</p>
+            </li>
+            <li>
+              <p class="citation-organizations">Xiaomi &middot; Sun Yat-sen University &middot; National University of Singapore</p>
+              <a href="https://arxiv.org/html/2604.10544v1#S2">WaveMoE: A Wavelet-Enhanced Mixture-of-Experts Foundation Model for Time Series Forecasting <span aria-hidden="true">&#8599;</span></a>
+              <p class="citation-context">Cites Kairos as an encoder&ndash;decoder foundation model in its related-work discussion.</p>
+            </li>
+            <li>
+              <p class="citation-organizations">Nokia &middot; FAU Erlangen&ndash;N&uuml;rnberg</p>
+              <a href="https://arxiv.org/html/2606.11990v3#S1">Time-Series Foundation Model Embeddings for Remaining Useful Life Estimation <span aria-hidden="true">&#8599;</span></a>
+              <p class="citation-context">Includes Kairos in the introduction&rsquo;s overview of time series foundation models.</p>
+            </li>
+            <li>
+              <p class="citation-organizations">Netze BW &middot; Karlsruhe Institute of Technology (KIT)</p>
+              <a href="https://arxiv.org/html/2607.01966v1#A1.T5">Probabilistic Low-Voltage Peak Load Forecasting with Time Series Foundation Models Evaluated on Application-Oriented Metrics <span aria-hidden="true">&#8599;</span></a>
+              <p class="citation-context">Lists Kairos in its model survey and selection tables; Kairos is not included in the final forecasting experiments.</p>
+            </li>
+            <li>
+              <p class="citation-organizations">University College London (UCL) &middot; University of Manchester &middot; Shanghai University</p>
+              <a href="https://arxiv.org/html/2511.18578v1#S5.SS1.SSS2">Re(Visiting) Time Series Foundation Models in Finance <span aria-hidden="true">&#8599;</span></a>
+              <p class="citation-context">Evaluates Kairos 10M, 23M, and 50M in an expanded zero-shot financial forecasting comparison.</p>
+            </li>
+            <li>
+              <p class="citation-organizations">Technical University of Munich (TUM) &middot; HKUST (Guangzhou) &middot; University of Strasbourg</p>
+              <a href="https://arxiv.org/html/2606.04074v1#S2">Adaptive Patching Is Harder Than It Looks for Time-Series Forecasting <span aria-hidden="true">&#8599;</span></a>
+              <p class="citation-context">Cites Kairos in its discussion of multi-granularity routing and mixing methods for time-series forecasting.</p>
+            </li>
           </ul>
-        </div>
-        <img src="./static/images/method.png" alt="KAIROS Architecture" style="margin-top: 20px;">
-        <p class="content has-text-centered">
-          <strong>Figure 2.</strong> The architecture of <span class="small-caps">Kairos</span>. (i) The Mixture-of-Size Encoder adaptively tokenizes input. (ii) The Heterogeneity-Aware Transformer processes tokens using DRoPE. (iii) The Multi-Patch Decoder predicts future patches in parallel.
-        </p>
+        </section>
       </div>
-    </div>
-  </div>
-</section>
+    </section>
 
-<section class="section">
-    <div class="container is-max-desktop">
-        <h2 class="title is-3 has-text-centered">GIFT-Eval Benchmark Results</h2>
-        <div class="content has-text-justified">
-            <p>
-                Performance evaluation on the GIFT-Eval benchmark using normalized MASE and CRPS metrics, where lower values indicate higher forecasting accuracy. The baseline models fall into three categories: statistical methods, deep learning (DL) models, and Time Series Foundation Models (TSFMs). TSFMs are further subdivided based on whether the training set included test data (TestData Leakage).
-            </p>
+    <section class="section" id="overview" aria-label="Overview">
+      <div class="container is-max-desktop">
+        <h2 class="title is-3 has-text-centered"><span class="section-heading">Overview</span></h2>
+        <p class="section-lead">Kairos achieves superior performance with fewer parameters on zero-shot forecasting benchmarks.</p>
+        <figure class="figure">
+          <a href="./static/images/intro.png" aria-label="Open the figure at original resolution">
+            <img src="./static/images/intro-web.png" alt="GIFT-Eval performance versus model size, temporal information density, and adaptive tokenization." fetchpriority="high" width="2800" height="1013">
+          </a>
+          <figcaption class="figure-caption"><strong>Figure 1.</strong> (a) Comparison on the GIFT-Eval benchmark demonstrates that <span class="small-caps">Kairos</span> achieves superior zero-shot forecasting performance (lower normalized MASE) while requiring significantly fewer parameters than existing TSFMs. (b)(c) Significant variation exists in information density (signal complexity) across and within different time series datasets. (d) Unlike existing TSFMs that use point-wise or fixed-size patching, <span class="small-caps">Kairos</span> uses Mixture-of-Size Tokenization to dynamically adapt to information density.</figcaption>
+        </figure>
+      </div>
+    </section>
+
+    <section class="section section-tinted" id="abstract">
+      <div class="container is-max-desktop">
+        <h2 class="title is-3 has-text-centered"><span class="section-heading">Abstract</span></h2>
+        <div class="content abstract-copy">
+          <p>Inherent temporal heterogeneity, such as varying sampling densities and periodic structures, has posed substantial challenges in zero-shot generalization for Time Series Foundation Models (TSFMs). Existing TSFMs predominantly rely on massive parameterization to absorb such heterogeneity, as their static tokenization and positional encoding schemes entangle diverse temporal patterns into a fixed representation space, encouraging memorization rather than adaptation. To address this limitation, we propose <span class="small-caps">Kairos</span>, a flexible and parameter-efficient TSFM that decouples temporal heterogeneity from model capacity through a novel tokenization perspective. <span class="small-caps">Kairos</span> introduces a dynamic patching tokenizer and a mixture-of-size encoding that adapt observational granularity to local information density, enabling fine-grained temporal abstraction without increasing model width or depth. In addition, we design a multi-granularity positional embedding based on dynamic rotary encodings, which conditions on instance-level spectral features and temporal structure induced by dynamic patching tokenization, allowing robust modeling of diverse temporal dependencies. Trained on a novel Predictability-Stratified Time-Series (PreSTS) corpus, <span class="small-caps">Kairos</span> achieves superior zero-shot performance with substantially fewer parameters on two mainstream benchmarks, GIFT-Eval and Time-Series-Library.</p>
         </div>
-        <div class="table-container">
-            <table class="table is-bordered is-striped is-narrow is-hoverable is-fullwidth is-centered-content" style="font-size: 0.83em;">
-                <thead>
-                    <tr>
-                        <th rowspan="2" style="vertical-align: middle; text-align: center;">Type</th>
-                        <th colspan="1" style="text-align: center;">Statistical</th>
-                        <th colspan="2" style="text-align: center;">DL (Full-Shot)</th>
-                        <th colspan="4" style="text-align: center;">TSFMs (TestData Leakage)</th>
-                        <th colspan="7" style="text-align: center;">TSFMs (Zero-Shot)</th>
-                    </tr>
-                    <tr>
-                        <th style="text-align: center;">Seasonal<br>Naïve</th>
-                        <th style="text-align: center;">DLinear</th>
-                        <th style="text-align: center;">PTST.</th>
-                        <th style="text-align: center;">TTM</th>
-                        <th style="text-align: center;">Chronos</th>
-                        <th style="text-align: center;">Chronos<br>Bolt</th>
-                        <th style="text-align: center;">TimesFM</th>
-                        <th style="text-align: center;">Moirai</th>
-                        <th style="text-align: center;">VisionTS</th>
-                        <th style="text-align: center;">Ying.</th>
-                        <th style="text-align: center;">Toto</th>
-                        <th style="text-align: center;">Sundial</th>
-                        <th style="text-align: center;"><span class="small-caps">Kairos</span><sub>s</sub><br>(Ours)</th>
-                        <th style="text-align: center;"><span class="small-caps">Kairos</span><sub>b</sub><br>(Ours)</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <th>#Params</th>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>-</td>
-                        <td>5M</td>
-                        <td>709M</td>
-                        <td>205M</td>
-                        <td>500M</td>
-                        <td>311M</td>
-                        <td>112M</td>
-                        <td>300M</td>
-                        <td>151M</td>
-                        <td>128M</td>
-                        <td>23M</td>
-                        <td>53M</td>
-                    </tr>
-                    <tr>
-                        <th>MASE &darr;</th>
-                        <td>1.000</td>
-                        <td>1.061</td>
-                        <td>0.849</td>
-                        <td>1.020</td>
-                        <td>0.870</td>
-                        <td>0.808</td>
-                        <td>0.758</td>
-                        <td>0.875</td>
-                        <td>0.863</td>
-                        <td>0.798</td>
-                        <td>0.750</td>
-                        <td>0.750</td>
-                        <td><u>0.748</u></td>
-                        <td><b>0.738</b></td>
-                    </tr>
-                    <tr>
-                        <th>CRPS &darr;</th>
-                        <td>1.000</td>
-                        <td>0.846</td>
-                        <td>0.587</td>
-                        <td>0.873</td>
-                        <td>0.574</td>
-                        <td>0.574</td>
-                        <td>0.550</td>
-                        <td>0.599</td>
-                        <td>0.755</td>
-                        <td><u>0.548</u></td>
-                        <td><b>0.517</b></td>
-                        <td>0.559</td>
-                        <td>0.554</td>
-                        <td><u>0.548</u></td>
-                    </tr>
-                </tbody>
-            </table>
-        </div>
-        <p class="content is-size-7 has-text-grey">
-            Baselines results officially reported by GIFT-Eval. Best results are <b>bolded</b>, second best are <u>underlined</u>.
-        </p>
-    </div>
-</section>
+      </div>
+    </section>
 
-
-<section class="section">
-    <div class="container is-max-desktop">
-      <div class="columns is-centered has-text-centered">
-        <div class="column is-four-fifths">
-          <h2 class="title is-3">TSLib Benchmark Results</h2>
-          <div class="content has-text-justified">
-            <p>
-              <span class="small-caps">Kairos</span> demonstrates remarkable zero-shot forecasting capabilities, outperforming both recent advanced TSFMs and the majority of full-shot deep learning models on the TSLib benchmark. The charts below show the aggregate average Mean Absolute Error (MAE) and Mean Squared Error (MSE), where lower values indicate better performance.
-            </p>
+    <section class="section" id="methodology">
+      <div class="container is-max-desktop">
+        <h2 class="title is-3 has-text-centered"><span class="section-heading">Methodology</span></h2>
+        <p class="section-lead">Three complementary components adapt to temporal heterogeneity without relying on massive parameterization.</p>
+        <div class="columns method-columns">
+          <div class="column">
+            <article class="method-card">
+              <p class="card-kicker">Adaptive tokenization</p>
+              <h3 class="title is-5">Mixture-of-Size Encoder</h3>
+              <p>A dynamic patching tokenizer that adaptively models time series at multiple granularities. It uses a Top-K Granularity Router with null experts to sparsely select optimal patch sizes based on local information density.</p>
+            </article>
           </div>
-          <img src="./static/images/tslib-zs.png" alt="TSLib Benchmark Results">
-          <p class="content has-text-centered">
-            <strong>Figure 3.</strong> Zero-shot performance on TSLib averaged over prediction lengths {96, 192, 336, 720}. Lower AVG MAE and MSE indicate better performance.
-          </p>
+          <div class="column">
+            <article class="method-card">
+              <p class="card-kicker">Temporal modeling</p>
+              <h3 class="title is-5">Heterogeneity-Aware Transformer</h3>
+              <p>The encoder output is processed by a Transformer equipped with Dynamic Rotary Position Embedding (DRoPE). Unlike standard RoPE, DRoPE modulates temporal scales using instance-level spectral features (via FFT) and calibrates positions to account for the varying physical durations of dynamic patches.</p>
+            </article>
+          </div>
+          <div class="column">
+            <article class="method-card">
+              <p class="card-kicker">Parallel forecasting</p>
+              <h3 class="title is-5">Multi-Patch Decoder</h3>
+              <p>To mitigate error accumulation in autoregressive generation, the decoder uses learnable forecast tokens to predict multiple future patches in parallel, offering flexibility for variable-length prediction horizons.</p>
+            </article>
+          </div>
         </div>
+        <figure class="figure">
+          <a href="./static/images/method.png" aria-label="Open the figure at original resolution">
+            <img src="./static/images/method-web.png" alt="Kairos architecture: Mixture-of-Size Encoder, Heterogeneity-Aware Transformer with DRoPE, and Multi-Patch Decoder." loading="lazy" width="2800" height="1146">
+          </a>
+          <figcaption class="figure-caption"><strong>Figure 2.</strong> The architecture of <span class="small-caps">Kairos</span>. (i) The Mixture-of-Size Encoder adaptively tokenizes input. (ii) The Heterogeneity-Aware Transformer processes tokens using DRoPE. (iii) The Multi-Patch Decoder predicts future patches in parallel.</figcaption>
+        </figure>
       </div>
-    </div>
-</section>
+    </section>
 
+    <section class="section section-tinted" id="results">
+      <div class="container is-max-widescreen">
+        <h2 class="title is-3 has-text-centered"><span class="section-heading">Results</span></h2>
+        <article class="results-block" aria-labelledby="gift-heading">
+          <h3 class="title is-4 has-text-centered" id="gift-heading">GIFT-Eval Benchmark</h3>
+          <div class="content results-intro"><p>Performance evaluation on the GIFT-Eval benchmark using normalized MASE and CRPS metrics, where lower values indicate higher forecasting accuracy. The baseline models fall into three categories: statistical methods, deep learning (DL) models, and Time Series Foundation Models (TSFMs). TSFMs are further subdivided based on whether the training set included test data (TestData Leakage).</p></div>
+          <div class="table-container" tabindex="0" role="region" aria-label="GIFT-Eval results; scroll horizontally to view all models" aria-describedby="results-note">
+            <table class="table results-table"><caption class="is-sr-only">GIFT-Eval normalized MASE and CRPS, with model parameter counts. Lower scores are better.</caption>
+<thead>
+<tr>
+<th rowspan="2" scope="col">Type</th>
+<th colspan="1" scope="col">Statistical</th>
+<th colspan="2" scope="colgroup">DL (Full-Shot)</th>
+<th colspan="4" scope="colgroup">TSFMs (TestData Leakage)</th>
+<th colspan="7" scope="colgroup">TSFMs (Zero-Shot)</th>
+</tr>
+<tr>
+<th scope="col">Seasonal<br/>Naïve</th>
+<th scope="col">DLinear</th>
+<th scope="col">PTST.</th>
+<th scope="col">TTM</th>
+<th scope="col">Chronos</th>
+<th scope="col">Chronos<br/>Bolt</th>
+<th scope="col">TimesFM</th>
+<th scope="col">Moirai</th>
+<th scope="col">VisionTS</th>
+<th scope="col">Ying.</th>
+<th scope="col">Toto</th>
+<th scope="col">Sundial</th>
+<th class="ours-cell" scope="col"><span class="small-caps">Kairos</span><sub>s</sub><br/>(Ours)</th>
+<th class="ours-cell" scope="col"><span class="small-caps">Kairos</span><sub>b</sub><br/>(Ours)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<th scope="row">#Params</th>
+<td>-</td>
+<td>-</td>
+<td>-</td>
+<td>5M</td>
+<td>709M</td>
+<td>205M</td>
+<td>500M</td>
+<td>311M</td>
+<td>112M</td>
+<td>300M</td>
+<td>151M</td>
+<td>128M</td>
+<td class="ours-cell">23M</td>
+<td class="ours-cell">53M</td>
+</tr>
+<tr>
+<th scope="row">MASE ↓</th>
+<td>1.000</td>
+<td>1.061</td>
+<td>0.849</td>
+<td>1.020</td>
+<td>0.870</td>
+<td>0.808</td>
+<td>0.758</td>
+<td>0.875</td>
+<td>0.863</td>
+<td>0.798</td>
+<td>0.750</td>
+<td>0.750</td>
+<td class="ours-cell"><u>0.748</u></td>
+<td class="ours-cell"><b>0.738</b></td>
+</tr>
+<tr>
+<th scope="row">CRPS ↓</th>
+<td>1.000</td>
+<td>0.846</td>
+<td>0.587</td>
+<td>0.873</td>
+<td>0.574</td>
+<td>0.574</td>
+<td>0.550</td>
+<td>0.599</td>
+<td>0.755</td>
+<td><u>0.548</u></td>
+<td><b>0.517</b></td>
+<td>0.559</td>
+<td class="ours-cell">0.554</td>
+<td class="ours-cell"><u>0.548</u></td>
+</tr>
+</tbody>
+</table>
+          </div>
+          <p class="table-note" id="results-note">Baselines results officially reported by GIFT-Eval. Best results are <b>bolded</b>, second best are <u>underlined</u>.</p>
+        </article>
+        <article class="results-block" aria-labelledby="tslib-heading">
+          <h3 class="title is-4 has-text-centered" id="tslib-heading">TSLib Benchmark</h3>
+          <div class="content results-intro"><p><span class="small-caps">Kairos</span> demonstrates remarkable zero-shot forecasting capabilities, outperforming both recent advanced TSFMs and the majority of full-shot deep learning models on the TSLib benchmark. The charts below show the aggregate average Mean Absolute Error (MAE) and Mean Squared Error (MSE), where lower values indicate better performance.</p></div>
+          <figure class="figure">
+          <a href="./static/images/tslib-zs.png" aria-label="Open the figure at original resolution">
+            <img src="./static/images/tslib-zs-web.png" alt="TSLib zero-shot forecasting results comparing average MAE and MSE across models." loading="lazy" width="2800" height="911">
+          </a>
+          <figcaption class="figure-caption"><strong>Figure 3.</strong> Zero-shot performance on TSLib averaged over prediction lengths {96, 192, 336, 720}. Lower AVG MAE and MSE indicate better performance.</figcaption>
+        </figure>
+        </article>
+      </div>
+    </section>
 
-<footer class="footer">
-  <div class="container">
-    <div class="content has-text-centered">
-      <a class="icon-link"
-         href="https://arxiv.org/pdf/2509.25826">
-        <i class="fas fa-file-pdf"></i>
-      </a>
-      <a class="icon-link" href="https://github.com/foundation-model-research/Kairos" class="external-link" disabled>
-        <i class="fab fa-github"></i>
-      </a>
-    </div>
-    <div class="columns is-centered">
-      <div class="column is-8">
-        <div class="content">
-          <p>
-            This website is licensed under a <a rel="license"
-                                                href="http://creativecommons.org/licenses/by-sa/4.0/">Creative
-            Commons Attribution-ShareAlike 4.0 International License</a>.
-          </p>
-          <p>
-            This means you are free to borrow the <a
-              href="https://github.com/nerfies/nerfies.github.io">source code</a> of this website,
-            we just ask that you link back to this page in the footer.
-            Please remember to remove the analytics code included in the header of the website which
-            you do not want on your website.
-          </p>
+    <section class="section" id="citation">
+      <div class="container is-max-desktop">
+        <h2 class="title is-3 has-text-centered"><span class="section-heading">Citation</span></h2>
+        <p class="has-text-centered">If you find Kairos useful in your research, please cite our <a href="https://arxiv.org/abs/2509.25826">paper</a>.</p>
+        <div class="bibtex-box">
+          <button class="copy-btn" id="copy-bibtex" type="button" aria-label="Copy BibTeX citation">Copy</button>
+          <pre tabindex="0" aria-label="BibTeX citation"><code id="bibtex">@article{feng2025kairos,
+  title={Kairos: Toward Adaptive and Parameter-Efficient Time Series Foundation Models},
+  author={Feng, Kun and Lan, Shaocheng and Fang, Yuchen and He, Wenchao and Lu, Sihan and Gu, Shuqi and Ma, Lintao and Lu, Xingyu and Ren, Kan},
+  journal={arXiv preprint arXiv:2509.25826},
+  year={2025}
+}</code></pre>
         </div>
+        <p class="copy-status" id="copy-status" role="status" aria-live="polite"></p>
       </div>
-    </div>
-  </div>
-</footer>
+    </section>
+  </main>
 
+  <footer class="footer">
+    <div class="container is-max-desktop has-text-centered">
+      <p><strong>Kairos</strong> &middot; ShanghaiTech University &amp; Ant Group</p>
+      <p>
+        <a class="icon-link" href="https://arxiv.org/pdf/2509.25826" aria-label="Paper PDF" title="Paper">
+          <i class="fas fa-file-pdf" aria-hidden="true"></i>
+        </a>
+        <a class="icon-link" href="https://github.com/foundation-model-research/Kairos" aria-label="Code on GitHub" title="Code">
+          <i class="fab fa-github" aria-hidden="true"></i>
+        </a>
+      </p>
+      <p>This website is adapted from the <a href="https://github.com/nerfies/nerfies.github.io">Nerfies website</a>.</p>
+      <p>Website content is licensed under <a rel="license" href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>.</p>
+    </div>
+  </footer>
 </body>
 </html>
