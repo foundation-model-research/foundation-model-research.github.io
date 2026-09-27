@@ -1,0 +1,230 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content="MLDI at ShanghaiTech: machine learning research across foundation models, sequence intelligence, agents, and mechanistic interpretability." />
+    <meta name="theme-color" content="#101210" />
+    <meta property="og:title" content="Trustworthy AI for the real world | MLDI" />
+    <meta property="og:description" content="Multimodal foundation models that observe, generate, reason, and remain understandable." />
+    <meta property="og:type" content="website" />
+    <meta property="og:image" content="https://foundation-model-research.github.io/assets/og-mldi.png" />
+    <meta name="twitter:card" content="summary_large_image" />
+    <title>Trustworthy AI for the real world | MLDI · ShanghaiTech</title>
+    <link rel="stylesheet" href="styles.css?v=6fed02c21d6a" />
+    <link rel="stylesheet" href="lab-footer.css?v=4b30e138ad08" />
+  </head>
+  <body>
+    <a class="skip-link" href="#main">Skip to content</a>
+
+    <header class="site-header" data-header>
+      <a class="wordmark" href="#top" aria-label="MLDI home">
+        <span class="wordmark-mark">MLDI</span>
+        <span class="wordmark-school">ShanghaiTech<br />SIST</span>
+      </a>
+      <nav class="desktop-nav" aria-label="Primary navigation">
+        <a href="#vision">Vision</a>
+        <a href="#atlas">Research</a>
+        <a href="#work">All work</a>
+        <a href="#lab">Lab</a>
+      </nav>
+      <div class="header-actions"><a class="header-link" href="https://scholar.google.com.hk/citations?user=USnQVWgAAAAJ" target="_blank" rel="noreferrer">Scholar <span aria-hidden="true">↗</span></a><button class="share-button" id="share-page" type="button">Share <span aria-hidden="true">↗</span></button></div>
+    </header>
+
+    <main id="main">
+      <section class="hero" id="top" aria-labelledby="hero-title">
+        <canvas id="research-field" aria-hidden="true"></canvas>
+        <div class="hero-grid" aria-hidden="true"></div>
+        <div class="hero-content">
+          <p class="eyebrow">Machine Learning &amp; Data Intelligence · ShanghaiTech University</p>
+          <h1 id="hero-title">Trustworthy AI<br />for the real world.</h1>
+          <p class="hero-deck">We build multimodal foundation models that <strong>observe</strong> real signals, <strong>reason</strong> about possible futures, and remain <strong>understandable</strong>.</p>
+          <div class="hero-actions">
+            <a class="button button-primary" href="#atlas">Explore the research</a>
+            <a class="button button-quiet" href="#work">Browse all publications</a>
+          </div>
+        </div>
+        <div class="hero-sequence" aria-hidden="true">
+          <span>01 · Signals</span><i></i><span>02 · Models</span><i></i><span>03 · Reasoning</span><i></i><span>04 · Action</span>
+        </div>
+      </section>
+
+      <section class="manifesto section" id="vision" aria-labelledby="vision-title">
+        <div class="section-kicker">Our big picture</div>
+        <div class="manifesto-grid">
+          <h2 id="vision-title">Intelligence should meet the world where it is: continuous, multimodal, uncertain, and consequential.</h2>
+          <div class="manifesto-copy">
+            <p>MLDI develops learning systems from the structure of real data outward. We model irregular signals, build adaptive foundation models, turn models into tool-using agents, and open their internal mechanisms to inspection.</p>
+            <p>These are not separate themes. They are layers of one research program: <strong>understand the data, generalize the model, ground the decision, and make the mechanism legible.</strong></p>
+          </div>
+        </div>
+      </section>
+
+      <section class="research-atlas section" id="atlas" aria-labelledby="atlas-title">
+        <div class="section-heading">
+          <div>
+            <p class="section-kicker">Research atlas</p>
+            <h2 id="atlas-title">One program, four connected frontiers</h2>
+          </div>
+          <p class="section-note">Multimodal models, grounded reasoning, and mechanisms we can inspect. Select a direction to explore the original research.</p>
+        </div>
+
+        <div class="atlas-layout">
+          <div class="atlas-map" role="tablist" aria-label="Research frontiers">
+            <button class="atlas-tab is-active" role="tab" aria-selected="true" aria-controls="frontier-panel" data-frontier="sequence">
+              <span>01</span><strong>Multimodal time series</strong><small>Connect temporal signals with language</small>
+            </button>
+            <button class="atlas-tab" role="tab" aria-selected="false" aria-controls="frontier-panel" data-frontier="foundation">
+              <span>02</span><strong>Foundation models</strong><small>Adapt across tasks and domains</small>
+            </button>
+            <button class="atlas-tab" role="tab" aria-selected="false" aria-controls="frontier-panel" data-frontier="agents">
+              <span>03</span><strong>Agents &amp; decisions</strong><small>Reason with tools, feedback, and context</small>
+            </button>
+            <button class="atlas-tab" role="tab" aria-selected="false" aria-controls="frontier-panel" data-frontier="interpretability">
+              <span>04</span><strong>Mechanistic trust</strong><small>See, steer, and evaluate mechanisms</small>
+            </button>
+          </div>
+          <article class="frontier-panel" id="frontier-panel" role="tabpanel" aria-live="polite">
+            <div class="frontier-visual frontier-originals" id="frontier-visual"></div>
+            <div class="frontier-content">
+              <p class="frontier-number" id="frontier-number">Frontier 01</p>
+              <h3 id="frontier-title">Connect time series with language.</h3>
+              <p id="frontier-description">Generate, edit, and forecast time series with language and real-world context.</p>
+              <details class="frontier-related"><summary>Related work</summary><ul id="frontier-papers" class="frontier-papers"></ul></details>
+              <p id="frontier-background" class="frontier-background"></p>
+              <a id="frontier-link" class="text-link" href="#work">View sequence research <span aria-hidden="true">→</span></a>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <section class="impact-section" id="impact" aria-labelledby="impact-title">
+        <div class="section">
+          <p class="section-kicker">Research impact</p>
+          <h2 id="impact-title">Advancing capability.<br />Building evidence for trust.</h2>
+          <p class="impact-lead">Open forecasting models that people use. Reasoning whose steps can be evaluated. Internal mechanisms that can be explained and tested through intervention.</p>
+          <div class="impact-metrics">
+            <article>
+              <span class="impact-label">Open foundation models</span><strong class="impact-value">38,997</strong><h3>cumulative model downloads</h3>
+              <p>Kairos is available in three compact, open forecasting checkpoints.</p>
+              <small>Hugging Face · 3 official Kairos models · all time · 27 Sep 2026</small>
+              <a href="https://huggingface.co/mldi-lab" target="_blank" rel="noreferrer">Explore the models ↗</a>
+              <details class="metric-details"><summary>Download breakdown</summary><ul><li>Kairos_50m: 15,396</li><li>Kairos_23m: 18,955</li><li>Kairos_10m: 4,646</li></ul><a href="https://huggingface.co/api/models?author=mldi-lab&amp;expand%5B%5D=downloadsAllTime&amp;limit=100" target="_blank" rel="noreferrer">Hugging Face download data ↗</a></details>
+            </article>
+            <article>
+              <span class="impact-label">Forecasting efficiency</span><strong class="impact-value">5.6×</strong><h3>fewer parameters</h3>
+              <p>Kairos-small uses 23M parameters versus Sundial’s 128M, with lower normalized MASE in the reported GIFT-Eval comparison.</p>
+              <small>MASE 0.748 vs 0.750 · lower is better · paper comparison</small>
+              <a href="https://arxiv.org/html/2509.25826v2#S4.SS2" target="_blank" rel="noreferrer">Read the benchmark setting ↗</a>
+            </article>
+            <article>
+              <span class="impact-label">Outcome-linked reasoning</span><strong class="impact-value">+16.7<span> pp</span></strong><h3>AIME24 accuracy</h3>
+              <p>CRM reaches 43.3%, compared with PURE’s 26.6%, when verifiable rewards are disabled in the reported RL experiment.</p>
+              <small>Qwen2.5-Math-7B · Pass@1 · same evaluation setting</small>
+              <a href="https://arxiv.org/html/2509.26578v1#S4.SS4" target="_blank" rel="noreferrer">Read the reasoning experiment ↗</a>
+            </article>
+          </div>
+          <div class="recognition-intro"><h3>Capability needs a meaningful test.</h3><p>Our agent and evaluation research received two paper awards. Together, these works ask how models solve a task—and whether the result answers the actual request.</p></div>
+          <div class="recognition-grid">
+            <article class="recognition-card"><p class="award-line">Outstanding Paper · EACL 2024</p><h3>MLCopilot</h3><p>Use experience from previous experiments to solve new machine-learning tasks.</p><div data-paper-static="mlcopilot-certificate"></div><a href="https://aclanthology.org/2024.eacl-long.179/" target="_blank" rel="noreferrer">Paper and award record ↗</a></article>
+            <article class="recognition-card"><p class="award-line">Best Paper · IEEE VIS 2024</p><h3>VisEval</h3><p>Check whether a generated visualization answers the question, beyond whether the code runs.</p><div data-paper-static="viseval-certificate"></div><a href="https://direct.ieeevis.org/year/2024/program/paper_v-full-1332.html" target="_blank" rel="noreferrer">Paper and award record ↗</a></article>
+          </div>
+        </div>
+      </section>
+
+      <section class="featured-work section" aria-labelledby="featured-title">
+        <div class="section-heading">
+          <div><p class="section-kicker">Selected research</p><h2 id="featured-title">Inside the papers</h2></div>
+          <p class="section-note">Original figures and demonstrations, with the contribution and evidence alongside. Open any figure to inspect it at full size.</p>
+        </div>
+        <div class="featured-grid" id="featured-grid"></div>
+      </section>
+
+      <section class="lab-section" id="lab" aria-labelledby="lab-title">
+        <div class="section lab-intro">
+          <div>
+            <p class="section-kicker light">The people behind the research</p>
+            <h2 id="lab-title">MLDI at ShanghaiTech</h2>
+          </div>
+          <div class="lab-statement">
+            <p>The Machine Learning and Data Intelligence Group is part of the School of Information Science and Technology at ShanghaiTech University, led by Prof. Kan Ren.</p>
+            <p>We work across multimodal time series, foundation models, agentic reasoning, and mechanistic interpretability, connecting fundamental methods with healthcare, finance, science, and other real-world settings.</p>
+          </div>
+        </div>
+        <div class="lab-gallery section">
+          <figure class="lab-photo lab-photo-wide">
+            <img src="assets/lab-apr-2026.jpg" alt="MLDI group at the ShanghaiTech campus in April 2026" width="1707" height="1280" loading="lazy" />
+            <figcaption><span>ShanghaiTech campus</span><strong>April 2026</strong></figcaption>
+          </figure>
+          <figure class="lab-photo">
+            <img src="assets/lab-oct-2025.jpg" alt="MLDI group in October 2025" width="1777" height="1280" loading="lazy" />
+            <figcaption><span>MLDI group</span><strong>October 2025</strong></figcaption>
+          </figure>
+        </div>
+        <div class="lab-profile section">
+          <img src="assets/kan-ren-homepage.jpg" alt="Professor Kan Ren, principal investigator of MLDI" loading="lazy" />
+          <div>
+            <p class="section-kicker light">Principal investigator</p>
+            <h3>Prof. Kan Ren</h3>
+            <p>Assistant Professor, Research Fellow, and PhD Supervisor at ShanghaiTech SIST. Previously Senior Researcher at Microsoft Research Asia.</p>
+          </div>
+          <ul>
+            <li><strong>40+</strong><span>papers in leading ML and AI venues</span></li>
+            <li><strong>2</strong><span>best / outstanding paper awards</span></li>
+            <li><strong>Open</strong><span>SeqML · Qlib · AutoRL · PhysioPro</span></li>
+          </ul>
+          <a class="button button-light" href="https://saying.ren/" target="_blank" rel="noreferrer">Meet the PI <span aria-hidden="true">↗</span></a>
+        </div>
+        <div id="partner-strip" class="section"></div>
+      </section>
+
+      <section class="publication-index section" id="work" aria-labelledby="work-title">
+        <div class="section-heading work-heading">
+          <div><p class="section-kicker">Complete index</p><h2 id="work-title">All research work</h2></div>
+          <p class="work-count"><span id="visible-count">0</span> works shown</p>
+        </div>
+        <div class="work-tools">
+          <div class="filters" role="group" aria-label="Filter publications by topic">
+            <button class="filter is-active" data-filter="all" aria-pressed="true">All</button>
+            <button class="filter" data-filter="foundation" aria-pressed="false">Foundation models</button>
+            <button class="filter" data-filter="sequence" aria-pressed="false">Sequence</button>
+            <button class="filter" data-filter="agents" aria-pressed="false">Agents &amp; RL</button>
+            <button class="filter" data-filter="trust" aria-pressed="false">Interpretability</button>
+            <button class="filter" data-filter="applications" aria-pressed="false">Applications</button>
+          </div>
+          <label class="search-box"><span class="sr-only">Search publications</span><input id="paper-search" type="search" placeholder="Search title, venue, or year" autocomplete="off" /><span aria-hidden="true">⌕</span></label>
+        </div>
+        <div class="paper-list" id="paper-list"></div>
+        <button class="load-more" id="load-more" type="button">Show more work</button>
+      </section>
+
+      <section class="open-research section" id="connect" aria-labelledby="connect-title">
+        <div>
+          <p class="section-kicker">Open research</p>
+          <h2 id="connect-title">Read the evidence.<br />Build on the work.</h2>
+        </div>
+        <div class="source-links">
+          <a href="https://scholar.google.com.hk/citations?user=USnQVWgAAAAJ" target="_blank" rel="noreferrer"><span>Publication record</span><strong>Google Scholar</strong><i>↗</i></a>
+          <a href="https://arxiv.org/search/?query=Kan+Ren&amp;searchtype=author" target="_blank" rel="noreferrer"><span>Open manuscripts</span><strong>arXiv</strong><i>↗</i></a>
+          <a href="https://seqml.github.io/" target="_blank" rel="noreferrer"><span>Sequence research</span><strong>SeqML</strong><i>↗</i></a>
+          <a href="https://foundation-model-research.github.io/" target="_blank" rel="noreferrer"><span>Project pages</span><strong>Foundation Model Research</strong><i>↗</i></a>
+        </div>
+      </section>
+    </main>
+
+    <footer class="site-footer">
+      <div class="footer-brand"><strong>MLDI</strong><span>Machine Learning &amp; Data Intelligence Lab<br />School of Information Science and Technology<br />ShanghaiTech University</span></div>
+      <div class="footer-meta"><a href="https://saying.ren/" target="_blank" rel="noreferrer">Principal Investigator · Kan Ren ↗</a><div id="pi-contact"></div><span>Shanghai</span></div>
+      <p class="footer-note">© 2026 Kan Ren’s Research Group and ShanghaiTech University. All rights reserved. The Group and the University reserve the right to interpret the research and content presented on this website.</p>
+    </footer>
+    <div class="toast" id="share-toast" role="status" aria-live="polite">Link copied</div>
+    <dialog id="figure-dialog" aria-labelledby="figure-dialog-title"><div class="figure-toolbar"><h2 id="figure-dialog-title">Original paper figure</h2><div><button data-zoom type="button" aria-pressed="false">Actual size</button><button data-close type="button">Close ✕</button></div></div><div class="figure-scroll"><img alt="" /></div><a class="figure-source" target="_blank" rel="noreferrer">Original source ↗</a></dialog>
+
+    <script src="data.js?v=2c9eac3be82c"></script>
+    <script src="paper-media-data.js?v=0d42efd4ddc5"></script>
+    <script src="research.js?v=72fe4f46b5dc"></script>
+    <script src="paper-media.js?v=f36ecfdb1b7f"></script>
+    <script src="app.js?v=f7db3c3c05a3"></script>
+    <script src="lab-footer.js?v=553e385649b7"></script>
+  </body>
+</html>
