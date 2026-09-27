@@ -67,15 +67,28 @@ a:hover {
 
 .publication-venue {
   display: inline-block;
+  max-width: 100%;
   margin: 0.25rem 0 1.5rem;
-  padding: 0.5rem 1.35rem;
+  padding: 0.8rem 1rem;
   border: 1px solid #f1d7b9;
-  border-radius: 999px;
+  border-radius: 16px;
   background: #fff8ee;
   color: #a65b11;
   font-size: 1.25rem;
   font-weight: 700;
   letter-spacing: 0.04em;
+}
+
+.venue-name {
+  display: block;
+  font-size: 1.25rem;
+  line-height: 1.6;
+  letter-spacing: normal;
+}
+
+.venue-short {
+  display: block;
+  margin-top: 0.2rem;
 }
 
 .publication-authors {
