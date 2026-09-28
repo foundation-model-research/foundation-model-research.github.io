@@ -227,6 +227,68 @@ section[id] {
   text-align: justify;
 }
 
+.intro-video {
+  position: relative;
+  margin: 1.7rem 0 0;
+  overflow: hidden;
+  border-radius: 12px;
+  background: #05090d;
+}
+
+.intro-video video {
+  display: block;
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16 / 9;
+}
+
+.intro-video-play {
+  position: absolute;
+  right: clamp(0.5rem, 2vw, 1.25rem);
+  bottom: clamp(0.5rem, 2vw, 1.25rem);
+  display: inline-flex;
+  align-items: center;
+  gap: 0.45rem;
+  padding: 0.65rem 0.9rem;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-radius: 999px;
+  background: rgba(10, 17, 26, 0.92);
+  color: #fff;
+  font: inherit;
+  font-size: clamp(0.75rem, 1.5vw, 0.95rem);
+  cursor: pointer;
+}
+
+.intro-video-play[hidden] {
+  display: none;
+}
+
+.intro-video-play:hover {
+  background: #285fac;
+}
+
+.intro-video-play:focus-visible {
+  outline: 3px solid #fff;
+  outline-offset: 3px;
+}
+
+.intro-video-duration {
+  margin-left: 0.35rem;
+  opacity: 0.75;
+}
+
+.intro-video-caption,
+.intro-video-status {
+  margin: 0.75rem 0 0;
+  color: var(--muted);
+  font-size: 0.88rem;
+  text-align: center;
+}
+
+.intro-video-status:empty {
+  display: none;
+}
+
 .figure {
   margin: 1.7rem 0 0;
 }

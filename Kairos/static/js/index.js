@@ -1,5 +1,32 @@
 "use strict";
 
+const introVideo = document.querySelector("#intro-video");
+const playIntroButton = document.querySelector("#play-intro-video");
+const introVideoStatus = document.querySelector("#intro-video-status");
+
+if (introVideo && playIntroButton && introVideoStatus) {
+  introVideo.controls = false;
+  playIntroButton.hidden = false;
+  playIntroButton.addEventListener("click", async () => {
+    // Defer the media URL until an explicit play request to avoid background downloads.
+    introVideo.src = introVideo.dataset.src;
+    introVideo.controls = true;
+    playIntroButton.hidden = true;
+    introVideo.focus();
+    try {
+      await introVideo.play();
+    } catch (error) {
+      introVideoStatus.textContent = "Playback did not start. Use the video controls or download the video.";
+    }
+  }, { once: true });
+  introVideo.addEventListener("playing", () => {
+    introVideoStatus.textContent = "";
+  });
+  introVideo.addEventListener("error", () => {
+    introVideoStatus.textContent = "Unable to load the video. Please reload the page or use the download link.";
+  });
+}
+
 const copyButton = document.querySelector("#copy-bibtex");
 const citation = document.querySelector("#bibtex");
 const copyStatus = document.querySelector("#copy-status");
