@@ -107,6 +107,7 @@ a:hover {
   margin-top: 1.6rem;
 }
 
+.resource-link,
 .resource-pending {
   display: inline-flex;
   align-items: center;
@@ -119,6 +120,12 @@ a:hover {
   font-weight: 600;
 }
 
+.resource-link:hover {
+  color: #225fb4;
+  background: #edf3fc;
+}
+
+.resource-link .icon,
 .resource-pending .icon {
   margin-right: 0.4rem;
 }
@@ -466,6 +473,20 @@ section[id] {
 
 .footer p + p {
   margin-top: 0.5rem;
+}
+
+.footer .icon-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.75rem;
+  height: 2.75rem;
+  color: var(--ink);
+  font-size: 1.5rem;
+}
+
+.footer .icon-link:hover {
+  color: #2464bd;
 }
 
 @media (max-width: 768px) {
