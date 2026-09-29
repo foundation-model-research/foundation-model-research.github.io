@@ -229,7 +229,8 @@ section[id] {
 
 .intro-video {
   position: relative;
-  margin: 1.7rem 0 0;
+  max-width: 960px;
+  margin: 1.7rem auto 0;
   overflow: hidden;
   border-radius: 12px;
   background: #05090d;

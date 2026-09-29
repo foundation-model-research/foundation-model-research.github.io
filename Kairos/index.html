@@ -84,6 +84,15 @@
           </a>
         </div>
         <p class="hero-summary">Adapt to temporal heterogeneity with fewer parameters.<br><strong>Dynamic tokenization, heterogeneity-aware modeling, and parallel forecasting.</strong></p>
+        <div class="intro-video">
+          <video id="intro-video" controls playsinline preload="none" poster="./static/images/video-poster.jpg" width="1920" height="1080" data-src="./static/videos/kairos_web_1080p.mp4" aria-label="Kairos introduction video" aria-describedby="intro-video-caption"></video>
+          <button class="intro-video-play" id="play-intro-video" type="button" aria-controls="intro-video" hidden>
+            <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"></path></svg>
+            <span>Play introduction <span class="intro-video-duration">1:30</span></span>
+          </button>
+        </div>
+        <p class="intro-video-caption" id="intro-video-caption">Kairos in 90 seconds <span aria-hidden="true">&middot;</span> <a href="./static/videos/kairos_web_1080p.mp4" download>Download video</a></p>
+        <p class="intro-video-status" id="intro-video-status" role="status"></p>
       </div>
     </div>
   </header>
@@ -235,15 +244,6 @@
       <div class="container is-max-desktop">
         <h2 class="title is-3 has-text-centered"><span class="section-heading">Overview</span></h2>
         <p class="section-lead">Kairos achieves superior performance with fewer parameters on zero-shot forecasting benchmarks.</p>
-        <div class="intro-video">
-          <video id="intro-video" controls playsinline preload="none" poster="./static/images/video-poster.jpg" width="1920" height="1080" data-src="./static/videos/kairos_web_1080p.mp4" aria-label="Kairos introduction video" aria-describedby="intro-video-caption"></video>
-          <button class="intro-video-play" id="play-intro-video" type="button" aria-controls="intro-video" hidden>
-            <svg viewBox="0 0 24 24" width="20" height="20" fill="currentColor" aria-hidden="true"><path d="M8 5v14l11-7z"></path></svg>
-            <span>Play introduction <span class="intro-video-duration">1:30</span></span>
-          </button>
-        </div>
-        <p class="intro-video-caption" id="intro-video-caption">Kairos in 90 seconds <span aria-hidden="true">&middot;</span> <a href="./static/videos/kairos_web_1080p.mp4" download>Download video</a></p>
-        <p class="intro-video-status" id="intro-video-status" role="status"></p>
         <figure class="figure">
           <a href="./static/images/intro.png" aria-label="Open the figure at original resolution" target="_blank" rel="noopener noreferrer">
             <img src="./static/images/intro-web.png" alt="GIFT-Eval performance versus model size, temporal information density, and adaptive tokenization." fetchpriority="high" width="2800" height="1013">
