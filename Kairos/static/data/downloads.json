@@ -1,6 +1,6 @@
 {
   "metric": "downloadsAllTime",
-  "updated_at": "2026-09-27",
+  "updated_at": "2026-09-29",
   "models": [
     {
       "id": "mldi-lab/Kairos_50m",
@@ -15,6 +15,6 @@
       "downloads": null
     }
   ],
-  "total": 38997,
+  "total": 39197,
   "source": "project-maintainer"
 }
