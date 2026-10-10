@@ -137,11 +137,40 @@ a:hover {
 }
 
 .hero-summary {
-  max-width: 780px;
+  max-width: 960px;
   margin: 1.8rem auto 0;
   color: #526073;
   font-size: 1.05rem;
   line-height: 1.8;
+}
+
+@media (min-width: 769px) {
+  .hero-summary strong {
+    font-size: clamp(0.85rem, 1.65vw, 1.05rem);
+    white-space: nowrap;
+  }
+}
+
+.related-work {
+  max-width: 960px;
+  margin: 1.5rem auto 0;
+  color: var(--muted);
+  font-size: 0.95rem;
+  line-height: 1.7;
+}
+
+.related-work strong {
+  color: var(--ink);
+}
+
+.related-work-venue {
+  white-space: nowrap;
+}
+
+.related-work a {
+  color: #285fac;
+  text-decoration: underline;
+  text-underline-offset: 3px;
 }
 
 .subnav {

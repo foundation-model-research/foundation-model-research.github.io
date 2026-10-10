@@ -101,6 +101,7 @@
   // Observe individual content blocks so long sections never wait to be fully visible.
   const items = document.querySelectorAll(
     '.hero .publication-title, .hero .publication-venue, .hero .hero-summary, ' +
+    '.hero .follow-up, .hero .related-work, ' +
     'main h2, main .section-lead, main .figure, main .abstract-copy, ' +
     'main .method-card, main .impact-card, main .download-panel, ' +
     'main .selected-citations, main .metric-grid, main .table-container, main .bibtex-box'

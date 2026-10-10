@@ -290,6 +290,28 @@ section[id] {
   display: none;
 }
 
+.follow-up {
+  max-width: 960px;
+  margin: 1.5rem auto 0;
+  color: var(--muted);
+  font-size: 0.95rem;
+  line-height: 1.7;
+}
+
+.follow-up strong {
+  color: var(--ink);
+}
+
+.follow-up-venue {
+  white-space: nowrap;
+}
+
+.follow-up a {
+  color: #285fac;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+
 .figure {
   margin: 1.7rem 0 0;
 }
