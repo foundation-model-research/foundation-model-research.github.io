@@ -1,0 +1,71 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="description" content="Integrated Policy Gradient: training-free attribution of multi-step LLM reasoning from outcomes to internal components. NeurIPS 2026.">
+  <meta name="theme-color" content="#f7faff">
+  <meta property="og:title" content="IPG — From Outcome to Representation">
+  <meta property="og:description" content="Tracing Reasoning Mechanisms through Integrated Policy Gradient. NeurIPS 2026.">
+  <meta property="og:type" content="website">
+  <title>IPG: From Outcome to Representation</title>
+  <link rel="stylesheet" href="./static/css/style.css">
+  <script src="./static/js/site.js" defer></script>
+</head>
+<body>
+<a class="skip" href="#overview">Skip to content</a>
+<header class="hero">
+  <div class="container">
+    <p class="venue">NeurIPS 2026</p>
+    <h1><span class="accent">From Outcome to Representation:</span><br>Tracing Reasoning Mechanisms through<br class="desktop-break"> Integrated Policy Gradient</h1>
+    <div class="authors">
+      <span>Changming Li<sup>1</sup></span><span>Kaixing Zhang<sup>1</sup></span><span>Yingdong Shi<sup>1</sup></span><span>Haoyun Xu<sup>1</sup></span><span>Zheng Zhang<sup>1</sup></span><span>Kaitao Song<sup>2</sup></span><a href="https://www.saying.ren/" target="_blank" rel="noopener noreferrer">Kan Ren<sup>1,†</sup></a>
+    </div>
+    <p class="affiliations"><sup>1</sup> ShanghaiTech University <span>·</span> <sup>2</sup> Apple</p>
+    <p class="correspondence"><sup>†</sup> Corresponding author: <a href="mailto:renkan@shanghaitech.edu.cn">renkan@shanghaitech.edu.cn</a></p>
+    <div class="resource-links"><a class="button primary" href="./static/papers/IPG.pdf" target="_blank" rel="noopener">Read the paper <span aria-hidden="true">↗</span></a><span class="button unavailable" aria-disabled="true">Code · coming soon</span><a class="button" href="#citation">BibTeX</a></div>
+    <p class="tagline">Look beneath the answer.</p>
+    <p class="hero-description">Attribute final reasoning outcomes to internal components.<br><strong>Training-free. Outcome-based. Sequential-influence-aware.</strong></p>
+    <div class="video-shell"><video id="intro-video" controls playsinline preload="metadata" poster="./static/images/video-poster.png"><source src="./static/videos/ipg-introduction.mp4" type="video/mp4">Your browser does not support video. <a href="./static/videos/ipg-introduction.mp4">Download the introduction.</a></video></div>
+    <p class="video-caption">IPG in 48 seconds · <a href="./static/videos/ipg-introduction.mp4" download>Download video</a></p>
+  </div>
+</header>
+<nav class="section-nav" aria-label="Page sections"><div class="container"><a class="brand" href="#">IPG</a><div class="nav-links"><a href="#overview">Overview</a><a href="#case-study">Case study</a><a href="#abstract">Abstract</a><a href="#methodology">Method</a><a href="#results">Results</a><a href="#citation">Citation</a></div></div></nav>
+<main>
+<section id="overview" class="section container">
+  <p class="eyebrow">The question</p><h2>A correct answer is not an explanation.</h2>
+  <p class="lead">Which neurons or sparse features contribute to successful multi-step reasoning—and how do their contributions accumulate across generation?</p>
+  <div class="cards three"><article class="card"><span class="card-number">01</span><h3>Start from outcomes</h3><p>Use outcome-level behavioral signals, such as task correctness, rather than relying only on surface text patterns.</p></article><article class="card"><span class="card-number">02</span><h3>Trace across steps</h3><p>Weight token log-probability gradients with outcome-derived advantages to attribute contributions across the generated trajectory.</p></article><article class="card"><span class="card-number">03</span><h3>Identify and intervene</h3><p>Integrate along activation paths, aggregate across questions, and modulate the selected internal components at inference time.</p></article></div>
+</section>
+<section id="case-study" class="section tinted"><div class="container">
+  <p class="eyebrow">An outcome you can see</p><h2>Same question. Different reasoning.</h2>
+  <p class="lead">Carlos invests $90 in a lemon tree. Each year it produces 7 lemons at $1.50 each, with $3 in upkeep. When does he start earning a positive profit?</p>
+  <div class="economics"><span><strong>$90</strong> initial cost</span><span><strong>$10.50</strong> yearly revenue</span><span><strong>$3</strong> yearly upkeep</span><span><strong>$7.50</strong> yearly net income</span></div>
+  <div class="state-controls" role="group" aria-label="Choose intervention state"><button type="button" data-state="suppressed" aria-pressed="false">Suppressed <span>γ &lt; 1</span></button><button type="button" data-state="original" aria-pressed="false">Original <span>γ = 1</span></button><button type="button" data-state="enhanced" aria-pressed="true">Enhanced <span>γ &gt; 1</span></button></div>
+  <div class="case-panel" data-active="enhanced"><div class="reasoning"><p id="state-label" class="eyebrow">Enhanced reasoning</p><div id="state-equation" class="equation">7.50n − 90 &gt; 0</div><p id="state-solve" class="solve">n &gt; 12 → the first whole-number year is 13.</p><p id="state-diagnosis">The strict positive-profit constraint is respected.</p></div><div class="answer"><span>Model answer</span><strong id="state-answer">13</strong><span>years</span><p id="state-profit">Actual profit at year 13: +$7.50</p></div></div>
+  <p class="caption">Selected excerpts from the provided case study. Suppression double-counts upkeep; the original response uses a non-strict constraint; enhancement changes the intermediate reasoning and returns 13 years.</p>
+</div></section>
+<section id="abstract" class="section container narrow"><p class="eyebrow">Abstract</p><h2>From final outcomes to internal representations.</h2><p>Large Language Models (LLMs) demonstrate remarkable reasoning capabilities, yet the internal mechanisms driving these multi-step processes remain opaque. Existing mechanistic interpretability approaches often rely on superficial text-pattern co-occurrences or capture only short-term effects, struggling to trace the long-horizon, outcome-driven influence of internal components such as neurons or sparse features in multi-step reasoning. We introduce <strong>Integrated Policy Gradient (IPG)</strong>, a training-free framework that brings policy-based attribution into mechanistic interpretability for LLM reasoning. IPG uses outcome-derived advantages to attribute behavioral signals across inference trajectories and integrates gradients along baseline-to-activation paths. Aggregated attributions identify outcome-relevant components for interpretation and intervention. Empirical evaluations on representative open-source LLMs demonstrate localization of sparse subsets of components, complementary spatial, semantic, and temporal insights, and improvements in reasoning performance through inference-time modulation.</p></section>
+<section id="methodology" class="section tinted"><div class="container"><p class="eyebrow">Methodology</p><h2>Trace. Integrate. Aggregate.</h2><p class="lead">One frozen model. Outcome signals at the end. Component-level attribution across the trajectory.</p>
+  <div class="method-diagram" aria-label="IPG method: question leads to sequential token generation, outcome-derived credit traces back across steps, and path integration yields aggregated component scores"><div class="generation"><span>Question</span><span>Read</span><span>Plan</span><span>Calculate</span><span>Check</span><span class="outcome">Outcome</span></div><div class="credit-line"><span>← Outcome-weighted credit across generation steps</span></div><div class="component-row"><div>Internal neurons<br>or SAE features</div><div>Baseline → activation<br>path integration</div><div>Aggregate over questions<br>rank components</div></div></div>
+  <div class="cards three"><article class="card"><p class="eyebrow">Sequential attribution</p><h3>Outcome-based credit</h3><p>Outcome-derived advantages weight token log-probability gradients. Parameters remain frozen: this is attribution, not model training.</p></article><article class="card"><p class="eyebrow">Integrated attribution</p><h3>Baseline-to-activation paths</h3><p>Accumulate gradients as component activations move from a baseline to their original values, then combine contributions across generation steps.</p></article><article class="card"><p class="eyebrow">Inference-time control</p><h3>Selected-component scaling</h3><p>Aggregate IPG scores across questions and select top-ranked components. Scale their activations by γ to suppress or enhance their influence.</p></article></div>
+  <details class="technical"><summary>Technical interpretation</summary><p>IPG is an outcome-oriented, sequential attribution framework motivated by a linear approximation of mediation effects. Its gradient-based scores are evaluated through component interventions and alignment with a group-based zero-ablation mediation proxy; they are not exact counterfactual mediation estimates.</p></details>
+</div></section>
+<section id="results" class="section container"><p class="eyebrow">Experimental evidence</p><h2>Training-free interventions improve reasoning performance.</h2><p class="lead">Accuracy (%) on Qwen2.5-Math-1.5B-Instruct under greedy decoding. Values after ± are half-widths of 95% confidence intervals, in percentage points.</p><div class="table-scroll" tabindex="0" role="region" aria-label="Reasoning benchmark results"><table><caption>Enhancement results · Table 2</caption><thead><tr><th scope="col">Method</th><th scope="col">GSM8K</th><th scope="col">MATH-500</th><th scope="col">AIME 2024</th><th scope="col">GPQA-D</th></tr></thead><tbody><tr><th scope="row">Original</th><td>82.41 ± 0.65</td><td>63.00 ± 0.95</td><td>10.00 ± 3.17</td><td>24.75 ± 1.92</td></tr><tr class="highlight"><th scope="row">IPG</th><td>84.61 ± 0.40</td><td>65.80 ± 0.88</td><td>20.00 ± 3.17</td><td>33.33 ± 1.68</td></tr><tr class="highlight"><th scope="row">IPG-SAE</th><td><strong>84.76 ± 0.50</strong></td><td><strong>66.00 ± 0.76</strong></td><td><strong>20.00 ± 4.75</strong></td><td><strong>35.35 ± 1.20</strong></td></tr></tbody></table></div><p class="caption">Selected methods from the manuscript. See the paper for the full baseline comparison, Llama3.1-8B results, and attribution-baseline experiments.</p>
+<div class="cards two"><article class="card evidence"><p class="eyebrow">Ablation · Table 1</p><h3>Intervention tests the selected components.</h3><div class="stat-flow"><span>63.0</span><span aria-hidden="true">→</span><strong>28.8</strong></div><p>MATH-500 accuracy drops when IPG-selected features are zero-ablated. Random ablation yields 59.8%; the unmodified model yields 63.0%.</p></article><article class="card evidence"><p class="eyebrow">Mediation proxy · Table 3</p><h3>Alignment with an intervention-based reference.</h3><div class="stat-flow"><strong>0.305</strong><span class="stat-unit">± 0.113</span></div><p>Mean Overlap@k ± standard deviation over five random seeds on Qwen. IPG reaches 0.246 ± 0.030 on DeepSeek-R1-Distill-Qwen-1.5B.</p></article></div>
+<div class="analysis-grid"><article><h3>Where</h3><p>Layer-wise localization shows where outcome-relevant components concentrate.</p></article><article><h3>What</h3><p>High-activation contexts reveal associations with planning, calculation, and summarization.</p></article><article><h3>When</h3><p>Activation dynamics provide a temporal view of component activity during generation.</p></article></div>
+</section>
+<section class="section tinted"><div class="container"><p class="eyebrow">A closer look</p><h2>From an example to experimental evidence.</h2><p class="lead">A second visual introduction combines the case study, component attribution, and intervention results.</p><div class="video-shell secondary"><video controls playsinline preload="none" poster="./static/images/evidence-poster.png"><source src="./static/videos/ipg-evidence.mp4" type="video/mp4">Your browser does not support video. <a href="./static/videos/ipg-evidence.mp4">Download the second video.</a></video></div><p class="video-caption">48 seconds · <a href="./static/videos/ipg-evidence.mp4" download>Download video</a></p></div></section>
+<section id="citation" class="section container narrow"><p class="eyebrow">Citation</p><h2>If you find IPG useful, please cite our paper.</h2><div class="citation-header"><span>BibTeX</span><button id="copy-citation" type="button">Copy</button></div><pre><code id="bibtex">@inproceedings{li2026ipg,
+  title = {From Outcome to Representation: Tracing Reasoning
+           Mechanisms through Integrated Policy Gradient},
+  author = {Li, Changming and Zhang, Kaixing and Shi, Yingdong
+            and Xu, Haoyun and Zhang, Zheng and Song, Kaitao
+            and Ren, Kan},
+  booktitle = {Advances in Neural Information Processing Systems},
+  year = {2026}
+}</code></pre><p id="copy-status" role="status" aria-live="polite"></p></section>
+</main>
+<footer class="site-footer container"><strong>IPG</strong><p>ShanghaiTech University · Apple</p><p>Page design inspired by <a href="https://mldi.group/Kairos/">Kairos</a>. Video 2 music: “Deliberate Thought” by Kevin MacLeod (<a href="https://incompetech.com/">incompetech.com</a>), licensed under <a href="https://creativecommons.org/licenses/by/4.0/">CC BY 4.0</a>; excerpted and faded.</p></footer>
+</body>
+</html>
